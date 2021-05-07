@@ -1,0 +1,295 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,600;0,700;0,900;1,500&display=swap');
+
+body{
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    background: #edf0f5;
+    line-height: 1.4;
+}
+.box-layout {
+    margin: 30px 0;
+}
+.template-header .logo h2 {
+    margin: 0;
+    padding: 0;
+    font-size: 20px;
+    font-weight: 600;
+    color: #2b3e58;
+}
+
+.social-icons ul.icon-list {
+    padding: 0;
+    margin: 0;
+}
+
+.social-icons ul.icon-list li {
+    display: inline-block;
+}
+
+.social-icons ul.icon-list li span {
+    display: block;
+    border: 1px solid #2b3e58;
+    border-radius: 100%;
+    color: #2b3e58;
+    width: 25px;
+    height: 25px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-icons {
+    text-align: right;
+}
+
+ul.user-nav {padding: 0;margin: 0;list-style: none;display: inline-block;}
+
+ul.user-nav li {
+    display: inline-block;
+    margin-right: 10px;
+}
+
+ul.user-nav li:last-child {
+    margin-right: 0;
+}
+
+ul.user-nav li a {
+    margin: 0;
+    color: #000;
+    font-size: 15px;
+}
+
+.bottom-header {
+    padding: 10px 0 0;
+}
+.dropdown-option {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-option .right-select {
+    margin-left: auto;
+}
+
+.user_login_area {
+    width: 100%;
+    background: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;    
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+.user_login_form {
+    width: 40%;
+    margin: 0 auto;
+}
+
+.user_login_form form.loginform {
+    width: 100%;
+}
+.user_login_form form.loginform input , .scanning_section input{
+    color: #2b3e58;
+    padding: 10px 14px;
+    font-weight: 500;
+    font-size: 14px;
+    border-radius: 10px;
+    border: 1px solid #d0d4de;
+}
+.form_submit {
+    text-align: center;
+}
+.action button {
+    font-size: 15px;
+}
+
+
+.form_submit button.login_submit {
+    background: #1e75f8;
+    border-color: #1e75f8;
+    padding: 7px 24px;
+    font-size: 15px;
+}
+    
+.right-select select, .qtybox input{
+    color: #2b3e58;
+    border: 1px solid #ced4da;
+    font-size: 14px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    transition: all 0.3s ease;
+}
+
+header.template-header {
+    padding: 15px 30px;
+    margin-bottom: 30px;
+    background: #fff;
+    border-radius: 10px;
+
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+
+}
+.scanning_section {
+    max-width: 40%;
+    margin: 0 auto;
+}
+.product_table_area {
+    padding: 30px;
+    padding-bottom: 30px;
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075)!important;
+}
+
+.table-hover tbody tr.active {
+    background-color: #00c850;
+}
+.product_table table {
+    border: 1px solid #dee2e6;
+    border-radius: 10px !important;
+    margin-top: 20px;
+    border-collapse: separate;
+    border-spacing: 0;
+}
+.product_table table th {
+    border-top: none;
+    color: #2b3e58;
+    font-weight: 600;
+    padding: 15px 15px;
+}
+.product_table {
+    max-width: 80%;
+    margin: 0 auto;
+}
+.qtybox input {
+    padding: 7px 12px;
+}
+.table td, .table th {
+    vertical-align: middle;
+
+    padding: 7px 15px;
+}
+.item-table-wrapper.show-table{
+    display: block !important;
+}
+.form-response{margin-top: 15px;}
+.input-error{border: 1px solid red !important;}
+/*Quantity buttom */
+input[type="number"] {
+  -webkit-appearance: textfield;
+    -moz-appearance: textfield;
+          appearance: textfield;
+}
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none;
+}
+.qtybox input {
+    
+    max-width: 100%;
+    display: inline-block;
+    border: none;
+    font-size: 14px;
+    font-weight: 500;
+    color: #2b3e58;
+
+}
+.product_table table td.qtybox {
+    width: 40%;
+}
+
+.qtybox .qty-btn {
+    display: inline-block;
+    position: absolute;
+    right: 10px;
+}
+
+.qtybox .qty-btn button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    line-height: 0;
+}
+
+.qtybox .number-input {
+    display: flex;
+    align-items: center;
+    max-width: 35%;
+    border: 1px solid #ced4da;
+    border-radius: 40px;
+    overflow: hidden;
+    position: relative;
+}
+.qtybox input:focus {
+    outline: none;
+}
+.qtybox .qty-btn button.minus i {
+    position: relative;
+    top: 3px;
+}
+.qtybox .qty-btn button{
+    outline: none;
+}
+.number-input:focus {
+    border-color: #000;
+}
+
+.qtybox .number-input:focus-within {
+    border-color: #777;
+}
+.qtybox input {
+    max-width: 100%;
+    display: inline-block;
+    border: none;
+    padding: 7px 30px 7px 12px;
+}
+
+.qtybox .qty-btn {
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    padding: 0;
+    height: 100%;
+}
+
+.qtybox .qty-btn button {
+    background: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    display: block;
+    width: 25px;
+    line-height: 0;
+}
+
+.qtybox .number-input {
+    display: flex;
+    align-items: center;
+    max-width: 35%;
+    border: 1px solid #999;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.qtybox .qty-btn:before {content: '';
+position: absolute;
+display: inline-block;
+border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
+
+.qtybox .qty-btn button.plus {
+    padding-top: 2px;
+    border-bottom: 1px solid #999;
+}
+/*Quantity buttom  end*/
+
+.extra-fiels-area {
+    width: 60%;
+    margin-left: 85px;
+}
+@media (min-width: 1200px){
+    .container {
+        max-width: 960px;
+    }
+}

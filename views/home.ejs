@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Packing system</title>
+    <link rel='stylesheet' href='/stylesheets/bootstrap.min.css' />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <script src="/javascripts/jquery-3.5.1.min.js"></script>
+    <script src="/javascripts/bootstrap.min.js"></script>
+    <script src="/javascripts/script.js"></script>
+</head>
+
+<body id="packing-system-template" class="packing-system-template">
+    <div class="container">
+        <div class="box-layout">
+            <header class="template-header">
+                <div class="row top-header">
+                    <div class="col-md-6 logo">
+                        <h2>Packing system</h2>
+                    </div>
+                    <div class="col-md-6 social-icons">
+                        <ul class="icon-list">
+                            <li class="circle">
+                                <span>P</span>
+                            </li>
+                            <li class="circle">
+                                <span>P</span>
+                            </li>
+                            <li class="circle">
+                                <span>P</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="row bottom-header">
+                    <div class="col-md-12">
+                        <div class="dropdown-option">
+                            <ul class="user-nav" style="display: none">
+                                <li class="logged_user">
+                                    <a href="javascript:void(0)">Username</a>
+                                </li>
+                                <li class="logout">
+                                    <a href="javascript:void(0)">Logoff</a>
+                                </li>
+                            </ul>
+                            <div class="right-select">
+                                <select name="pallet_no" class="pallet_no common-select">
+                                    <option>Pallet No.</option>
+                                    <% palletNo.forEach(function(singlePalletNo){ %>
+                                        <option value="1234">
+                                            <%= singlePalletNo.PALLETNUM %>
+                                        </option>
+                                        <% }); %>
+
+                                </select>
+                                <select name="distribution_no" class="distribution_no common-select">
+                                    <option>Distribution Number</option>
+                                    <option value="1234">1234</option>
+                                    <option value="2345">2345</option>
+                                    <option value="3456">3456</option>
+                                    <option value="4567">4567</option>
+                                    <option value="5678">5678</option>
+                                    <option value="6789">6789</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </header>
+            <div class="main" id="main">
+                <div class="user_login_area">
+                    <div class="user_login_form">
+                        <form class="loginform" method="post">
+                            <div class="form-group">
+                                <input type="text" name="username" class="username form-control" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <input type="password" name="password" class="password form-control"
+                                    placeholder="*****">
+                            </div>
+                            <div class="form-group form_submit mb-0">
+                                <button type="submit" name="login_submit"
+                                    class="btn btn-primary login_submit">Login</button>
+                            </div>
+                        </form>
+                        <div class="form-response"></div>
+                    </div>
+                </div>
+
+                <div class="product_table_area">
+                    <div class="catalog_area">
+                        <div class="scanning_section">
+                            <div class="row">
+                                <div class="col-md-12 scan-field form-group">
+                                    <input type="text" name="scanbasket" class="scanbasket form-control"
+                                        placeholder="Scan basket">
+                                </div>
+                                <div class="col-md-12 scan-field form-group" style="display: none;">
+                                    <input type="text" name="scanitem" class="scanitem form-control"
+                                        placeholder="Scan Item">
+                                </div>
+                                <div class="col-md-12 error-field form-group">
+                                    <div class="alert alert-primary" role="alert" style="display: none;">
+                                        This is a danger alert—check it out!
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="extra-fiels-area">
+                        <div class="row">
+                            <div class="col-md-6 form-group">
+                                <label>Number of packs</label>
+                                <input type="number" name="packs_number" class="packs_number form-control" min="1"
+                                    value="1">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product_table">
+                        <div class="table-responsive item-table-wrapper" style="display: none">
+                            <table class="table table-hover table-items">
+                                <tr>
+                                    <th>נסרק</th>
+                                    <th>כמות</th>
+                                    <th>תאור</th>
+                                    <th>מקט</th>
+                                    <th>KLINE</th>
+                                </tr>
+                                <!-- <tr class="item_row" data-id="1">
+                                    <td class="qtybox">
+                                        <div class="number-input md-number-input">
+                                            <input class="quantity" min="0" name="quantity" value="1" type="number">
+                                            <div class="qty-btn">
+                                                <button class="plus qtybox-btn"><i class="fa fa-sort-asc"
+                                                        aria-hidden="true"></i></button>
+                                                <button class="minus qtybox-btn"><i class="fa fa-caret-down"
+                                                        aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="totalqty">3</td>
+                                    <td class="itemdesc">ווסקי</td>
+                                    <td class="itemsku" data-sku="AAAA">AAAA</td>
+                                    <td class="kline">1</td>
+                                </tr>
+                                <tr class="item_row" data-id="2">
+                                    <td class="qtybox">
+                                        <div class="number-input md-number-input">
+                                            <input class="quantity" min="0" name="quantity" value="1" type="number">
+                                            <div class="qty-btn">
+                                                <button class="plus qtybox-btn"><i class="fa fa-sort-asc"
+                                                        aria-hidden="true"></i></button>
+                                                <button class="minus qtybox-btn"><i class="fa fa-caret-down"
+                                                        aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="totalqty">1</td>
+                                    <td class="itemdesc">ודקה</td>
+                                    <td class="itemsku" data-sku="BBBB">BBBB</td>
+                                    <td class="kline">2</td>
+                                </tr>
+                                <tr class="item_row" data-id="3">
+                                    <td class="qtybox">
+                                        <div class="number-input md-number-input">
+                                            <input class="quantity" min="0" name="quantity" value="1" type="number">
+                                            <div class="qty-btn">
+                                                <button class="plus qtybox-btn"><i class="fa fa-sort-asc"
+                                                        aria-hidden="true"></i></button>
+                                                <button class="minus qtybox-btn"><i class="fa fa-caret-down"
+                                                        aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="totalqty">7</td>
+                                    <td class="itemdesc">יין</td>
+                                    <td class="itemsku" data-sku="CCCC">CCCC</td>
+                                    <td class="kline">3</td>
+                                </tr> -->
+                            </table>
+                        </div>
+                        <div class="row action">
+                            <div class="col-md-6">
+                                <button type="button" class="btn btn-outline-primary btn-complete">Complete</button>
+                            </div>
+                            <div class="col-md-6 text-right">
+                                <button type="button" class="btn btn-outline-warning btn-suspend">Suspended</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
