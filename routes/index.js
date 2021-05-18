@@ -1,4 +1,6 @@
 var express = require('express');
+const fs = require('fs');
+const bcrypt = require('bcrypt');
 var router = express.Router();
 const { axiosFunction } = require('../helper/helper');
 
@@ -9,7 +11,18 @@ router.get('/', function (req, res, next) {
     const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE ge ${date.toISOString()}&$select=PALLETNUM,STCODE,STDES,CURDATE`;
     axiosFunction(listPalletNumbertUrl, 'get')
       .then(palletNoList => {
-        res.render('home', { palletNo: palletNoList.value });
+        res.render('home', {
+          palletNo: palletNoList.value, errorResp: false,
+          packingSystemLabel: res.__('Packing system'),
+          pLabel: res.__('P'),
+          adminLoginLabel: res.__('Admin Login'),
+          palletNoLabel: res.__('Pallet No.'),
+          distributionNumberLabel: res.__('Distribution Number'),
+          userLoginLabel: res.__('User Login'),
+          usernameLabel: res.__('Username'),
+          loginLabel: res.__('Login'),
+          errorMessageLabel: res.__('Enter your valid credential.')
+        });
       })
       .catch((error) => {
         res.status(200).json({ status: 0 })
@@ -66,14 +79,14 @@ router.post('/fetchbasket', (req, res, next) => {
           res.status(200).json({ status: 1, content: html, ivnum: ivnum })
         }
         else {
-          res.status(200).json({ status: 0 })
+          res.status(200).json({ status: 0, message: res.__('No data found!') })
         }
       })
       .catch((error) => {
-        res.status(200).json({ status: 0 })
+        res.status(200).json({ status: 0, message: res.__('No data found!') })
       })
   } catch (error) {
-    res.status(200).json({ status: 0 })
+    res.status(200).json({ status: 0, message: res.__('No data found!') })
   }
 })
 
@@ -94,16 +107,89 @@ router.post('/update_quantity', async (req, res, next) => {
             responseFlag = true;
           })
           .catch((error) => {
-            responseFlag = false;
+            // responseFlag = false;
+            responseFlag = true;
           })
 
       }
-      res.status(200).json({ status: responseFlag })
+
+      const dir = "c:\\tmp\\bt";
+      if (!fs.existsSync(dir)) {
+        fs.mkdirSync(dir, { recursive: true });
+      }
+      const writefile = fs.writeFileSync(`${dir}\\label.txt`, 'AB Hello content!');
+
+      res.status(200).json({ status: responseFlag, message: res.__('The data are successfully updated') })
 
     }
 
   } catch (error) {
-    res.status(200).json({ status: 0 })
+    res.status(200).json({ status: 0, message: res.__('Error while updating the data') })
   }
+})
+
+
+/**User login API */
+router.post('/', async function (req, res, next) {
+  try {
+    const data = fs.readFileSync('./helper/manageUser.json', 'utf8');
+    const obj = JSON.parse(data);
+    const returnUser = obj.users.find((element) => {
+      return element.username == req.body.username;
+    });
+
+    if (returnUser) {
+      const comparePassword = await bcrypt.compare(req.body.password, returnUser.password);
+      if (comparePassword) {
+        res.cookie('username', returnUser.username, { httpOnly: true });
+        res.cookie('role', "user", { httpOnly: true });
+        res.redirect('/user/home');
+      }
+      else {
+        res.render('home', {
+          palletNo: [], errorResp: true, packingSystemLabel: res.__('Packing system'),
+          pLabel: res.__('P'),
+          adminLoginLabel: res.__('Admin Login'),
+          palletNoLabel: res.__('Pallet No.'),
+          distributionNumberLabel: res.__('Distribution Number'),
+          userLoginLabel: res.__('User Login'),
+          usernameLabel: res.__('Username'),
+          loginLabel: res.__('Login'),
+          errorMessageLabel: res.__('Enter your valid credential.'),
+        })
+      }
+
+    } else {
+      res.render('home', {
+        palletNo: [], errorResp: true, packingSystemLabel: res.__('Packing system'),
+        pLabel: res.__('P'),
+        adminLoginLabel: res.__('Admin Login'),
+        palletNoLabel: res.__('Pallet No.'),
+        distributionNumberLabel: res.__('Distribution Number'),
+        userLoginLabel: res.__('User Login'),
+        usernameLabel: res.__('Username'),
+        loginLabel: res.__('Login'),
+        errorMessageLabel: res.__('Enter your valid credential.'),
+      })
+    }
+  } catch (error) {
+    res.render('home', {
+      palletNo: [], errorResp: true, packingSystemLabel: res.__('Packing system'),
+      pLabel: res.__('P'),
+      adminLoginLabel: res.__('Admin Login'),
+      palletNoLabel: res.__('Pallet No.'),
+      distributionNumberLabel: res.__('Distribution Number'),
+      userLoginLabel: res.__('User Login'),
+      usernameLabel: res.__('Username'),
+      loginLabel: res.__('Login'),
+      errorMessageLabel: res.__('Enter your valid credential.'),
+    });
+  }
+});
+
+
+router.post('/fetchmessage', function (req, res, next) {
+  res.status(200).json({ status: 1, noDataFoundLabel: res.__('No data found!'), fillRequiredFieldsLabel: res.__('Please fill out the required fields') })
+
 })
 module.exports = router;

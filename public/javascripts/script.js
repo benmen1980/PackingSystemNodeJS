@@ -1,4 +1,26 @@
 jQuery(document).ready(function () {
+	let noDataFoundLabel = '';
+	let fillRequiredFieldsLabel = '';
+	jQuery.ajax({
+
+		url: '/fetchmessage',
+		type: 'POST',
+		data: {},
+		success: function (resp) {
+
+			var obj = resp;
+
+			if (obj.status == 1) {
+				console.log("obj: ", obj)
+				noDataFoundLabel = obj.noDataFoundLabel;
+				fillRequiredFieldsLabel = obj.fillRequiredFieldsLabel;
+			}
+		},
+		error: function (jqXHR, textStatus, errorThrown) {
+			console.log(jqXHR.status);
+		}
+
+	});
 
 	jQuery(".logout").click(function () {
 		jQuery(".user-nav").hide();
@@ -62,7 +84,7 @@ jQuery(document).ready(function () {
 						}
 
 					} else {
-						jQuery('.alert').html('No data found!');
+						jQuery('.alert').html(obj.message);
 						jQuery('.alert').show();
 						jQuery('.item-table-wrapper').removeClass('show-table');
 					}
@@ -116,7 +138,7 @@ jQuery(document).ready(function () {
 
 						} else {
 
-							jQuery('.alert').html('No data found!');
+							jQuery('.alert').html(obj.message);
 							jQuery('.alert').show();
 							jQuery('.item-table-wrapper').removeClass('show-table');
 						}
@@ -162,7 +184,7 @@ jQuery(document).ready(function () {
 
 		if (jQuery.inArray(item_val, items) === -1) {
 			jQuery('.item-table-wrapper').removeClass('show-table');
-			jQuery('.alert').html('No data found!');
+			jQuery('.alert').html(noDataFoundLabel);
 			jQuery('.alert').show();
 		}
 
@@ -202,7 +224,7 @@ jQuery(document).ready(function () {
 
 			if (jQuery.inArray(item_val, items) === -1) {
 				jQuery('.item-table-wrapper').removeClass('show-table');
-				jQuery('.alert').html('No data found!');
+				jQuery('.alert').html(noDataFoundLabel);
 				jQuery('.alert').show();
 			}
 		}
@@ -213,7 +235,7 @@ jQuery(document).ready(function () {
 	});
 
 	jQuery(".login_submit").click(function (e) {
-		e.preventDefault();
+		// e.preventDefault();
 		var username = jQuery(".loginform .username").val();
 		var password = jQuery(".loginform .password").val();
 		var error = 0;
@@ -234,15 +256,15 @@ jQuery(document).ready(function () {
 
 		if (error == 1) {
 			jQuery('.form-response').html(
-				'<div class="alert alert-danger" role="alert">Please fill out the required fields.</div>'
+				`<div class="alert alert-danger" role="alert">${fillRequiredFieldsLabel}</div>`
 			);
 			return false;
 
 		} else {
-			jQuery(".user_login_area").hide();
-			jQuery(".logged_user a").text(username);
-			jQuery(".user-nav").show();
-			jQuery(".loginform")[0].reset();
+			// jQuery(".user_login_area").hide();
+			// jQuery(".logged_user a").text(username);
+			// jQuery(".user-nav").show();
+			// jQuery(".loginform")[0].reset();
 		}
 
 	});
@@ -305,12 +327,11 @@ jQuery(document).ready(function () {
 
 					if (obj.status == true) {
 						jQuery('.item-table-wrapper').removeClass('show-table');
-						jQuery('.alert').html('The data are successfully updated');
+						jQuery('.alert').html(obj.message);
 						jQuery('.alert').show();
-
 					} else {
 						jQuery('.item-table-wrapper').removeClass('show-table');
-						jQuery('.alert').html('Error while updating the data');
+						jQuery('.alert').html(obj.message);
 						jQuery('.alert').show();
 					}
 					jQuery('.btn-complete').prop('disabled', false);

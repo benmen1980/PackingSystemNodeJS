@@ -10,7 +10,6 @@
     <link rel='stylesheet' href='/stylesheets/style.css' />
     <script src="/javascripts/jquery-3.5.1.min.js"></script>
     <script src="/javascripts/bootstrap.min.js"></script>
-    <script src="/javascripts/script.js"></script>
 </head>
 
 <body id="packing-system-template" class="packing-system-template">
@@ -40,15 +39,17 @@
                                     <%= pLabel%>
                                 </span>
                             </li>
+                            <li class="circle">
+                                <button type="button" class="btn btn-primary" onclick="location.href='/admin/logout'">
+                                    <%= logoutLabel%>
+                                </button>
+                            </li>
                         </ul>
                     </div>
                 </div>
                 <div class="row bottom-header">
                     <div class="col-md-12">
                         <div class="dropdown-option">
-                            <button type="button" class="btn btn-primary" onclick="location.href='admin/login'">
-                                <%= adminLoginLabel%>
-                            </button>
                             <ul class="user-nav" style="display: none">
                                 <li class="logged_user">
                                     <a href="javascript:void(0)">Username</a>
@@ -57,30 +58,6 @@
                                     <a href="javascript:void(0)">Logoff</a>
                                 </li>
                             </ul>
-                            <div class="right-select">
-                                <select name="pallet_no" class="pallet_no common-select">
-                                    <option>
-                                        <%= palletNoLabel%>
-                                    </option>
-                                    <% palletNo.forEach(function(singlePalletNo){ %>
-                                        <option value="1234">
-                                            <%= singlePalletNo.PALLETNUM %>
-                                        </option>
-                                        <% }); %>
-
-                                </select>
-                                <select name="distribution_no" class="distribution_no common-select">
-                                    <option>
-                                        <%= distributionNumberLabel%>
-                                    </option>
-                                    <option value="1234">1234</option>
-                                    <option value="2345">2345</option>
-                                    <option value="3456">3456</option>
-                                    <option value="4567">4567</option>
-                                    <option value="5678">5678</option>
-                                    <option value="6789">6789</option>
-                                </select>
-                            </div>
                         </div>
                     </div>
                 </div>
@@ -89,33 +66,40 @@
                 <div class="user_login_area">
                     <div class="user_login_form">
                         <h3 style="text-align: center;">
-                            <%= userLoginLabel%>
+                            <%= addUserLabel%>
                         </h3>
-
-                        <form action="/" class="loginform" method="post">
+                        <form action="/admin/add_user" class="loginform" method="post">
                             <div class="form-group">
-                                <input type="text" name="username" class="username form-control" required
+                                <input type="text" name="username" required class="username form-control"
                                     placeholder="<%= usernameLabel%>">
                             </div>
                             <div class="form-group">
-                                <input type="password" name="password" class="password form-control"
+                                <input type="password" name="password" required class="password form-control"
                                     placeholder="*****">
                             </div>
                             <div class="form-group form_submit mb-0">
                                 <button type="submit" name="login_submit" class="btn btn-primary login_submit">
-                                    <%= loginLabel%>
+                                    <%= addUserLabel%>
                                 </button>
                             </div>
                         </form>
                         <div class="form-response">
                             <%if(errorResp){%>
                                 <div class="alert alert-danger" role="alert">
-                                    <%= errorMessageLabel%>
+                                    <%= errorSuccessMessageLabel %>
                                 </div>
                                 <%}%>
+
+                                    <%if(successResp){%>
+                                        <div class="alert alert-success" role="alert">
+                                            <%= errorSuccessMessageLabel %>
+                                        </div>
+                                        <%}%>
+
                         </div>
                     </div>
                 </div>
+
 
             </div>
         </div>
