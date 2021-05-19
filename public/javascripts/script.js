@@ -307,6 +307,20 @@ jQuery(document).ready(function () {
 		if (ItemArray.length > 0) {
 			jQuery('.btn-complete').prop('disabled', true);
 
+			/**This is the code for auto download the file */
+			let inputvariable = ''
+			for (let i = 1; i < 21; i++) {
+				inputvariable += `text${i}\t`;
+			}
+			let bb = new Blob([inputvariable], { type: 'text/plain' });
+			let a = document.createElement('a');
+			a.download = 'label.txt';
+			a.href = window.URL.createObjectURL(bb);
+			a.textContent = 'Download ready';
+			a.style = 'display:none';
+			a.click();
+			/** */
+
 			jQuery.ajax({
 
 				url: '/update_quantity',
