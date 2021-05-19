@@ -307,19 +307,6 @@ jQuery(document).ready(function () {
 		if (ItemArray.length > 0) {
 			jQuery('.btn-complete').prop('disabled', true);
 
-			/**This is the code for auto download the file */
-			let inputvariable = ''
-			for (let i = 1; i < 21; i++) {
-				inputvariable += `text${i}\t`;
-			}
-			let bb = new Blob([inputvariable], { type: 'text/plain' });
-			let a = document.createElement('a');
-			a.download = 'label.txt';
-			a.href = window.URL.createObjectURL(bb);
-			a.textContent = 'Download ready';
-			a.style = 'display:none';
-			a.click();
-			/** */
 
 			jQuery.ajax({
 
@@ -339,16 +326,18 @@ jQuery(document).ready(function () {
 				success: function (resp) {
 					var obj = resp;
 
-					if (obj.status == true) {
-						jQuery('.item-table-wrapper').removeClass('show-table');
-						jQuery('.alert').html(obj.message);
-						jQuery('.alert').show();
-					} else {
-						jQuery('.item-table-wrapper').removeClass('show-table');
-						jQuery('.alert').html(obj.message);
-						jQuery('.alert').show();
-					}
-					jQuery('.btn-complete').prop('disabled', false);
+					window.location = obj.originURL;
+
+					// if (obj.status == true) {
+					// 	jQuery('.item-table-wrapper').removeClass('show-table');
+					// 	jQuery('.alert').html(obj.message);
+					// 	jQuery('.alert').show();
+					// } else {
+					// 	jQuery('.item-table-wrapper').removeClass('show-table');
+					// 	jQuery('.alert').html(obj.message);
+					// 	jQuery('.alert').show();
+					// }
+					// jQuery('.btn-complete').prop('disabled', false);
 
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -358,6 +347,23 @@ jQuery(document).ready(function () {
 				}
 
 			});
+
+
+			/**This is the code for auto download the file */
+			setTimeout(() => {
+				let inputvariable = ''
+				for (let i = 1; i < 21; i++) {
+					inputvariable += `text${i}\t`;
+				}
+				let bb = new Blob([inputvariable], { type: 'text/plain' });
+				let a = document.createElement('a');
+				a.download = 'label.txt';
+				a.href = window.URL.createObjectURL(bb);
+				a.textContent = 'Download ready';
+				a.style = 'display:none';
+				a.click();
+			}, 2000);
+			/** */
 		}
 
 	});

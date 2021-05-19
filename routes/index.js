@@ -113,18 +113,12 @@ router.post('/update_quantity', async (req, res, next) => {
 
       }
 
-      const dir = "c:\\tmp\\bt";
-      if (!fs.existsSync(dir)) {
-        fs.mkdirSync(dir, { recursive: true });
-      }
-      const writefile = fs.writeFileSync(`${dir}\\label.txt`, 'AB Hello content!');
-
-      res.status(200).json({ status: responseFlag, message: res.__('The data are successfully updated') })
+      res.status(200).json({ status: responseFlag, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated') })
 
     }
 
   } catch (error) {
-    res.status(200).json({ status: 0, message: res.__('Error while updating the data') })
+    res.status(200).json({ status: 0, originURL: `${req.headers.origin}/user/home`, message: res.__('Error while updating the data') })
   }
 })
 
