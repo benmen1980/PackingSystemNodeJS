@@ -74,7 +74,7 @@
                         <div class="scanning_section">
                             <div class="row">
                                 <div class="col-md-12 scan-field form-group">
-                                    <input type="text" name="scanbasket" class="scanbasket form-control"
+                                    <input type="text" id="scanbasket" name="scanbasket" class="scanbasket form-control"
                                         placeholder="<%= scanBasketLabel%>">
                                 </div>
                                 <div class="col-md-12 scan-field form-group" style="display: none;">
@@ -82,8 +82,13 @@
                                         placeholder="<%= scanItemLabel%>">
                                 </div>
                                 <div class="col-md-12 error-field form-group">
-                                    <div class="alert alert-primary" role="alert" style="display: none;">
+                                    <div class="alert alert-primary" id="error_message" role="alert" style="display: none;">
                                         This is a danger alert—check it out!
+                                    </div>
+                                </div>
+                                <div class="col-md-12 error-field form-group">
+                                    <div class="alert alert-success" id="api_processing_message" role="alert" style="display: none;">
+                                        <%= printingAndProcessingLabel%>
                                     </div>
                                 </div>
                             </div>

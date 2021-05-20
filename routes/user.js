@@ -12,7 +12,8 @@ router.get('/home', userAuthentication, (req, res, next) => {
         scanItemLabel: res.__('Scan Item'),
         numberOfPacksLabel: res.__('Number of packs'),
         completeLabel: res.__('Complete'),
-        suspendedLabel: res.__('Suspended')
+        suspendedLabel: res.__('Suspended'),
+        printingAndProcessingLabel: res.__('Printing and processing...'),
     });
 
 })

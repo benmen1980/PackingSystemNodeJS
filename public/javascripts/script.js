@@ -83,10 +83,15 @@ jQuery(document).ready(function () {
 							jQuery(hidden_field).insertAfter('.table-items');
 						}
 
+						jQuery('.scanitem').show();
+
+
 					} else {
-						jQuery('.alert').html(obj.message);
-						jQuery('.alert').show();
-						jQuery('.item-table-wrapper').removeClass('show-table');
+						// jQuery('.alert').html(obj.message);
+						// jQuery('.alert').show();
+						jQuery('#error_message').html(obj.message);
+						jQuery('#error_message').show();
+						jQuery('.product_table').removeClass('show-table');
 					}
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -136,11 +141,18 @@ jQuery(document).ready(function () {
 								jQuery(hidden_field).insertAfter('.table-items');
 							}
 
+							jQuery('.scanitem').show();
+
+
 						} else {
 
-							jQuery('.alert').html(obj.message);
-							jQuery('.alert').show();
-							jQuery('.item-table-wrapper').removeClass('show-table');
+							// jQuery('.alert').html(obj.message);
+							// jQuery('.alert').show();
+							jQuery('#error_message').html(obj.message);
+							jQuery('#error_message').show();
+							// jQuery('.item-table-wrapper').removeClass('show-table');
+							jQuery('.product_table').removeClass('show-table');
+
 						}
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
@@ -184,8 +196,10 @@ jQuery(document).ready(function () {
 
 		if (jQuery.inArray(item_val, items) === -1) {
 			jQuery('.item-table-wrapper').removeClass('show-table');
-			jQuery('.alert').html(noDataFoundLabel);
-			jQuery('.alert').show();
+			// jQuery('.alert').html(noDataFoundLabel);
+			// jQuery('.alert').show();
+			jQuery('#error_message').html(noDataFoundLabel);
+			jQuery('#error_message').show();
 		}
 
 	});
@@ -224,15 +238,22 @@ jQuery(document).ready(function () {
 
 			if (jQuery.inArray(item_val, items) === -1) {
 				jQuery('.item-table-wrapper').removeClass('show-table');
-				jQuery('.alert').html(noDataFoundLabel);
-				jQuery('.alert').show();
+				// jQuery('.alert').html(noDataFoundLabel);
+				// jQuery('.alert').show();
+				jQuery('#error_message').html(noDataFoundLabel);
+				jQuery('#error_message').show();
 			}
 		}
 	});
 
-	jQuery(".btn-complete").click(function () {
-		jQuery('.item-table-wrapper').hide();
-	});
+	// jQuery(".btn-complete").click(function () {
+	// 	jQuery('.item-table-wrapper').hide();
+
+	// 	jQuery('.scanbasket').show();
+	// 	jQuery('.scanitem').hide();
+	// 	jQuery('.item-table-wrapper').removeClass('show-table');
+	// 	$('#scanbasket').val('');
+	// });
 
 	jQuery(".login_submit").click(function (e) {
 		// e.preventDefault();
@@ -326,7 +347,15 @@ jQuery(document).ready(function () {
 				success: function (resp) {
 					var obj = resp;
 
-					window.location = obj.originURL;
+					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
+					$('#api_processing_message').hide();
+					jQuery('.scanbasket').show();
+					$('#scanbasket').val('');
+					jQuery('.btn-complete').prop('disabled', false);
+					jQuery('tbody').remove();
+					/** */
+
+					// window.location = obj.originURL;
 
 					// if (obj.status == true) {
 					// 	jQuery('.item-table-wrapper').removeClass('show-table');
@@ -362,7 +391,16 @@ jQuery(document).ready(function () {
 				a.textContent = 'Download ready';
 				a.style = 'display:none';
 				a.click();
-			}, 2000);
+			}, 1500);
+			/** */
+
+
+			/** Hide scan item, table section and display the API processing message  */
+			jQuery('.scanitem').hide();
+			jQuery('.item-table-wrapper').removeClass('show-table');
+
+			$('#api_processing_message').show();
+
 			/** */
 		}
 
