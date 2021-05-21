@@ -7,26 +7,19 @@ const { axiosFunction } = require('../helper/helper');
 
 router.get('/', function (req, res, next) {
   try {
-    const date = new Date();
-    const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE ge ${date.toISOString()}&$select=PALLETNUM,STCODE,STDES,CURDATE`;
-    axiosFunction(listPalletNumbertUrl, 'get')
-      .then(palletNoList => {
-        res.render('home', {
-          palletNo: palletNoList.value, errorResp: false,
-          packingSystemLabel: res.__('Packing system'),
-          pLabel: res.__('P'),
-          adminLoginLabel: res.__('Admin Login'),
-          palletNoLabel: res.__('Pallet No.'),
-          distributionNumberLabel: res.__('Distribution Number'),
-          userLoginLabel: res.__('User Login'),
-          usernameLabel: res.__('Username'),
-          loginLabel: res.__('Login'),
-          errorMessageLabel: res.__('Enter your valid credential.')
-        });
-      })
-      .catch((error) => {
-        res.status(200).json({ status: 0 })
-      })
+    res.render('home', {
+      errorResp: false,
+      packingSystemLabel: res.__('Packing system'),
+      pLabel: res.__('P'),
+      adminLoginLabel: res.__('Admin Login'),
+      palletNoLabel: res.__('Pallet No.'),
+      distributionNumberLabel: res.__('Distribution Number'),
+      userLoginLabel: res.__('User Login'),
+      usernameLabel: res.__('Username'),
+      loginLabel: res.__('Login'),
+      errorMessageLabel: res.__('Enter your valid credential.')
+    });
+
   } catch (error) {
     res.status(200).json({ status: 0 })
   }
@@ -76,7 +69,7 @@ router.post('/fetchbasket', (req, res, next) => {
           });
           html += '</tbody>';
 
-          res.status(200).json({ status: 1, content: html, ivnum: ivnum })
+          res.status(200).json({ status: 1, content: html, ivnum: ivnum, IVNUM: basketList.value[0].IVNUM, ROYY_TRANSPORTMEAN: basketList.value[0].ROYY_TRANSPORTMEAN })
         }
         else {
           res.status(200).json({ status: 0, message: res.__('No data found!') })

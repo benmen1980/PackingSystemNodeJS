@@ -83,6 +83,15 @@ jQuery(document).ready(function () {
 							jQuery(hidden_field).insertAfter('.table-items');
 						}
 
+						/**Dynamically IVNUM and ROYY_TRANSPORTMEAN display enable and set value in label */
+						if(obj.IVNUM && obj.IVNUM !== ""){
+							jQuery('.scanbasket-IVNUM').show();
+							jQuery('.scanbasket-IVNUM label').text(obj.IVNUM);
+							jQuery('.scanbasket-royy_transportmean').show();
+							jQuery('.scanbasket-royy_transportmean label').text(obj.ROYY_TRANSPORTMEAN);
+						}
+						/*** ***/
+
 						jQuery('.scanitem').show();
 
 
@@ -140,6 +149,15 @@ jQuery(document).ready(function () {
 								var hidden_field = '<input type="hidden" name="ivnum" class="ivnum" value="' + obj.ivnum + '">';
 								jQuery(hidden_field).insertAfter('.table-items');
 							}
+
+							/**Dynamically IVNUM and ROYY_TRANSPORTMEAN display enable and set value in label */
+							if(obj.IVNUM && obj.IVNUM !== ""){
+								jQuery('.scanbasket-IVNUM').show();
+								jQuery('.scanbasket-IVNUM label').text(obj.IVNUM);
+								jQuery('.scanbasket-royy_transportmean').show();
+								jQuery('.scanbasket-royy_transportmean label').text(obj.ROYY_TRANSPORTMEAN);
+							}
+							/*** ***/
 
 							jQuery('.scanitem').show();
 
@@ -324,13 +342,13 @@ jQuery(document).ready(function () {
 	jQuery(".btn-complete").click(function (e) {
 		e.preventDefault();
 
-		var ItemArray = [];
-		var IVnum = jQuery('.ivnum').val();
+		let ItemArray = [];
+		let IVnum = jQuery('.ivnum').val();
 
 		jQuery('.table-items .item_row').each(function () {
-			var current_Qty = jQuery(this).find('.quantity').val();
-			var kLine = jQuery(this).find('.kline').text();
-			var IVNUM = jQuery(this).find('.IVNUM').text();
+			let current_Qty = jQuery(this).find('.quantity').val();
+			let kLine = jQuery(this).find('.kline').text();
+			let IVNUM = jQuery(this).find('.IVNUM').text();
 
 			ItemArray.push({ kLine: kLine, current_Qty: current_Qty, IVNUM: IVNUM })
 
@@ -338,6 +356,7 @@ jQuery(document).ready(function () {
 
 		if (ItemArray.length > 0) {
 			jQuery('.btn-complete').prop('disabled', true);
+			jQuery('.alert').hide();
 
 
 			jQuery.ajax({
@@ -356,7 +375,7 @@ jQuery(document).ready(function () {
 					}
 				},
 				success: function (resp) {
-					var obj = resp;
+					let obj = resp;
 
 					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
 					$('#api_processing_message').hide();
@@ -406,10 +425,11 @@ jQuery(document).ready(function () {
 			/** */
 
 
-			/** Hide scan item, table section and display the API processing message  */
+			/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
 			jQuery('.scanitem').hide();
 			jQuery('.item-table-wrapper').removeClass('show-table');
-
+			jQuery('.scanbasket-IVNUM').hide();
+			jQuery('.scanbasket-royy_transportmean').hide();
 			$('#api_processing_message').show();
 
 			/** */
