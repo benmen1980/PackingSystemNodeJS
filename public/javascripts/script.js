@@ -42,7 +42,7 @@ jQuery(document).ready(function () {
 		}
 
 		jQuery(this).parents(".number-input").find('.quantity').val(new_qty);
-		jQuery(this).parents(".item_row").find(".totalqty").text(new_qty);
+		// jQuery(this).parents(".item_row").find(".totalqty").text(new_qty);
 	});
 
 	jQuery('.table-items').on('click', '.item_row', function () {
@@ -186,12 +186,15 @@ jQuery(document).ready(function () {
 					jQuery(this).addClass('active');
 					jQuery(this).siblings().removeClass('active');
 					jQuery(this).find('.quantity').val(new_qty);
-					jQuery(this).find('.totalqty').text(new_qty);
+					// jQuery(this).find('.totalqty').text(new_qty);
 
 					jQuery('.item-table-wrapper').addClass('show-table');
 					jQuery('.alert').hide();
 
 					$this.val('');
+				}
+				else {
+					jQuery(this).removeClass('active');
 				}
 			});
 
@@ -231,12 +234,15 @@ jQuery(document).ready(function () {
 						jQuery(this).addClass('active');
 						jQuery(this).siblings().removeClass('active');
 						jQuery(this).find('.quantity').val(new_qty);
-						jQuery(this).find('.totalqty').text(new_qty);
+						// jQuery(this).find('.totalqty').text(new_qty);
 
 						jQuery('.item-table-wrapper').addClass('show-table');
 						jQuery('.alert').hide();
 
 						$this.val('');
+					}
+					else {
+						jQuery(this).removeClass('active');
 					}
 				});
 
