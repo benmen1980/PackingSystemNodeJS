@@ -293,6 +293,10 @@ border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
     max-width: 100%;
     min-width: 80px;
 }
+.n-product_table table th:nth-child(1),.n-product_table table td:nth-child(1) {
+    max-width: 100px;
+    width: 100px;
+}
 .n-product_table table th:nth-child(2),.n-product_table table td:nth-child(2) {
     max-width: 100px;
     width: 100px;

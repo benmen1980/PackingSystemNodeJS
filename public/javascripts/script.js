@@ -1,6 +1,9 @@
 jQuery(document).ready(function () {
 	let noDataFoundLabel = '';
 	let fillRequiredFieldsLabel = '';
+	let closeinvoiceLabel = '';
+	let CloseInvoiceInProgressLabel = '';
+
 	jQuery.ajax({
 
 		url: '/fetchmessage',
@@ -8,12 +11,13 @@ jQuery(document).ready(function () {
 		data: {},
 		success: function (resp) {
 
-			var obj = resp;
+			let obj = resp;
 
 			if (obj.status == 1) {
-				console.log("obj: ", obj)
 				noDataFoundLabel = obj.noDataFoundLabel;
 				fillRequiredFieldsLabel = obj.fillRequiredFieldsLabel;
+				closeinvoiceLabel = obj.closeinvoiceLabel;
+				CloseInvoiceInProgressLabel = obj.CloseInvoiceInProgressLabel;
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -84,7 +88,7 @@ jQuery(document).ready(function () {
 						}
 
 						/**Dynamically IVNUM and ROYY_TRANSPORTMEAN display enable and set value in label */
-						if(obj.IVNUM && obj.IVNUM !== ""){
+						if (obj.IVNUM && obj.IVNUM !== "") {
 							jQuery('.scanbasket-IVNUM').show();
 							jQuery('.scanbasket-IVNUM label').text(obj.IVNUM);
 							jQuery('.scanbasket-royy_transportmean').show();
@@ -151,7 +155,7 @@ jQuery(document).ready(function () {
 							}
 
 							/**Dynamically IVNUM and ROYY_TRANSPORTMEAN display enable and set value in label */
-							if(obj.IVNUM && obj.IVNUM !== ""){
+							if (obj.IVNUM && obj.IVNUM !== "") {
 								jQuery('.scanbasket-IVNUM').show();
 								jQuery('.scanbasket-IVNUM label').text(obj.IVNUM);
 								jQuery('.scanbasket-royy_transportmean').show();
@@ -375,7 +379,6 @@ jQuery(document).ready(function () {
 					}
 				},
 				success: function (resp) {
-					let obj = resp;
 
 					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
 					$('#api_processing_message').hide();
@@ -384,19 +387,6 @@ jQuery(document).ready(function () {
 					jQuery('.btn-complete').prop('disabled', false);
 					jQuery('tbody').remove();
 					/** */
-
-					// window.location = obj.originURL;
-
-					// if (obj.status == true) {
-					// 	jQuery('.item-table-wrapper').removeClass('show-table');
-					// 	jQuery('.alert').html(obj.message);
-					// 	jQuery('.alert').show();
-					// } else {
-					// 	jQuery('.item-table-wrapper').removeClass('show-table');
-					// 	jQuery('.alert').html(obj.message);
-					// 	jQuery('.alert').show();
-					// }
-					// jQuery('.btn-complete').prop('disabled', false);
 
 				},
 				error: function (jqXHR, textStatus, errorThrown) {
@@ -431,10 +421,54 @@ jQuery(document).ready(function () {
 			jQuery('.scanbasket-IVNUM').hide();
 			jQuery('.scanbasket-royy_transportmean').hide();
 			$('#api_processing_message').show();
-
 			/** */
+
+			/**Unset IVNUM and ROYY_TRANSPORTMEAN labels text*/
+			jQuery('.scanbasket-IVNUM label').text('');
+			jQuery('.scanbasket-royy_transportmean label').text('');
+			/** **/
+
 		}
 
 	});
+
+	jQuery(".btn-close-to-invoice").click(function (e) {
+		e.preventDefault();
+		const ivnumValue = jQuery('.scanbasket-IVNUM label').html();
+		if (ivnumValue && ivnumValue !== "") {
+
+			/**Disable close invoice, complete button and change close invoice button text */
+			jQuery('.btn-close-to-invoice').text(CloseInvoiceInProgressLabel)
+			jQuery('.btn-close-to-invoice').prop('disabled', true);
+			jQuery('.btn-complete').prop('disabled', true);
+			/** **/
+
+			jQuery.ajax({
+				url: '/close_invoice',
+				type: 'POST',
+				data: {
+					'IVNUM': ivnumValue
+				},
+				success: function (resp) {
+					console.log("Close Invoice API Response  : ", resp)
+
+					/**enable close invoice, complete button and change close invoice button text */
+					jQuery('.btn-close-to-invoice').text(closeinvoiceLabel)
+					jQuery('.btn-close-to-invoice').prop('disabled', false);
+					jQuery('.btn-complete').prop('disabled', false);
+					/** **/
+
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.status);
+					/**enable close invoice, complete button and change close invoice button text */
+					jQuery('.btn-close-to-invoice').text(closeinvoiceLabel)
+					jQuery('.btn-close-to-invoice').prop('disabled', false);
+					jQuery('.btn-complete').prop('disabled', false);
+					/** */
+				}
+			});
+		}
+	})
 
 });

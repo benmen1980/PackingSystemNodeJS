@@ -25,5 +25,7 @@
     "Back to HomePage": "בחזרה לעמוד הבית",
     "Please fill out the required fields": "אנא מלא את השדות הנדרשים",
     "Printing and processing...":"הדפסה ועיבוד ...",
-    "Pack Number": "מספר חבילה"
+    "Pack Number": "מספר חבילה",
+    "Close invoice":"סגור חשבונית",
+    "Close invoice in-progress": "סגור חשבונית בעיצומה"
 }

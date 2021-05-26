@@ -2,7 +2,7 @@ var express = require('express');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 var router = express.Router();
-const { axiosFunction } = require('../helper/helper');
+const { axiosFunction, closeInvoice } = require('../helper/helper');
 
 
 router.get('/', function (req, res, next) {
@@ -176,7 +176,24 @@ router.post('/', async function (req, res, next) {
 
 
 router.post('/fetchmessage', function (req, res, next) {
-  res.status(200).json({ status: 1, noDataFoundLabel: res.__('No data found!'), fillRequiredFieldsLabel: res.__('Please fill out the required fields') })
+  res.status(200).json({ status: 1, noDataFoundLabel: res.__('No data found!'), fillRequiredFieldsLabel: res.__('Please fill out the required fields'), closeinvoiceLabel: res.__('Close invoice'), CloseInvoiceInProgressLabel: res.__('Close invoice in-progress') })
 
+})
+
+router.post('/close_invoice', async function (req, res, next) {
+  try {
+    if (req.body.IVNUM === "") {
+      return res.status(200).json({ message: "Please select valid IVNUM" })
+    }
+    await closeInvoice(req.body.IVNUM)
+      .then(closeInvoiceResp => {
+        res.status(200).json({ ...closeInvoiceResp })
+      })
+      .catch(error => {
+        res.status(200).json({ ...error })
+      })
+  } catch (error) {
+    res.status(200).json({ message: "Getting error into close invoice API" })
+  }
 })
 module.exports = router;

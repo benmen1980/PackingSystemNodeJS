@@ -23,7 +23,9 @@ router.get('/home', userAuthentication, (req, res, next) => {
                 completeLabel: res.__('Complete'),
                 suspendedLabel: res.__('Suspended'),
                 printingAndProcessingLabel: res.__('Printing and processing...'),
-                packNumberLabel: res.__('Pack Number')
+                packNumberLabel: res.__('Pack Number'),
+                closeinvoiceLabel: res.__('Close invoice'),
+                CloseInvoiceInProgressLabel: res.__('Close invoice in-progress')
             });
         })
         .catch((error) => {
@@ -41,7 +43,9 @@ router.get('/home', userAuthentication, (req, res, next) => {
                 completeLabel: res.__('Complete'),
                 suspendedLabel: res.__('Suspended'),
                 printingAndProcessingLabel: res.__('Printing and processing...'),
-                packNumberLabel: res.__('Pack Number')
+                packNumberLabel: res.__('Pack Number'),
+                closeinvoiceLabel: res.__('Close invoice'),
+                CloseInvoiceInProgressLabel: res.__('Close invoice in-progress')
             });
         })
 })
