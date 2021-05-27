@@ -497,7 +497,7 @@ jQuery(document).ready(function () {
 					'IVNUM': ivnumValue
 				},
 				success: function (resp) {
-					console.log("Close Invoice API Response  : ", resp)
+					console.log("Generated Print Invoice URL: ", resp.url)
 
 					jQuery('.btn-print-to-invoice').text(printInvoiceLabel)
 					// jQuery('.btn-print-to-invoice').prop('disabled', false);
