@@ -147,20 +147,43 @@
                                     <th>מקט</th>
                                     <th>KLINE</th>
                                 </tr>
+                                <!-- <tr class="item_row" data-id="1">
+                                    <td class="qtybox">
+                                        <div class="number-input md-number-input">
+                                            <input class="quantity" min="0" name="quantity" value="1" type="number">
+                                            <div class="qty-btn">
+                                                <button class="plus qtybox-btn"><i class="fa fa-sort-asc"
+                                                        aria-hidden="true"></i></button>
+                                                <button class="minus qtybox-btn"><i class="fa fa-caret-down"
+                                                        aria-hidden="true"></i></button>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td class="totalqty">3</td>
+                                    <td class="itemdesc">ווסקי</td>
+                                    <td class="itemsku" data-sku="AAAA">AAAA</td>
+                                    <td class="kline">1</td>
+                                </tr>
+                                 -->
                             </table>
                         </div>
                         <div class="row action">
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <button type="button" class="btn btn-outline-primary btn-complete">
                                     <%= completeLabel%>
                                 </button>
                             </div>
-                            <div class="col-md-4 text-center">
+                            <div class="col-md-3 text-left">
                                 <button type="button" class="btn btn-outline-danger btn-close-to-invoice">
                                     <%= closeinvoiceLabel%>
                                 </button>
                             </div>
-                            <div class="col-md-4 text-right">
+                            <div class="col-md-3 text-right">
+                                <button type="button" class="btn btn-outline-primary btn-print-to-invoice">
+                                    <%= printInvoiceLabel%>
+                                </button>
+                            </div>
+                            <div class="col-md-3 text-right">
                                 <button type="button" class="btn btn-outline-warning btn-suspend">
                                     <%= suspendedLabel%>
                                 </button>

@@ -3,6 +3,8 @@ jQuery(document).ready(function () {
 	let fillRequiredFieldsLabel = '';
 	let closeinvoiceLabel = '';
 	let CloseInvoiceInProgressLabel = '';
+	let printInvoiceLabel = '';
+	let printingInvoiceLabel = '';
 
 	jQuery.ajax({
 
@@ -18,6 +20,8 @@ jQuery(document).ready(function () {
 				fillRequiredFieldsLabel = obj.fillRequiredFieldsLabel;
 				closeinvoiceLabel = obj.closeinvoiceLabel;
 				CloseInvoiceInProgressLabel = obj.CloseInvoiceInProgressLabel;
+				printInvoiceLabel = obj.printInvoiceLabel;
+				printingInvoiceLabel = obj.printingInvoiceLabel;
 			}
 		},
 		error: function (jqXHR, textStatus, errorThrown) {
@@ -439,8 +443,9 @@ jQuery(document).ready(function () {
 
 			/**Disable close invoice, complete button and change close invoice button text */
 			jQuery('.btn-close-to-invoice').text(CloseInvoiceInProgressLabel)
-			jQuery('.btn-close-to-invoice').prop('disabled', true);
-			jQuery('.btn-complete').prop('disabled', true);
+			// jQuery('.btn-close-to-invoice').prop('disabled', true);
+			// jQuery('.btn-complete').prop('disabled', true);
+			jQuery('.btn').prop('disabled', true);
 			/** **/
 
 			jQuery.ajax({
@@ -454,8 +459,10 @@ jQuery(document).ready(function () {
 
 					/**enable close invoice, complete button and change close invoice button text */
 					jQuery('.btn-close-to-invoice').text(closeinvoiceLabel)
-					jQuery('.btn-close-to-invoice').prop('disabled', false);
-					jQuery('.btn-complete').prop('disabled', false);
+					// jQuery('.btn-close-to-invoice').prop('disabled', false);
+					// jQuery('.btn-complete').prop('disabled', false);
+					jQuery('.btn').prop('disabled', false);
+
 					/** **/
 
 				},
@@ -463,12 +470,48 @@ jQuery(document).ready(function () {
 					console.log(jqXHR.status);
 					/**enable close invoice, complete button and change close invoice button text */
 					jQuery('.btn-close-to-invoice').text(closeinvoiceLabel)
-					jQuery('.btn-close-to-invoice').prop('disabled', false);
-					jQuery('.btn-complete').prop('disabled', false);
+					jQuery('.btn').prop('disabled', false);
 					/** */
 				}
 			});
 		}
 	})
 
+
+	jQuery(".btn-print-to-invoice").click(function (e) {
+		e.preventDefault();
+		const ivnumValue = jQuery('.scanbasket-IVNUM label').html();
+		if (ivnumValue && ivnumValue !== "") {
+
+			/**Disable close invoice, complete button and change close invoice button text */
+			jQuery('.btn-print-to-invoice').text(printingInvoiceLabel)
+			// jQuery('.btn-print-to-invoice').prop('disabled', true);
+			jQuery('.btn').prop('disabled', true);
+			/** **/
+
+
+			jQuery.ajax({
+				url: '/print_invoice',
+				type: 'POST',
+				data: {
+					'IVNUM': ivnumValue
+				},
+				success: function (resp) {
+					console.log("Close Invoice API Response  : ", resp)
+
+					jQuery('.btn-print-to-invoice').text(printInvoiceLabel)
+					// jQuery('.btn-print-to-invoice').prop('disabled', false);
+					jQuery('.btn').prop('disabled', false);
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.status);
+
+					/**enable close invoice, complete button and change close invoice button text */
+					jQuery('.btn-print-to-invoice').text(printInvoiceLabel)
+					jQuery('.btn').prop('disabled', false);
+					/** */
+				}
+			});
+		}
+	})
 });

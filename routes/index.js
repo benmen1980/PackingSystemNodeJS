@@ -2,7 +2,7 @@ var express = require('express');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 var router = express.Router();
-const { axiosFunction, closeInvoice } = require('../helper/helper');
+const { axiosFunction, closeInvoice, printInvoice } = require('../helper/helper');
 
 
 router.get('/', function (req, res, next) {
@@ -176,7 +176,8 @@ router.post('/', async function (req, res, next) {
 
 
 router.post('/fetchmessage', function (req, res, next) {
-  res.status(200).json({ status: 1, noDataFoundLabel: res.__('No data found!'), fillRequiredFieldsLabel: res.__('Please fill out the required fields'), closeinvoiceLabel: res.__('Close invoice'), CloseInvoiceInProgressLabel: res.__('Close invoice in-progress') })
+  res.status(200).json({ status: 1, noDataFoundLabel: res.__('No data found!'), fillRequiredFieldsLabel: res.__('Please fill out the required fields'), closeinvoiceLabel: res.__('Close invoice'), CloseInvoiceInProgressLabel: res.__('Close invoice in-progress'),
+  printinvoiceLabel: res.__('Print invoice'), printingInvoiceLabel: res.__('Printing invoice') })
 
 })
 
@@ -194,6 +195,23 @@ router.post('/close_invoice', async function (req, res, next) {
       })
   } catch (error) {
     res.status(200).json({ message: "Getting error into close invoice API" })
+  }
+})
+
+router.post('/print_invoice', async function (req, res, next) {
+  try {
+    if (req.body.IVNUM === "") {
+      return res.status(200).json({ message: "Please select valid IVNUM" })
+    }
+    await printInvoice(req.body.IVNUM)
+      .then(printInvoiceResp => {
+        res.status(200).json({ ...printInvoiceResp })
+      })
+      .catch(error => {
+        res.status(200).json({ ...error })
+      })
+  } catch (error) {
+    res.status(200).json({ message: "Getting error into print invoice API" })
   }
 })
 module.exports = router;
