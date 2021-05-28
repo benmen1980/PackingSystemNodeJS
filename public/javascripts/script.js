@@ -54,8 +54,23 @@ jQuery(document).ready(function () {
 	});
 
 	jQuery('.table-items').on('click', '.item_row', function () {
-		jQuery(this).toggleClass('active');
+
+		jQuery('.table-items .item_row').each(function () {
+			let scan_quantity = jQuery(this).find('.quantity').val();
+			let item_quantity = jQuery(this).find('.totalqty').html();
+			if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+				jQuery(this).addClass('active-red');
+			}
+			else {
+				jQuery(this).removeClass('active');
+				jQuery(this).removeClass('active-red');
+			}
+		});
+
+		jQuery(this).removeClass('active-red');
+		jQuery(this).addClass('active');
 		jQuery(this).siblings().removeClass('active');
+
 	});
 
 
@@ -194,21 +209,22 @@ jQuery(document).ready(function () {
 
 	jQuery('.scanitem').on('focusout', function () {
 
-		var items = [];
-		var item_val = jQuery(this).val();
-		var $this = jQuery(this);
+		let items = [];
+		let item_val = jQuery(this).val();
+		let $this = jQuery(this);
 		if (item_val !== "") {
 
 			jQuery('.table-items .item_row').each(function () {
 
-				var td_val = jQuery(this).find('.itemsku').attr('data-sku');
+				let td_val = jQuery(this).find('.itemsku').attr('data-sku');
 				items.push(td_val);
 
 				if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
-					var current_qty = parseInt(jQuery(this).find('.quantity').val());
-					var new_qty = current_qty + 1;
+					let current_qty = parseInt(jQuery(this).find('.quantity').val());
+					let new_qty = current_qty + 1;
 
+					jQuery(this).removeClass('active-red');
 					jQuery(this).addClass('active');
 					jQuery(this).siblings().removeClass('active');
 					jQuery(this).find('.quantity').val(new_qty);
@@ -220,14 +236,21 @@ jQuery(document).ready(function () {
 					$this.val('');
 				}
 				else {
-					jQuery(this).removeClass('active');
+					// jQuery(this).removeClass('active');
+					let scan_quantity = jQuery(this).find('.quantity').val();
+					let item_quantity = jQuery(this).find('.totalqty').html();
+					if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+						jQuery(this).addClass('active-red');
+					}
+					else {
+						jQuery(this).removeClass('active');
+						jQuery(this).removeClass('active-red');
+					}
 				}
 			});
 
 			if (jQuery.inArray(item_val, items) === -1) {
 				// jQuery('.item-table-wrapper').removeClass('show-table');
-				// jQuery('.alert').html(noDataFoundLabel);
-				// jQuery('.alert').show();
 				jQuery('#error_message').html(noDataFoundLabel);
 				jQuery('#error_message').show();
 			}
@@ -257,6 +280,7 @@ jQuery(document).ready(function () {
 						var current_qty = parseInt(jQuery(this).find('.quantity').val());
 						var new_qty = current_qty + 1;
 
+						jQuery(this).removeClass('active-red');
 						jQuery(this).addClass('active');
 						jQuery(this).siblings().removeClass('active');
 						jQuery(this).find('.quantity').val(new_qty);
@@ -268,7 +292,16 @@ jQuery(document).ready(function () {
 						$this.val('');
 					}
 					else {
-						jQuery(this).removeClass('active');
+						// jQuery(this).removeClass('active');
+						let scan_quantity = jQuery(this).find('.quantity').val();
+						let item_quantity = jQuery(this).find('.totalqty').html();
+						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+							jQuery(this).addClass('active-red');
+						}
+						else {
+							jQuery(this).removeClass('active');
+							jQuery(this).removeClass('active-red');
+						}
 					}
 				});
 
