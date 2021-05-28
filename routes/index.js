@@ -2,7 +2,10 @@ var express = require('express');
 const fs = require('fs');
 const bcrypt = require('bcrypt');
 var router = express.Router();
-const { axiosFunction, closeInvoice, printInvoice } = require('../helper/helper');
+const { axiosFunction } = require('../helper/helper');
+const { closeInvoice } = require('../helper/closeInvoice');
+const { printInvoice } = require('../helper/printInvoice');
+const { updateQuantity } = require('../helper/updateQuantity');
 
 
 router.get('/', function (req, res, next) {
@@ -89,26 +92,8 @@ router.post('/update_quantity', async (req, res, next) => {
   try {
     req.body.Items = JSON.parse(req.body.Items)
     if (req.body.Items.length > 0) {
-      let itemUpdateUrl = ''
-      let responseFlag = false;
-
-
-      for (let singleItem of req.body.Items) {
-
-        itemUpdateUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES(IVNUM='${singleItem.IVNUM}',IVTYPE='A',DEBIT='D')/AINVOICEITEMS_SUBFORM(${singleItem.kLine})`;
-        await axiosFunction(itemUpdateUrl, 'patch', { "CARTONNUM": singleItem.current_Qty })
-          .then(basketList => {
-            responseFlag = true;
-          })
-          .catch((error) => {
-            // responseFlag = false;
-            responseFlag = true;
-          })
-
-      }
-
+      const updateResp = await updateQuantity(req.body.Items);
       res.status(200).json({ status: responseFlag, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated') })
-
     }
 
   } catch (error) {
