@@ -532,6 +532,27 @@ jQuery(document).ready(function () {
 				success: function (resp) {
 					console.log("Generated Print Invoice URL: ", resp.url)
 
+					/***Download html invoice */
+					
+					let oReq = new XMLHttpRequest();
+					oReq.open("GET", resp.url, true);
+					oReq.responseType = "blob";
+					oReq.onload = function (oEvent) {
+						let blob = oReq.response;
+
+						console.log("blob : ", blob)
+						let bb = new Blob([blob], { type: 'text/html' });
+						let a = document.createElement('a');
+						a.download = 'Invoice.html';
+						a.href = window.URL.createObjectURL(bb);
+						a.textContent = 'Download ready';
+						a.style = 'display:none';
+						a.click();
+					};
+					oReq.send();
+					/***** */
+
+					/**Enable all buttons */
 					jQuery('.btn-print-to-invoice').text(printInvoiceLabel)
 					// jQuery('.btn-print-to-invoice').prop('disabled', false);
 					jQuery('.btn').prop('disabled', false);
@@ -545,6 +566,8 @@ jQuery(document).ready(function () {
 					/** */
 				}
 			});
+	
 		}
+	
 	})
 });
