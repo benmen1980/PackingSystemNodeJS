@@ -92,7 +92,8 @@ router.post('/update_quantity', async (req, res, next) => {
   try {
     req.body.Items = JSON.parse(req.body.Items)
     if (req.body.Items.length > 0) {
-      const updateResp = await updateQuantity(req.body.Items);
+      const username = req.cookies['username'];
+      const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username);
       res.status(200).json({ status: responseFlag, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated') })
     }
 
