@@ -6,7 +6,8 @@ const { axiosFunction } = require('../helper/helper');
 router.get('/home', userAuthentication, (req, res, next) => {
 
     const date = new Date();
-    const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE ge ${date.toISOString()}&$select=PALLETNUM,STCODE,STDES,CURDATE`;
+    // const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE ge ${date.toISOString()}&$select=PALLETNUM,STCODE,STDES,CURDATE`;
+    const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE%20ge%202021-05-01T09:59:00%2B02:00 and SENTTODRIVER ne 'Y'&$select=PALLETNUM,STCODE,STDES,SENTTODRIVER ,CURDATE`;
     axiosFunction(listPalletNumbertUrl, 'get')
         .then(palletNoList => {
             res.render('user/home', {

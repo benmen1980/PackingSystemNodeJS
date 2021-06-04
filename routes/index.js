@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,CARTONNUM)&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {

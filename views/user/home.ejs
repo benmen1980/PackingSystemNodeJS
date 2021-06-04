@@ -68,7 +68,7 @@
                                         <%= palletNoLabel%>
                                     </option>
                                     <% palletNo.forEach(function(singlePalletNo){ %>
-                                        <option value="1234">
+                                        <option value="<%= singlePalletNo.PALLETNUM %>">
                                             <%= singlePalletNo.PALLETNUM %>
                                         </option>
                                         <% }); %>
