@@ -1,6 +1,6 @@
 const { axiosFunction } = require("./helper");
 
-exports.updateQuantity = async (items, IVNUM, username) => {
+exports.updateQuantity = async (items, IVNUM, username, palletNo, packNumber) => {
     return new Promise(async (resolve, reject) => {
         const apiHeader = { "content-type": "application/json; odata.metadata=minimal; odata.streaming=true", "odata-version": "4.0", "X-App-Id": "APP006", "X-App-Key": "F40FFA79343C446A9931BA1177716F04" }
         let apiArray = [{
@@ -11,8 +11,8 @@ exports.updateQuantity = async (items, IVNUM, username) => {
             "id": "g1",
             "body": {
                 "DETAILS": username,
-                // "ROYY_PALLETNUM": "PL003215",
-                // "ROYY_ACTUAL_PACK_QTY": 5
+                "ROYY_PALLETNUM": palletNo,
+                "ROYY_ACTUAL_PACK_QTY": parseInt(packNumber)
             }
         }];
 
@@ -35,7 +35,7 @@ exports.updateQuantity = async (items, IVNUM, username) => {
                 //     console.log("e : ", e.body);
                 // })
             })
-            .catch((error) => console.log("error -- ", error))
+            .catch((error) => {})
         resolve({ message: "Data update successfully." })
     })
 }

@@ -395,9 +395,15 @@ jQuery(document).ready(function () {
 
 		});
 
-		if (ItemArray.length > 0) {
+		const selectedPalletNo = jQuery("select.pallet_no").children("option:selected").val();
+
+		const packNumber = jQuery(".packs_number").val();
+
+		if (ItemArray.length > 0 && packNumber > 0) {
 			jQuery('.btn-complete').prop('disabled', true);
 			jQuery('.alert').hide();
+			jQuery(".packs_number").removeClass('input-error');
+
 
 
 			jQuery.ajax({
@@ -407,6 +413,8 @@ jQuery(document).ready(function () {
 				data: {
 					'action': 'patchitemtable',
 					'IVNUM': IVnum,
+					'packNumber': packNumber,
+					'palletNo': selectedPalletNo,
 					'Items': JSON.stringify(ItemArray)
 				},
 				dataType: "json",
@@ -465,6 +473,9 @@ jQuery(document).ready(function () {
 			jQuery('.scanbasket-royy_transportmean label').text('');
 			/** **/
 
+		}
+		if (packNumber < 1) {
+			jQuery(".packs_number").addClass('input-error');
 		}
 
 	});
@@ -533,7 +544,7 @@ jQuery(document).ready(function () {
 					console.log("Generated Print Invoice URL: ", resp.url)
 
 					/***Download html invoice */
-					
+
 					let oReq = new XMLHttpRequest();
 					oReq.open("GET", resp.url, true);
 					oReq.responseType = "blob";
@@ -566,8 +577,8 @@ jQuery(document).ready(function () {
 					/** */
 				}
 			});
-	
+
 		}
-	
+
 	})
 });

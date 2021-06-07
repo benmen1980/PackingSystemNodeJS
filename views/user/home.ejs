@@ -63,13 +63,14 @@
                                 </li>
                             </ul>
                             <div class="right-select">
+                                
                                 <select name="pallet_no" class="pallet_no common-select">
-                                    <option>
+                                    <option value="">
                                         <%= palletNoLabel%>
                                     </option>
                                     <% palletNo.forEach(function(singlePalletNo){ %>
                                         <option value="<%= singlePalletNo.PALLETNUM %>">
-                                            <%= singlePalletNo.PALLETNUM %>
+                                            <%= singlePalletNo.PALLETNUM  %>
                                         </option>
                                         <% }); %>
 
