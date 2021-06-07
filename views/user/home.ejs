@@ -50,7 +50,7 @@
                 <div class="row bottom-header">
                     <div class="col-md-12">
                         <div class="dropdown-option">
-                            <ul class="user-nav">
+                            <ul class="col-md-4 user-nav">
                                 <li class="logged_user">
                                     <a href="javascript:void(0)">
                                         <%= username %>
@@ -62,20 +62,31 @@
                                     </a>
                                 </li>
                             </ul>
+                    
+                            <div class="col-sm-2 form-group pallet_no-STCODE"
+                                style="text-align: center;">
+                                <h6>STCODE</h6>
+                                <label>-</label>
+                            </div>
+                    
+                            <div class="col-sm-2 form-group pallet_no-STDES"
+                                style="text-align: center;">
+                                <h6>STDES</h6>
+                                <label>-</label>
+                            </div>
+                    
                             <div class="right-select">
-                                
+                    
                                 <select name="pallet_no" class="pallet_no common-select">
                                     <option value="">
                                         <%= palletNoLabel%>
                                     </option>
                                     <% palletNo.forEach(function(singlePalletNo){ %>
-                                        <option value="<%= singlePalletNo.PALLETNUM %>">
-                                            <%= singlePalletNo.PALLETNUM  %>
-                                        </option>
+                                        <option value="<%= singlePalletNo.PALLETNUM %>"><%= singlePalletNo.PALLETNUM  %>  <%= singlePalletNo.STCODE  %>  <%= singlePalletNo.STDES  %></option>
                                         <% }); %>
 
                                 </select>
-                                
+
                             </div>
                         </div>
                     </div>

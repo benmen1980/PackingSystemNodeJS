@@ -379,6 +379,23 @@ jQuery(document).ready(function () {
 		jQuery('.item-table-wrapper').hide();
 	});*/
 
+	$("select.pallet_no").change(function () {
+		console.log("select.pallet_no: ")
+		const selectedPalletNoValue = jQuery("select.pallet_no").children("option:selected").val();
+		const selectedPalletNoText = jQuery("select.pallet_no").children("option:selected").text();
+		if (selectedPalletNoValue && selectedPalletNoValue !== "") {
+			const splitedText = selectedPalletNoText.split(' ');
+			const STCODE = splitedText[2];
+			const STDES = splitedText.slice(4).join(' ');
+			jQuery('.pallet_no-STCODE').show();
+			jQuery('.pallet_no-STCODE label').text(STCODE);
+			jQuery('.pallet_no-STDES').show();
+			jQuery('.pallet_no-STDES label').text(STDES);
+		} else {
+			jQuery('.pallet_no-STCODE label').text('-');
+			jQuery('.pallet_no-STDES label').text('-');
+		}
+	});
 
 	jQuery(".btn-complete").click(function (e) {
 		e.preventDefault();
