@@ -207,78 +207,111 @@ jQuery(document).ready(function () {
 	});
 
 
-	jQuery('.scanitem').on('focusout', function () {
+	async function scanItemWithChangeQuantity(item_val) {
+		const totalScanItemArray = []
+		let flag = true;
+		let count = 0;
+		jQuery('.table-items .item_row').each(function () {
+			let td_val = jQuery(this).find('.itemsku').attr('data-sku');
+			if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+				let current_qty = parseInt(jQuery(this).find('.quantity').val());
+				let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
+				if (current_qty !== item_quantity) {
+					flag = false;
+				}
+				count++;
+			}
+
+		})
+
+		if (count > 1 && flag) {
+			return true
+		} else {
+			return false
+		}
+	}
+
+	jQuery('.scanitem').on('focusout', async function () {
 
 		let items = [];
 		let item_val = jQuery(this).val();
 		let $this = jQuery(this);
 		if (item_val !== "") {
 
+			const isDifferentQuantity = await scanItemWithChangeQuantity(item_val);
+
+			let totalSkuCount = 0;
+			jQuery('.table-items .item_row').each(function () {
+
+				let sku_val = jQuery(this).find('.itemsku').attr('data-sku');
+				if (jQuery.trim(item_val) == jQuery.trim(sku_val)) {
+					totalSkuCount++;
+				}
+			});
+
 			jQuery('.table-items .item_row').each(function () {
 
 				let td_val = jQuery(this).find('.itemsku').attr('data-sku');
 				items.push(td_val);
 
-				if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
-
-					let current_qty = parseInt(jQuery(this).find('.quantity').val());
-					let new_qty = current_qty + 1;
-
-					jQuery(this).removeClass('active-red');
-					jQuery(this).addClass('active');
-					jQuery(this).siblings().removeClass('active');
-					jQuery(this).find('.quantity').val(new_qty);
-					// jQuery(this).find('.totalqty').text(new_qty);
-
-					jQuery('.item-table-wrapper').addClass('show-table');
-					jQuery('.alert').hide();
-
-					$this.val('');
-				}
-				else {
-					// jQuery(this).removeClass('active');
-					let scan_quantity = jQuery(this).find('.quantity').val();
-					let item_quantity = jQuery(this).find('.totalqty').html();
-					if (parseInt(scan_quantity) > parseInt(item_quantity)) {
-						jQuery(this).addClass('active-red');
-					}
-					else {
-						jQuery(this).removeClass('active');
-						jQuery(this).removeClass('active-red');
-					}
-				}
-			});
-
-			if (jQuery.inArray(item_val, items) === -1) {
-				// jQuery('.item-table-wrapper').removeClass('show-table');
-				jQuery('#error_message').html(noDataFoundLabel);
-				jQuery('#error_message').show();
-			}
-		}
-
-	});
-
-	jQuery('.scanitem').keypress(function (event) {
-
-		var keycode = (event.keyCode ? event.keyCode : event.which);
-
-		if (keycode == '13') {
-
-			var items = [];
-			var item_val = jQuery(this).val();
-			var $this = jQuery(this);
-
-			if (item_val !== "") {
-
-				jQuery('.table-items .item_row').each(function () {
-
-					var td_val = jQuery(this).find('.itemsku').attr('data-sku');
-					items.push(td_val);
-
+				if (totalSkuCount > 1) {
 					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
-						var current_qty = parseInt(jQuery(this).find('.quantity').val());
-						var new_qty = current_qty + 1;
+						let current_qty = parseInt(jQuery(this).find('.quantity').val());
+						let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
+
+						let new_qty = 0
+						if (current_qty < item_quantity) {
+							new_qty = current_qty + 1;
+							jQuery(this).removeClass('active-red');
+							jQuery(this).addClass('active');
+							jQuery(this).siblings().removeClass('active');
+							jQuery(this).find('.quantity').val(new_qty);
+							jQuery('.item-table-wrapper').addClass('show-table');
+							jQuery('.alert').hide();
+							$this.val('');
+							return false;
+						} else {
+							if (parseInt(current_qty) > parseInt(item_quantity)) {
+								jQuery(this).addClass('active-red');
+							}
+							jQuery(this).addClass('active');
+							jQuery(this).siblings().removeClass('active');
+							jQuery('.item-table-wrapper').addClass('show-table');
+							jQuery('.alert').hide();
+							$this.val('');
+						}
+
+
+						// jQuery(this).removeClass('active-red');
+						// jQuery(this).addClass('active');
+						// jQuery(this).siblings().removeClass('active');
+						// jQuery(this).find('.quantity').val(new_qty);
+						// // jQuery(this).find('.totalqty').text(new_qty);
+
+						// jQuery('.item-table-wrapper').addClass('show-table');
+						// jQuery('.alert').hide();
+
+						// $this.val('');
+					}
+					else {
+						// jQuery(this).removeClass('active');
+						let scan_quantity = jQuery(this).find('.quantity').val();
+						let item_quantity = jQuery(this).find('.totalqty').html();
+						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+							jQuery(this).addClass('active-red');
+						}
+						else {
+							jQuery(this).removeClass('active');
+							jQuery(this).removeClass('active-red');
+						}
+					}
+				}
+				else {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+
+						let current_qty = parseInt(jQuery(this).find('.quantity').val());
+						let new_qty = current_qty + 1;
 
 						jQuery(this).removeClass('active-red');
 						jQuery(this).addClass('active');
@@ -303,12 +336,168 @@ jQuery(document).ready(function () {
 							jQuery(this).removeClass('active-red');
 						}
 					}
+				}
+
+			});
+
+
+			if (isDifferentQuantity) {
+				jQuery('.table-items .item_row').each(function () {
+
+					let td_val = jQuery(this).find('.itemsku').attr('data-sku');
+					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+
+						let current_qty = parseInt(jQuery(this).find('.quantity').val());
+						let new_qty = current_qty + 1;
+						jQuery(this).addClass('active-red');
+						jQuery(this).siblings().removeClass('active');
+						jQuery(this).find('.quantity').val(new_qty);
+
+						jQuery('.item-table-wrapper').addClass('show-table');
+						jQuery('.alert').hide();
+
+						$this.val('');
+						return false;
+					}
+
 				});
+			}
+
+			if (jQuery.inArray(item_val, items) === -1) {
+				// jQuery('.item-table-wrapper').removeClass('show-table');
+				jQuery('#error_message').html(noDataFoundLabel);
+				jQuery('#error_message').show();
+			}
+		}
+	});
+
+	jQuery('.scanitem').keypress(async function (event) {
+
+		var keycode = (event.keyCode ? event.keyCode : event.which);
+
+		if (keycode == '13') {
+
+			var items = [];
+			var item_val = jQuery(this).val();
+			var $this = jQuery(this);
+
+			if (item_val !== "") {
+
+				const isDifferentQuantity = await scanItemWithChangeQuantity(item_val);
+
+				let totalSkuCount = 0;
+				jQuery('.table-items .item_row').each(function () {
+
+					let sku_val = jQuery(this).find('.itemsku').attr('data-sku');
+					if (jQuery.trim(item_val) == jQuery.trim(sku_val)) {
+						totalSkuCount++;
+					}
+				});
+
+				jQuery('.table-items .item_row').each(function () {
+
+					let td_val = jQuery(this).find('.itemsku').attr('data-sku');
+					items.push(td_val);
+
+					if (totalSkuCount > 1) {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+
+							let current_qty = parseInt(jQuery(this).find('.quantity').val());
+							let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
+
+							let new_qty = 0
+							if (current_qty < item_quantity) {
+								new_qty = current_qty + 1;
+								jQuery(this).removeClass('active-red');
+								jQuery(this).addClass('active');
+								jQuery(this).siblings().removeClass('active');
+								jQuery(this).find('.quantity').val(new_qty);
+								jQuery('.item-table-wrapper').addClass('show-table');
+								jQuery('.alert').hide();
+								$this.val('');
+								return false;
+							} else {
+								if (parseInt(current_qty) > parseInt(item_quantity)) {
+									jQuery(this).addClass('active-red');
+								}
+								jQuery(this).addClass('active');
+								jQuery(this).siblings().removeClass('active');
+								jQuery('.item-table-wrapper').addClass('show-table');
+								jQuery('.alert').hide();
+								$this.val('');
+							}
+						}
+						else {
+							// jQuery(this).removeClass('active');
+							let scan_quantity = jQuery(this).find('.quantity').val();
+							let item_quantity = jQuery(this).find('.totalqty').html();
+							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+								jQuery(this).addClass('active-red');
+							}
+							else {
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-red');
+							}
+						}
+					}
+					else {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+
+							let current_qty = parseInt(jQuery(this).find('.quantity').val());
+							let new_qty = current_qty + 1;
+
+							jQuery(this).removeClass('active-red');
+							jQuery(this).addClass('active');
+							jQuery(this).siblings().removeClass('active');
+							jQuery(this).find('.quantity').val(new_qty);
+							// jQuery(this).find('.totalqty').text(new_qty);
+
+							jQuery('.item-table-wrapper').addClass('show-table');
+							jQuery('.alert').hide();
+
+							$this.val('');
+						}
+						else {
+							// jQuery(this).removeClass('active');
+							let scan_quantity = jQuery(this).find('.quantity').val();
+							let item_quantity = jQuery(this).find('.totalqty').html();
+							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+								jQuery(this).addClass('active-red');
+							}
+							else {
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-red');
+							}
+						}
+					}
+
+				});
+
+
+				if (isDifferentQuantity) {
+					jQuery('.table-items .item_row').each(function () {
+
+						let td_val = jQuery(this).find('.itemsku').attr('data-sku');
+						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+
+							let current_qty = parseInt(jQuery(this).find('.quantity').val());
+							let new_qty = current_qty + 1;
+							jQuery(this).addClass('active-red');
+							jQuery(this).siblings().removeClass('active');
+							jQuery(this).find('.quantity').val(new_qty);
+
+							jQuery('.item-table-wrapper').addClass('show-table');
+							jQuery('.alert').hide();
+
+							$this.val('');
+							return false;
+						}
+
+					});
+				}
 
 				if (jQuery.inArray(item_val, items) === -1) {
 					// jQuery('.item-table-wrapper').removeClass('show-table');
-					// jQuery('.alert').html(noDataFoundLabel);
-					// jQuery('.alert').show();
 					jQuery('#error_message').html(noDataFoundLabel);
 					jQuery('#error_message').show();
 				}
@@ -380,7 +569,6 @@ jQuery(document).ready(function () {
 	});*/
 
 	$("select.pallet_no").change(function () {
-		console.log("select.pallet_no: ")
 		const selectedPalletNoValue = jQuery("select.pallet_no").children("option:selected").val();
 		const selectedPalletNoText = jQuery("select.pallet_no").children("option:selected").text();
 		if (selectedPalletNoValue && selectedPalletNoValue !== "") {
