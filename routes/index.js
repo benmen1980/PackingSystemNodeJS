@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {
@@ -73,16 +73,29 @@ router.post('/fetchbasket', (req, res, next) => {
           });
           html += '</tbody>';
 
-          res.status(200).json({ status: 1, content: html, ivnum: ivnum, IVNUM: basketList.value[0].IVNUM, ROYY_TRANSPORTMEAN: basketList.value[0].ROYY_TRANSPORTMEAN })
+          res.status(200).json({
+            status: 1, content: html, ivnum: ivnum, IVNUM: basketList.value[0].IVNUM, ROYY_TRANSPORTMEAN: basketList.value[0].ROYY_TRANSPORTMEAN,
+            ORDNAME: basketList.value[0].ORDNAME, CDES: basketList.value[0].CDES,
+            SHIPTO2_SUBFORM_ADDRESS: (basketList.value[0].SHIPTO2_SUBFORM) ? basketList.value[0].SHIPTO2_SUBFORM.ADDRESS : '',
+            SHIPTO2_SUBFORM_PHONENUM: (basketList.value[0].SHIPTO2_SUBFORM) ? basketList.value[0].SHIPTO2_SUBFORM.PHONENUM : '',
+            SHIPTO2_SUBFORM_STATE: (basketList.value[0].SHIPTO2_SUBFORM) ? basketList.value[0].SHIPTO2_SUBFORM.STATE : '',
+            PNCO_WEBNUMBER: basketList.value[0].PNCO_WEBNUMBER,
+            PAYMENTDEF_SUBFORM_PAYACCOUNT: (basketList.value[0].PAYMENTDEF_SUBFORM) ? basketList.value[0].PAYMENTDEF_SUBFORM.PAYACCOUNT : '',
+            PNCO_REMARKS: basketList.value[0].PNCO_REMARKS,
+            QAMT_SHIPREMARK: basketList.value[0].QAMT_SHIPREMARK,
+            PNCO_NUMOFPACKS: basketList.value[0].PNCO_NUMOFPACKS
+          })
         }
         else {
           res.status(200).json({ status: 0, message: res.__('No data found!') })
         }
       })
       .catch((error) => {
+        console.log("error: ", error)
         res.status(200).json({ status: 0, message: res.__('No data found!') })
       })
   } catch (error) {
+    console.log("error: ", error)
     res.status(200).json({ status: 0, message: res.__('No data found!') })
   }
 })
@@ -93,7 +106,7 @@ router.post('/update_quantity', async (req, res, next) => {
     req.body.Items = JSON.parse(req.body.Items)
     if (req.body.Items.length > 0) {
       const username = req.cookies['username'];
-      
+
       const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
       res.status(200).json({ status: responseFlag, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated') })
     }

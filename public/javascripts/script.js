@@ -117,6 +117,20 @@ jQuery(document).ready(function () {
 
 						jQuery('.scanitem').show();
 
+						/**Information section enable and set values */
+						jQuery('.order_information_section').show();
+						jQuery('.ORDNAME').text(obj.ORDNAME);
+						jQuery('.CDES').text(obj.CDES);
+						jQuery('.SHIPTO2_SUBFORM_ADDRESS').text(obj.SHIPTO2_SUBFORM_ADDRESS);
+						jQuery('.SHIPTO2_SUBFORM_PHONENUM').text(obj.SHIPTO2_SUBFORM_PHONENUM);
+						jQuery('.SHIPTO2_SUBFORM_STATE').text(obj.SHIPTO2_SUBFORM_STATE);
+
+						jQuery('.PNCO_WEBNUMBER').text(obj.PNCO_WEBNUMBER);
+						jQuery('.PNCO_REMARKS').text(obj.PNCO_REMARKS);
+						jQuery('.QAMT_SHIPREMARK').text(obj.QAMT_SHIPREMARK);
+						jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text(obj.PAYMENTDEF_SUBFORM_PAYACCOUNT);
+						jQuery('.PNCO_NUMOFPACKS').text(obj.PNCO_NUMOFPACKS);
+						/** */
 
 					} else {
 						// jQuery('.alert').html(obj.message);
@@ -183,6 +197,22 @@ jQuery(document).ready(function () {
 							/*** ***/
 
 							jQuery('.scanitem').show();
+
+
+							/**Information section enable and set values */
+							jQuery('.order_information_section').show();
+							jQuery('.ORDNAME').text(obj.ORDNAME);
+							jQuery('.CDES').text(obj.CDES);
+							jQuery('.SHIPTO2_SUBFORM_ADDRESS').text(obj.SHIPTO2_SUBFORM_ADDRESS);
+							jQuery('.SHIPTO2_SUBFORM_PHONENUM').text(obj.SHIPTO2_SUBFORM_PHONENUM);
+							jQuery('.SHIPTO2_SUBFORM_STATE').text(obj.SHIPTO2_SUBFORM_STATE);
+
+							jQuery('.PNCO_WEBNUMBER').text(obj.PNCO_WEBNUMBER);
+							jQuery('.PNCO_REMARKS').text(obj.PNCO_REMARKS);
+							jQuery('.QAMT_SHIPREMARK').text(obj.QAMT_SHIPREMARK);
+							jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text(obj.PAYMENTDEF_SUBFORM_PAYACCOUNT);
+							jQuery('.PNCO_NUMOFPACKS').text(obj.PNCO_NUMOFPACKS);
+							/** */
 
 
 						} else {
@@ -649,11 +679,21 @@ jQuery(document).ready(function () {
 
 
 			/**This is the code for auto download the file */
-			setTimeout(() => {
-				let inputvariable = ''
-				for (let i = 1; i < 21; i++) {
-					inputvariable += `text${i}\t`;
+			const textField = [{ field: 'ORDNAME', position: 2 }, { field: 'CDES', position: 4 }, { field: 'SHIPTO2_SUBFORM_ADDRESS', position: 6 }, { field: 'SHIPTO2_SUBFORM_PHONENUM', position: 7 }, { field: 'SHIPTO2_SUBFORM_STATE', position: 8 }, { field: 'PNCO_WEBNUMBER', position: 10 }, { field: 'PAYMENTDEF_SUBFORM_PAYACCOUNT', position: 11 }, { field: 'PNCO_REMARKS', position: 14 }, { field: 'QAMT_SHIPREMARK', position: 18 }, { field: 'PNCO_NUMOFPACKS', position: 21 }]
+			let inputvariable = '';
+			for (let i = 1; i < 22; i++) {
+				const findField = textField.filter(e => {
+					if (e.position === i) {
+						return e;
+					}
+				})
+				if (findField.length > 0) {
+					inputvariable += `${jQuery(`.${findField[0].field}`).text()}\n`;
+				} else {
+					inputvariable += `\n`;
 				}
+			}
+			setTimeout(() => {
 				let bb = new Blob([inputvariable], { type: 'text/plain' });
 				let a = document.createElement('a');
 				a.download = 'label.txt';
@@ -678,6 +718,20 @@ jQuery(document).ready(function () {
 			jQuery('.scanbasket-royy_transportmean label').text('');
 			/** **/
 
+			/**Information section enable and set values */
+			jQuery('.order_information_section').hide();
+			jQuery('.ORDNAME').text('');
+			jQuery('.CDES').text('');
+			jQuery('.SHIPTO2_SUBFORM_ADDRESS').text('');
+			jQuery('.SHIPTO2_SUBFORM_PHONENUM').text('');
+			jQuery('.SHIPTO2_SUBFORM_STATE').text('');
+
+			jQuery('.PNCO_WEBNUMBER').text('');
+			jQuery('.PNCO_REMARKS').text('');
+			jQuery('.QAMT_SHIPREMARK').text('');
+			jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text('');
+			jQuery('.PNCO_NUMOFPACKS').text('');
+			/** */
 		}
 		if (packNumber < 1) {
 			jQuery(".packs_number").addClass('input-error');
