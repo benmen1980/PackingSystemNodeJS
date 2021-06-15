@@ -615,7 +615,37 @@ jQuery(document).ready(function () {
 		}
 	});
 
-	jQuery(".btn-complete").click(function (e) {
+	/**This is the code for auto download the file */
+	async function generateDownloadFileContent() {
+		const textField = [{ field: 'ORDNAME', position: 2 }, { field: 'CDES', position: 4 }, { field: 'SHIPTO2_SUBFORM_ADDRESS', position: 6 }, { field: 'SHIPTO2_SUBFORM_PHONENUM', position: 7 }, { field: 'SHIPTO2_SUBFORM_STATE', position: 8 }, { field: 'PNCO_WEBNUMBER', position: 10 }, { field: 'PAYMENTDEF_SUBFORM_PAYACCOUNT', position: 11 }, { field: 'PNCO_REMARKS', position: 14 }, { field: 'QAMT_SHIPREMARK', position: 18 }, { field: 'PNCO_NUMOFPACKS', position: 21 }]
+		let inputvariable = '';
+		for (let i = 1; i < 22; i++) {
+			const findField = textField.filter(e => {
+				if (e.position === i) {
+					return e;
+				}
+			})
+			if (findField.length > 0) {
+				let findText = jQuery(`.${findField[0].field}`).text();
+				if (findText !== "") {
+					if (findField[0].position === 6 || findField[0].position === 7 || findField[0].position === 10) {
+						inputvariable += `${jQuery(`.${findField[0].field}`).text()}\t`;
+					}
+					else {
+						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+					}
+				}
+				else {
+					inputvariable += `\t`;
+				}
+			} else {
+				inputvariable += `\t`;
+			}
+		}
+		return inputvariable;
+	}
+
+	jQuery(".btn-complete").click(async function (e) {
 		e.preventDefault();
 
 		let ItemArray = [];
@@ -677,22 +707,8 @@ jQuery(document).ready(function () {
 
 			});
 
-
 			/**This is the code for auto download the file */
-			const textField = [{ field: 'ORDNAME', position: 2 }, { field: 'CDES', position: 4 }, { field: 'SHIPTO2_SUBFORM_ADDRESS', position: 6 }, { field: 'SHIPTO2_SUBFORM_PHONENUM', position: 7 }, { field: 'SHIPTO2_SUBFORM_STATE', position: 8 }, { field: 'PNCO_WEBNUMBER', position: 10 }, { field: 'PAYMENTDEF_SUBFORM_PAYACCOUNT', position: 11 }, { field: 'PNCO_REMARKS', position: 14 }, { field: 'QAMT_SHIPREMARK', position: 18 }, { field: 'PNCO_NUMOFPACKS', position: 21 }]
-			let inputvariable = '';
-			for (let i = 1; i < 22; i++) {
-				const findField = textField.filter(e => {
-					if (e.position === i) {
-						return e;
-					}
-				})
-				if (findField.length > 0) {
-					inputvariable += `${jQuery(`.${findField[0].field}`).text()}\n`;
-				} else {
-					inputvariable += `\n`;
-				}
-			}
+			const inputvariable = await generateDownloadFileContent();
 			setTimeout(() => {
 				let bb = new Blob([inputvariable], { type: 'text/plain' });
 				let a = document.createElement('a');
@@ -840,4 +856,20 @@ jQuery(document).ready(function () {
 		}
 
 	})
+
+	jQuery(".btn-print-sticker").on("click", async function (e) {
+		let IVnum = jQuery('.ivnum').val();
+		if (IVnum) {
+			/**This is the code for auto download the file */
+			const inputvariable = await generateDownloadFileContent();
+			let bb = new Blob([inputvariable], { type: 'text/plain' });
+			let a = document.createElement('a');
+			a.download = 'sticker.txt';
+			a.href = window.URL.createObjectURL(bb);
+			a.textContent = 'Download ready';
+			a.style = 'display:none';
+			a.click();
+			/** */
+		}
+	});
 });

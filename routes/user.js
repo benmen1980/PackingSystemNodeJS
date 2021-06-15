@@ -27,7 +27,8 @@ router.get('/home', userAuthentication, (req, res, next) => {
                 packNumberLabel: res.__('Pack Number'),
                 closeinvoiceLabel: res.__('Close invoice'),
                 CloseInvoiceInProgressLabel: res.__('Close invoice in-progress'),
-                printInvoiceLabel: res.__('Print invoice')
+                printInvoiceLabel: res.__('Print invoice'),
+                printStickerLabel: res.__('Print Sticker')
             });
         })
         .catch((error) => {
