@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {

@@ -147,6 +147,7 @@ jQuery(document).ready(function () {
 						jQuery('.STCODE').text(obj.STCODE);
 						jQuery('.STDES').text(obj.STDES);
 
+						jQuery(".packs_number").val(obj.PNCO_NUMOFPACKS);
 						/** */
 
 					} else {
@@ -246,7 +247,7 @@ jQuery(document).ready(function () {
 							jQuery('.STCODE').text(obj.STCODE);
 							jQuery('.STDES').text(obj.STDES);
 
-
+							jQuery(".packs_number").val(obj.PNCO_NUMOFPACKS);
 							/** */
 
 
@@ -799,6 +800,10 @@ jQuery(document).ready(function () {
 						}
 					},
 					success: function (resp) {
+						
+						console.log("=========================================")
+						console.log("Patch API Response: ")
+						console.log(resp.patchApiResp)
 
 						/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
 						$('#api_processing_message').hide();
@@ -807,14 +812,13 @@ jQuery(document).ready(function () {
 						jQuery('.btn-complete').prop('disabled', false);
 						jQuery('tbody').remove();
 						/** */
-						console.log("=========================================")
-						console.log("Patch API Response: ")
-						console.log(resp.patchApiResp)
 						
+						jQuery(".packs_number").val(1);
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
 						console.log(jqXHR.status);
 						jQuery('.btn-complete').prop('disabled', false);
+						jQuery(".packs_number").val(1);
 
 					}
 
