@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {
@@ -83,7 +83,9 @@ router.post('/fetchbasket', (req, res, next) => {
             PAYMENTDEF_SUBFORM_PAYACCOUNT: (basketList.value[0].PAYMENTDEF_SUBFORM) ? basketList.value[0].PAYMENTDEF_SUBFORM.PAYACCOUNT : '',
             PNCO_REMARKS: basketList.value[0].PNCO_REMARKS,
             QAMT_SHIPREMARK: basketList.value[0].QAMT_SHIPREMARK,
-            PNCO_NUMOFPACKS: basketList.value[0].PNCO_NUMOFPACKS
+            PNCO_NUMOFPACKS: basketList.value[0].PNCO_NUMOFPACKS,
+            STCODE: basketList.value[0].STCODE,
+            STDES: basketList.value[0].STDES,
           })
         }
         else {
@@ -108,7 +110,7 @@ router.post('/update_quantity', async (req, res, next) => {
       const username = req.cookies['username'];
 
       const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
-      res.status(200).json({ status: responseFlag, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated') })
+      res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp })
     }
 
   } catch (error) {

@@ -34,8 +34,10 @@ exports.updateQuantity = async (items, IVNUM, username, palletNo, packNumber) =>
                 // basketList.responses.map(e => {
                 //     console.log("e : ", e.body);
                 // })
+                resolve({ patchApiResp: basketList })
+
             })
             .catch((error) => {})
-        resolve({ message: "Data update successfully." })
+        // resolve({ message: "Data update successfully." })
     })
 }

@@ -97,10 +97,24 @@ jQuery(document).ready(function () {
 					if (obj.status == 1) {
 
 						jQuery('.table-items').html(obj.content);
-						jQuery('.item-table-wrapper').addClass('show-table');
 						jQuery('.alert').hide();
 						$this.hide();
 
+						/**Verify scan basket stcode and pallletno stcode */
+						const palletNoStcode = jQuery('.pallet_no-STCODE label').text();
+						if((palletNoStcode === "" ) || (parseInt(palletNoStcode) !==  parseInt(obj.STCODE))){
+							/**Hide the table and display error message */
+							jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
+							jQuery('.btn').prop('disabled', true);
+						}
+						else{
+							/**Hide the error message and display the table */
+							jQuery('.item-table-wrapper').addClass('show-table');
+							jQuery('.alert').hide();
+							jQuery('.btn').prop('disabled', false);
+
+						}
+						
 						if (obj.ivnum != '') {
 							var hidden_field = '<input type="hidden" name="ivnum" class="ivnum" value="' + obj.ivnum + '">';
 							jQuery(hidden_field).insertAfter('.table-items');
@@ -130,6 +144,9 @@ jQuery(document).ready(function () {
 						jQuery('.QAMT_SHIPREMARK').text(obj.QAMT_SHIPREMARK);
 						jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text(obj.PAYMENTDEF_SUBFORM_PAYACCOUNT);
 						jQuery('.PNCO_NUMOFPACKS').text(obj.PNCO_NUMOFPACKS);
+						jQuery('.STCODE').text(obj.STCODE);
+						jQuery('.STDES').text(obj.STDES);
+
 						/** */
 
 					} else {
@@ -178,9 +195,23 @@ jQuery(document).ready(function () {
 						if (obj.status == 1) {
 
 							jQuery('.table-items').html(obj.content);
-							jQuery('.item-table-wrapper').addClass('show-table');
 							jQuery('.alert').hide();
 							$this.hide();
+
+							/**Verify scan basket stcode and pallletno stcode */
+							const palletNoStcode = jQuery('.pallet_no-STCODE label').text();
+							if((palletNoStcode === "" ) || (parseInt(palletNoStcode) !==  parseInt(obj.STCODE))){
+								/**Verify scan basket stcode and pallletno stcode */
+								jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
+								jQuery('.btn').prop('disabled', true);
+							}
+							else{
+								/**Hide the error message and display the table */
+								jQuery('.item-table-wrapper').addClass('show-table');
+								jQuery('.alert').hide();
+								jQuery('.btn').prop('disabled', false);
+
+							}
 
 							if (obj.ivnum != '') {
 								var hidden_field = '<input type="hidden" name="ivnum" class="ivnum" value="' + obj.ivnum + '">';
@@ -212,6 +243,10 @@ jQuery(document).ready(function () {
 							jQuery('.QAMT_SHIPREMARK').text(obj.QAMT_SHIPREMARK);
 							jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text(obj.PAYMENTDEF_SUBFORM_PAYACCOUNT);
 							jQuery('.PNCO_NUMOFPACKS').text(obj.PNCO_NUMOFPACKS);
+							jQuery('.STCODE').text(obj.STCODE);
+							jQuery('.STDES').text(obj.STDES);
+
+
 							/** */
 
 
@@ -601,17 +636,41 @@ jQuery(document).ready(function () {
 	$("select.pallet_no").change(function () {
 		const selectedPalletNoValue = jQuery("select.pallet_no").children("option:selected").val();
 		const selectedPalletNoText = jQuery("select.pallet_no").children("option:selected").text();
-		if (selectedPalletNoValue && selectedPalletNoValue !== "") {
+		if (selectedPalletNoValue && selectedPalletNoValue !== "" ) {
 			const splitedText = selectedPalletNoText.split(' ');
-			const STCODE = splitedText[2];
+			let STCODE = splitedText[2];
 			const STDES = splitedText.slice(4).join(' ');
 			jQuery('.pallet_no-STCODE').show();
 			jQuery('.pallet_no-STCODE label').text(STCODE);
 			jQuery('.pallet_no-STDES').show();
 			jQuery('.pallet_no-STDES label').text(STDES);
+
+
+			const infoSTCODE = jQuery('.STCODE').text();
+			if(jQuery('.scanbasket-IVNUM label').text() !== ""){
+				if(infoSTCODE && infoSTCODE !== "" && parseInt(infoSTCODE) === parseInt(STCODE)){
+					console.log("ifffff dropdown....")
+					jQuery('.item-table-wrapper').addClass('show-table');
+					jQuery('.alert').hide();
+					jQuery('.btn').prop('disabled', false);
+				} else {
+					jQuery('.alert').hide();
+					jQuery('.item-table-wrapper').removeClass('show-table');
+					jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
+					jQuery('.btn').prop('disabled', true);
+				}
+			}
+			
 		} else {
 			jQuery('.pallet_no-STCODE label').text('-');
 			jQuery('.pallet_no-STDES label').text('-');
+
+			if(jQuery('.scanbasket-IVNUM label').text() !== ""){
+				jQuery('.alert').hide();
+				jQuery('.item-table-wrapper').removeClass('show-table');
+				jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
+				jQuery('.btn').prop('disabled', true);
+			}
 		}
 	});
 
@@ -670,57 +729,6 @@ jQuery(document).ready(function () {
 			jQuery(".packs_number").removeClass('input-error');
 
 
-
-			jQuery.ajax({
-
-				url: '/update_quantity',
-				type: 'POST',
-				data: {
-					'action': 'patchitemtable',
-					'IVNUM': IVnum,
-					'packNumber': packNumber,
-					'palletNo': selectedPalletNo,
-					'Items': JSON.stringify(ItemArray)
-				},
-				dataType: "json",
-				beforeSend: function (x) {
-					if (x && x.overrideMimeType) {
-						x.overrideMimeType("application/j-son;charset=UTF-8");
-					}
-				},
-				success: function (resp) {
-
-					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
-					$('#api_processing_message').hide();
-					jQuery('.scanbasket').show();
-					$('#scanbasket').val('');
-					jQuery('.btn-complete').prop('disabled', false);
-					jQuery('tbody').remove();
-					/** */
-
-				},
-				error: function (jqXHR, textStatus, errorThrown) {
-					console.log(jqXHR.status);
-					jQuery('.btn-complete').prop('disabled', false);
-
-				}
-
-			});
-
-			/**This is the code for auto download the file */
-			const inputvariable = await generateDownloadFileContent();
-			setTimeout(() => {
-				let bb = new Blob([inputvariable], { type: 'text/plain' });
-				let a = document.createElement('a');
-				a.download = 'label.txt';
-				a.href = window.URL.createObjectURL(bb);
-				a.textContent = 'Download ready';
-				a.style = 'display:none';
-				a.click();
-			}, 1500);
-			/** */
-
-
 			/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
 			jQuery('.scanitem').hide();
 			jQuery('.item-table-wrapper').removeClass('show-table');
@@ -747,7 +755,72 @@ jQuery(document).ready(function () {
 			jQuery('.QAMT_SHIPREMARK').text('');
 			jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text('');
 			jQuery('.PNCO_NUMOFPACKS').text('');
+			jQuery('.STCODE').text('');
+			jQuery('.STDES').text('');
 			/** */
+
+
+			
+			/**This is the code for auto download the file */
+			const inputvariable = await generateDownloadFileContent();
+			setTimeout(() => {
+				let bb = new Blob([inputvariable], { type: 'text/plain' });
+				let a = document.createElement('a');
+				a.download = 'label.txt';
+				a.href = window.URL.createObjectURL(bb);
+				a.textContent = 'Download ready';
+				a.style = 'display:none';
+				a.click();
+			}, 500);
+			/** */
+
+
+			const requestData = {
+				'action': 'patchitemtable',
+				'IVNUM': IVnum,
+				'packNumber': packNumber,
+				'palletNo': selectedPalletNo,
+				'Items': JSON.stringify(ItemArray)
+			};
+
+			setTimeout(() => {
+				console.log("PATCH API Request called..")
+				console.log(requestData)
+
+				jQuery.ajax({
+
+					url: '/update_quantity',
+					type: 'POST',
+					data: requestData,
+					dataType: "json",
+					beforeSend: function (x) {
+						if (x && x.overrideMimeType) {
+							x.overrideMimeType("application/j-son;charset=UTF-8");
+						}
+					},
+					success: function (resp) {
+
+						/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
+						$('#api_processing_message').hide();
+						jQuery('.scanbasket').show();
+						$('#scanbasket').val('');
+						jQuery('.btn-complete').prop('disabled', false);
+						jQuery('tbody').remove();
+						/** */
+						console.log("=========================================")
+						console.log("Patch API Response: ")
+						console.log(resp.patchApiResp)
+						
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log(jqXHR.status);
+						jQuery('.btn-complete').prop('disabled', false);
+
+					}
+
+				});
+			}, 1000);
+
 		}
 		if (packNumber < 1) {
 			jQuery(".packs_number").addClass('input-error');

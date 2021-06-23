@@ -24,11 +24,12 @@
     "Scan Item": "פריט סריקה",
     "Back to HomePage": "בחזרה לעמוד הבית",
     "Please fill out the required fields": "אנא מלא את השדות הנדרשים",
-    "Printing and processing...":"הדפסה ועיבוד ...",
+    "Printing and processing...": "הדפסה ועיבוד ...",
     "Pack Number": "מספר חבילה",
-    "Close invoice":"סגור חשבונית",
+    "Close invoice": "סגור חשבונית",
     "Close invoice in-progress": "סגור חשבונית בעיצומה",
     "Print invoice": "הדפסת חשבונית",
     "Printing invoice": "הדפסת חשבונית",
-    "Print Sticker": "מדבקת הדפסה"
+    "Print Sticker": "מדבקת הדפסה",
+    "STCODE not equalt pallete STCODE!!!": "STCODE לא שווה pallete STCODE !!!"
 }
