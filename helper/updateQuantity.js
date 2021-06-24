@@ -23,7 +23,7 @@ exports.updateQuantity = async (items, IVNUM, username, palletNo, packNumber) =>
                 apiObj.url = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES(IVNUM='${singleItem.IVNUM}',IVTYPE='A',DEBIT='D')/AINVOICEITEMS_SUBFORM(${singleItem.kLine})`;
             apiObj.headers = apiHeader,
                 apiObj.id = `g1`;
-            apiObj.body = { "QUANT": parseInt(singleItem.current_Qty) };
+            apiObj.body = { "CARTONNUM": parseInt(singleItem.current_Qty) };
             apiArray.push(apiObj);
             counter++;
         }

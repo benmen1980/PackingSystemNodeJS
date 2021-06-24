@@ -25,7 +25,7 @@ exports.printInvoice = async (IVNUM) => {
             priority
                 .login(configuration)
                 .then(async (loginResp) => {
-                    return await priority.procStart('WWWSHOWAIV', 'P', onProgress, configuration.profile.company);
+                    return await priority.procStart('LIEL_WWWSHOWAIV1_0', 'P', onProgress, configuration.profile.company);
                 })
                 .then(async procStepResult => {
 
@@ -43,7 +43,8 @@ exports.printInvoice = async (IVNUM) => {
                     resolve({ url: continueProcResult.Urls[0].url })
                 })
                 .catch((err) => {
-                    resolve({ message: JSON.stringify(err) })
+                    // reject({ message: JSON.stringify(err) })
+                    reject({ message: "Getting error into print invoice API" })
                 });
         } catch (err) {
             reject({ message: "Getting error into print invoice API" })

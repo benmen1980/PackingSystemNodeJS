@@ -650,7 +650,6 @@ jQuery(document).ready(function () {
 			const infoSTCODE = jQuery('.STCODE').text();
 			if(jQuery('.scanbasket-IVNUM label').text() !== ""){
 				if(infoSTCODE && infoSTCODE !== "" && parseInt(infoSTCODE) === parseInt(STCODE)){
-					console.log("ifffff dropdown....")
 					jQuery('.item-table-wrapper').addClass('show-table');
 					jQuery('.alert').hide();
 					jQuery('.btn').prop('disabled', false);
@@ -893,27 +892,32 @@ jQuery(document).ready(function () {
 					'IVNUM': ivnumValue
 				},
 				success: function (resp) {
-					console.log("Generated Print Invoice URL: ", resp.url)
-
-					/***Download html invoice */
-
-					let oReq = new XMLHttpRequest();
-					oReq.open("GET", resp.url, true);
-					oReq.responseType = "blob";
-					oReq.onload = function (oEvent) {
-						let blob = oReq.response;
-
-						console.log("blob : ", blob)
-						let bb = new Blob([blob], { type: 'text/html' });
-						let a = document.createElement('a');
-						a.download = 'Invoice.html';
-						a.href = window.URL.createObjectURL(bb);
-						a.textContent = 'Download ready';
-						a.style = 'display:none';
-						a.click();
-					};
-					oReq.send();
-					/***** */
+					if(resp.status){
+						console.log("Generated Print Invoice URL: ", resp.url)
+	
+						/***Download html invoice */
+	
+						let oReq = new XMLHttpRequest();
+						oReq.open("GET", resp.url, true);
+						oReq.responseType = "blob";
+						oReq.onload = function (oEvent) {
+							let blob = oReq.response;
+	
+							console.log("blob : ", blob)
+							let bb = new Blob([blob], { type: 'text/html' });
+							let a = document.createElement('a');
+							a.download = 'Invoice.html';
+							a.href = window.URL.createObjectURL(bb);
+							a.textContent = 'Download ready';
+							a.style = 'display:none';
+							a.click();
+						};
+						oReq.send();
+						/***** */
+					} else{
+						console.log("Erro Message: ",resp.message)
+					}
+				
 
 					/**Enable all buttons */
 					jQuery('.btn-print-to-invoice').text(printInvoiceLabel)

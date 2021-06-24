@@ -210,13 +210,13 @@ router.post('/print_invoice', async function (req, res, next) {
     }
     await printInvoice(req.body.IVNUM)
       .then(printInvoiceResp => {
-        res.status(200).json({ ...printInvoiceResp })
+        res.status(200).json({ status: 1, ...printInvoiceResp })
       })
       .catch(error => {
-        res.status(200).json({ ...error })
+        res.status(200).json({ status: 0, ...error })
       })
-  } catch (error) {
-    res.status(200).json({ message: "Getting error into print invoice API" })
+    } catch (error) {
+    res.status(200).json({ status: 0, message: "Getting error into print invoice API" })
   }
 })
 module.exports = router;
