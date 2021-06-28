@@ -798,12 +798,16 @@ jQuery(document).ready(function () {
 					},
 					success: function (resp) {
 						
-						console.log("PATCH API Request called..")
-						console.log(resp.patchApiReq)
+						console.log("PATCH API Request called..");
+						console.log(resp.patchApiReq);
 				
-						console.log("=========================================")
-						console.log("Patch API Response: ")
-						console.log(resp.patchApiResp)
+						console.log("=========================================");
+						console.log("Patch API Response: ");
+						console.log(resp.patchApiResp);
+						
+						console.log("=========================================");
+						console.log("Close Invoice Response: ");
+						console.log(resp.closeInvoiceResp);
 
 						/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
 						$('#api_processing_message').hide();
