@@ -784,8 +784,6 @@ jQuery(document).ready(function () {
 			};
 
 			setTimeout(() => {
-				console.log("PATCH API Request called..")
-				console.log(requestData)
 
 				jQuery.ajax({
 
@@ -800,6 +798,9 @@ jQuery(document).ready(function () {
 					},
 					success: function (resp) {
 						
+						console.log("PATCH API Request called..")
+						console.log(resp.patchApiReq)
+				
 						console.log("=========================================")
 						console.log("Patch API Response: ")
 						console.log(resp.patchApiResp)

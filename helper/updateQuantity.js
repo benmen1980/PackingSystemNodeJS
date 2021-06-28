@@ -23,18 +23,20 @@ exports.updateQuantity = async (items, IVNUM, username, palletNo, packNumber) =>
                 apiObj.url = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES(IVNUM='${singleItem.IVNUM}',IVTYPE='A',DEBIT='D')/AINVOICEITEMS_SUBFORM(${singleItem.kLine})`;
             apiObj.headers = apiHeader,
                 apiObj.id = `g1`;
-            apiObj.body = { "CARTONNUM": parseInt(singleItem.current_Qty) };
+            apiObj.body = { "CARTONNUM": singleItem.current_Qty };
             apiArray.push(apiObj);
             counter++;
         }
 
         const batchAPIURL = 'https://pri.paneco.com/odata/Priority/tabula.ini/a190515/$batch';
+        const temp = { "requests": apiArray };
+        // console.log(temp);
         await axiosFunction(batchAPIURL, 'POST', { "requests": apiArray })
             .then(basketList => {
                 // basketList.responses.map(e => {
                 //     console.log("e : ", e.body);
                 // })
-                resolve({ patchApiResp: basketList })
+                resolve({ patchApiReq: temp, patchApiResp: basketList })
 
             })
             .catch((error) => {})
