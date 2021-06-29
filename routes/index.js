@@ -51,8 +51,8 @@ router.post('/fetchbasket', (req, res, next) => {
               des = singleAINVOICEITEMS_SUBFORM.PDES;
               sku = singleAINVOICEITEMS_SUBFORM.PARTNAME;
               kline = singleAINVOICEITEMS_SUBFORM.KLINE;
-              let CARTONNUM = singleAINVOICEITEMS_SUBFORM.CARTONNUM ? singleAINVOICEITEMS_SUBFORM.CARTONNUM : 0;
-              html += `<tr class="item_row ${(CARTONNUM > qty) ? 'active-red' : ''}" data-id="${counter}">`;
+              let CARTONNUM = singleAINVOICEITEMS_SUBFORM.CARTONNUM ? parseInt(singleAINVOICEITEMS_SUBFORM.CARTONNUM) : 0;
+              html += `<tr class="item_row ${(CARTONNUM > qty) ? 'active-red' : (CARTONNUM > 0 && CARTONNUM < qty) ? 'active-yellow' : (CARTONNUM === qty) ? 'active-green' : ''}" data-id="${counter}">`;
               html += `<td class="qtybox">
 	                            <div class="number-input md-number-input">
 	                              <input class="quantity" min="0" name="quantity" value="${singleAINVOICEITEMS_SUBFORM.CARTONNUM ? singleAINVOICEITEMS_SUBFORM.CARTONNUM : 0}" type="number">

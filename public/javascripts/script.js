@@ -60,13 +60,24 @@ jQuery(document).ready(function () {
 			let item_quantity = jQuery(this).find('.totalqty').html();
 			if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 				jQuery(this).addClass('active-red');
+			} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
+				
+				jQuery(this).addClass('active-yellow');
+				
+			} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+				jQuery(this).addClass('active-green');
+	
 			}
 			else {
 				jQuery(this).removeClass('active');
 				jQuery(this).removeClass('active-red');
+				jQuery(this).removeClass('active-yellow');
+				jQuery(this).removeClass('active-green');
 			}
 		});
 
+		jQuery(this).removeClass('active-yellow');
+    	jQuery(this).removeClass('active-green');
 		jQuery(this).removeClass('active-red');
 		jQuery(this).addClass('active');
 		jQuery(this).siblings().removeClass('active');
@@ -330,6 +341,7 @@ jQuery(document).ready(function () {
 						if (current_qty < item_quantity) {
 							new_qty = current_qty + 1;
 							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-yellow');
 							jQuery(this).addClass('active');
 							jQuery(this).siblings().removeClass('active');
 							jQuery(this).find('.quantity').val(new_qty);
@@ -340,6 +352,9 @@ jQuery(document).ready(function () {
 						} else {
 							if (parseInt(current_qty) > parseInt(item_quantity)) {
 								jQuery(this).addClass('active-red');
+							}
+							else if(current_qty === item_quantity){
+								jQuery(this).addClass('active-green');
 							}
 							jQuery(this).addClass('active');
 							jQuery(this).siblings().removeClass('active');
@@ -366,10 +381,19 @@ jQuery(document).ready(function () {
 						let item_quantity = jQuery(this).find('.totalqty').html();
 						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 							jQuery(this).addClass('active-red');
+						} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
+							
+							jQuery(this).addClass('active-yellow');
+							
+						} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+							jQuery(this).addClass('active-green');
+			
 						}
 						else {
 							jQuery(this).removeClass('active');
 							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-yellow');
+							jQuery(this).removeClass('active-green');
 						}
 					}
 				}
@@ -380,6 +404,8 @@ jQuery(document).ready(function () {
 						let new_qty = current_qty + 1;
 
 						jQuery(this).removeClass('active-red');
+						jQuery(this).removeClass('active-yellow');
+                    	jQuery(this).removeClass('active-green');
 						jQuery(this).addClass('active');
 						jQuery(this).siblings().removeClass('active');
 						jQuery(this).find('.quantity').val(new_qty);
@@ -396,10 +422,19 @@ jQuery(document).ready(function () {
 						let item_quantity = jQuery(this).find('.totalqty').html();
 						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 							jQuery(this).addClass('active-red');
+						} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
+							
+							jQuery(this).addClass('active-yellow');
+							
+						} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+							jQuery(this).addClass('active-green');
+			
 						}
 						else {
 							jQuery(this).removeClass('active');
 							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-yellow');
+							jQuery(this).removeClass('active-green');
 						}
 					}
 				}
@@ -415,6 +450,7 @@ jQuery(document).ready(function () {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
+						jQuery(this).removeClass('active-green');
 						jQuery(this).addClass('active-red');
 						jQuery(this).siblings().removeClass('active');
 						jQuery(this).find('.quantity').val(new_qty);
@@ -475,6 +511,7 @@ jQuery(document).ready(function () {
 							if (current_qty < item_quantity) {
 								new_qty = current_qty + 1;
 								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-yellow');
 								jQuery(this).addClass('active');
 								jQuery(this).siblings().removeClass('active');
 								jQuery(this).find('.quantity').val(new_qty);
@@ -485,6 +522,9 @@ jQuery(document).ready(function () {
 							} else {
 								if (parseInt(current_qty) > parseInt(item_quantity)) {
 									jQuery(this).addClass('active-red');
+								}
+								else if(current_qty === item_quantity){
+									jQuery(this).addClass('active-green');
 								}
 								jQuery(this).addClass('active');
 								jQuery(this).siblings().removeClass('active');
@@ -499,10 +539,19 @@ jQuery(document).ready(function () {
 							let item_quantity = jQuery(this).find('.totalqty').html();
 							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 								jQuery(this).addClass('active-red');
+							} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
+							
+								jQuery(this).addClass('active-yellow');
+								
+							} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+								jQuery(this).addClass('active-green');
+				
 							}
 							else {
 								jQuery(this).removeClass('active');
 								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-yellow');
+								jQuery(this).removeClass('active-green');
 							}
 						}
 					}
@@ -513,6 +562,8 @@ jQuery(document).ready(function () {
 							let new_qty = current_qty + 1;
 
 							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-yellow');
+                    		jQuery(this).removeClass('active-green');
 							jQuery(this).addClass('active');
 							jQuery(this).siblings().removeClass('active');
 							jQuery(this).find('.quantity').val(new_qty);
@@ -529,10 +580,19 @@ jQuery(document).ready(function () {
 							let item_quantity = jQuery(this).find('.totalqty').html();
 							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 								jQuery(this).addClass('active-red');
+							} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
+							
+								jQuery(this).addClass('active-yellow');
+								
+							} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+								jQuery(this).addClass('active-green');
+				
 							}
 							else {
 								jQuery(this).removeClass('active');
 								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-yellow');
+								jQuery(this).removeClass('active-green');
 							}
 						}
 					}
@@ -548,6 +608,7 @@ jQuery(document).ready(function () {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let new_qty = current_qty + 1;
+							jQuery(this).removeClass('active-green');
 							jQuery(this).addClass('active-red');
 							jQuery(this).siblings().removeClass('active');
 							jQuery(this).find('.quantity').val(new_qty);
