@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,PARTNAME,PDES,CARTONNUM,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,BARCODE,PDES,CARTONNUM,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' )&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {
@@ -49,7 +49,7 @@ router.post('/fetchbasket', (req, res, next) => {
             singleValue.AINVOICEITEMS_SUBFORM.forEach(singleAINVOICEITEMS_SUBFORM => {
               qty = singleAINVOICEITEMS_SUBFORM.TQUANT;
               des = singleAINVOICEITEMS_SUBFORM.PDES;
-              sku = singleAINVOICEITEMS_SUBFORM.PARTNAME;
+              sku = singleAINVOICEITEMS_SUBFORM.BARCODE;
               kline = singleAINVOICEITEMS_SUBFORM.KLINE;
               let CARTONNUM = singleAINVOICEITEMS_SUBFORM.CARTONNUM ? parseInt(singleAINVOICEITEMS_SUBFORM.CARTONNUM) : 0;
               html += `<tr class="item_row ${(CARTONNUM > qty) ? 'active-red' : (CARTONNUM > 0 && CARTONNUM < qty) ? 'active-yellow' : (CARTONNUM === qty) ? 'active-green' : ''}" data-id="${counter}">`;
