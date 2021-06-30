@@ -876,6 +876,7 @@ jQuery(document).ready(function () {
 						$('#scanbasket').val('');
 						jQuery('.btn-complete').prop('disabled', false);
 						jQuery('tbody').remove();
+						jQuery('.scanitem').val('')
 						/** */
 						
 						jQuery(".packs_number").val(1);
@@ -1118,6 +1119,7 @@ jQuery(document).ready(function () {
 						$('#scanbasket').val('');
 						jQuery('.btn-complete').prop('disabled', false);
 						jQuery('tbody').remove();
+						jQuery('.scanitem').val('')
 						/** */
 						
 						jQuery(".packs_number").val(1);

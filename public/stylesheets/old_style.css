@@ -9,14 +9,7 @@ body{
 .box-layout {
     margin: 30px 0;
 }
-/* .template-header .logo h2 {
-    margin: 0;
-    padding: 0;
-    font-size: 20px;
-    font-weight: 600;
-    color: #2b3e58;
-} */
-.logo h2 {
+.template-header .logo h2 {
     margin: 0;
     padding: 0;
     font-size: 20px;
@@ -137,11 +130,7 @@ header.template-header {
 }
 .scanning_section {
     max-width: 40%;
-    /* margin: 0 auto; */
-    margin-top: 0px;
-    margin-right: auto;
-    margin-bottom: 0px;
-    /* margin-left: auto; */
+    margin: 0 auto;
 }
 .product_table_area {
     padding: 30px;
@@ -305,8 +294,8 @@ border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
 /*Quantity buttom  end*/
 
 .extra-fiels-area {
-    width: 100%;
-    /* margin-left: 85px; */
+    width: 60%;
+    margin-left: 85px;
 }
 .n-product_table table {table-layout: fixed;}
 .n-product_table table .qtybox .number-input {
@@ -314,8 +303,8 @@ border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
     min-width: 80px;
 }
 .n-product_table table th:nth-child(1),.n-product_table table td:nth-child(1) {
-    max-width: 90px;
-    width: 90px;
+    max-width: 100px;
+    width: 100px;
 }
 .n-product_table table th:nth-child(2),.n-product_table table td:nth-child(2) {
     max-width: 100px;
@@ -326,11 +315,11 @@ border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
     width: 250px;
 }
 .n-product_table table th:nth-child(4), .n-product_table table td:nth-child(4) {
-    min-width: 155px;
-    width: 155px;
+    min-width: 125px;
+    width: 125px;
 }
 .n-product_table table th:nth-child(5), .n-product_table table td:nth-child(5) {
-    width: 80px;
+    width: 100px;
 }
 @media (min-width: 1200px){
     .container {
