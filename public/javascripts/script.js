@@ -848,7 +848,7 @@ jQuery(document).ready(function () {
 
 				jQuery.ajax({
 
-					url: '/update_quantity',
+					url: '/update_quantity_with_close_invoice',
 					type: 'POST',
 					data: requestData,
 					dataType: "json",
@@ -888,7 +888,7 @@ jQuery(document).ready(function () {
 					}
 
 				});
-			}, 1000);
+			}, 800);
 
 		}
 		if (packNumber < 1) {
@@ -1019,4 +1019,122 @@ jQuery(document).ready(function () {
 			/** */
 		}
 	});
+
+	async function changeInvoiceDetailAndButtons(){
+		jQuery('.btn-complete').prop('disabled', true);
+		jQuery('.alert').hide();
+		jQuery(".packs_number").removeClass('input-error');
+
+
+		/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
+		jQuery('.scanitem').hide();
+		jQuery('.item-table-wrapper').removeClass('show-table');
+		jQuery('.scanbasket-IVNUM').hide();
+		jQuery('.scanbasket-royy_transportmean').hide();
+		$('#api_processing_message').show();
+		/** */
+
+		/**Unset IVNUM and ROYY_TRANSPORTMEAN labels text*/
+		jQuery('.scanbasket-IVNUM label').text('');
+		jQuery('.scanbasket-royy_transportmean label').text('');
+		/** **/
+
+		/**Information section enable and set values */
+		jQuery('.order_information_section').hide();
+		jQuery('.ORDNAME').text('');
+		jQuery('.CDES').text('');
+		jQuery('.SHIPTO2_SUBFORM_ADDRESS').text('');
+		jQuery('.SHIPTO2_SUBFORM_PHONENUM').text('');
+		jQuery('.SHIPTO2_SUBFORM_STATE').text('');
+
+		jQuery('.PNCO_WEBNUMBER').text('');
+		jQuery('.PNCO_REMARKS').text('');
+		jQuery('.QAMT_SHIPREMARK').text('');
+		jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text('');
+		jQuery('.PNCO_NUMOFPACKS').text('');
+		jQuery('.STCODE').text('');
+		jQuery('.STDES').text('');
+		/** */
+	} 
+
+	jQuery(".btn-suspend").click(function (e) {
+		e.preventDefault();
+		
+		let ItemArray = [];
+		let IVnum = jQuery('.ivnum').val();
+
+		jQuery('.table-items .item_row').each(function () {
+			let current_Qty = jQuery(this).find('.quantity').val();
+			let kLine = jQuery(this).find('.kline').text();
+			let IVNUM = jQuery(this).find('.IVNUM').text();
+
+			ItemArray.push({ kLine: kLine, current_Qty: current_Qty, IVNUM: IVNUM })
+
+		});
+
+		const selectedPalletNo = jQuery("select.pallet_no").children("option:selected").val();
+
+		const packNumber = jQuery(".packs_number").val();
+
+		if (ItemArray.length > 0 && packNumber > 0) {
+			
+
+			changeInvoiceDetailAndButtons();
+
+			const requestData = {
+				'action': 'patchitemtable',
+				'IVNUM': IVnum,
+				'packNumber': packNumber,
+				'palletNo': selectedPalletNo,
+				'Items': JSON.stringify(ItemArray)
+			};
+
+			setTimeout(() => {
+
+				jQuery.ajax({
+
+					url: '/update_quantity',
+					type: 'POST',
+					data: requestData,
+					dataType: "json",
+					beforeSend: function (x) {
+						if (x && x.overrideMimeType) {
+							x.overrideMimeType("application/j-son;charset=UTF-8");
+						}
+					},
+					success: function (resp) {
+						
+						console.log("PATCH API Request called..");
+						console.log(resp.patchApiReq);
+				
+						console.log("=========================================");
+						console.log("Patch API Response: ");
+						console.log(resp.patchApiResp);
+						
+
+						/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
+						$('#api_processing_message').hide();
+						jQuery('.scanbasket').show();
+						$('#scanbasket').val('');
+						jQuery('.btn-complete').prop('disabled', false);
+						jQuery('tbody').remove();
+						/** */
+						
+						jQuery(".packs_number").val(1);
+					},
+					error: function (jqXHR, textStatus, errorThrown) {
+						console.log(jqXHR.status);
+						jQuery('.btn-complete').prop('disabled', false);
+						jQuery(".packs_number").val(1);
+
+					}
+
+				});
+			}, 200);
+
+		}
+		if (packNumber < 1) {
+			jQuery(".packs_number").addClass('input-error');
+		}
+	})
 });

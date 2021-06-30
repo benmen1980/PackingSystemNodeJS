@@ -103,7 +103,7 @@ router.post('/fetchbasket', (req, res, next) => {
 })
 
 
-router.post('/update_quantity', async (req, res, next) => {
+router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
   try {
     let closeInvoiceResp = {};
     req.body.Items = JSON.parse(req.body.Items)
@@ -119,6 +119,21 @@ router.post('/update_quantity', async (req, res, next) => {
         closeInvoiceResp = { ...error };
       })
       res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp })
+    }
+
+  } catch (error) {
+    res.status(200).json({ status: 0, originURL: `${req.headers.origin}/user/home`, message: res.__('Error while updating the data') })
+  }
+})
+
+router.post('/update_quantity', async (req, res, next) => {
+  try {
+    req.body.Items = JSON.parse(req.body.Items)
+    if (req.body.Items.length > 0) {
+      const username = req.cookies['username'];
+
+      const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
+      res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp })
     }
 
   } catch (error) {
