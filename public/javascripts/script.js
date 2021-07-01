@@ -962,7 +962,7 @@ jQuery(document).ready(function () {
 					if(resp.status){
 						console.log("Generated Print Invoice URL: ", resp.url)
 	
-						/***Download html invoice */
+						/***Download html/PDF invoice */
 	
 						let oReq = new XMLHttpRequest();
 						oReq.open("GET", resp.url, true);
@@ -970,10 +970,10 @@ jQuery(document).ready(function () {
 						oReq.onload = function (oEvent) {
 							let blob = oReq.response;
 	
-							console.log("blob : ", blob)
+							// console.log("blob : ", blob)
 							let bb = new Blob([blob], { type: 'text/html' });
 							let a = document.createElement('a');
-							a.download = 'Invoice.html';
+							a.download = (blob.type === "application/pdf")? 'Invoice.pdf':'Invoice.html';
 							a.href = window.URL.createObjectURL(bb);
 							a.textContent = 'Download ready';
 							a.style = 'display:none';
