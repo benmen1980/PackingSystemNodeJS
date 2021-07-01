@@ -20,12 +20,12 @@
                 <div class="product_table_area">
                     
                     <div class="row top-header">
-                        <div class="col-md-2 logo">
+                        <div class="col-md-4 logo">
                             <h2>
                                 <%= packingSystemLabel%>
                             </h2>
                         </div>
-                        <div class="col-md-3">
+                        <div class="col-md-5">
                             <ul class="user-nav">
                                 <li class="logged_user">
                                     <a href="javascript:void(0)">
@@ -40,12 +40,12 @@
                             </ul>
                         </div>
     
-                        <div class="col-sm-2 form-group pallet_no-STCODE" style="text-align: center;">
+                        <div class="col-sm-2 form-group pallet_no-STCODE" style="text-align: center;display: none;">
                             <h6>STCODE</h6>
                             <label>-</label>
                         </div>
     
-                        <div class="col-sm-2 form-group pallet_no-STDES" style="text-align: center;">
+                        <div class="col-sm-2 form-group pallet_no-STDES" style="text-align: center;display: none;">
                             <h6>STDES</h6>
                             <label>-</label>
                         </div>
@@ -73,18 +73,15 @@
                                     <%= numberOfPacksLabel%>
                                 </label>
                                 <input type="number" name="packs_number" class="packs_number form-control" min="1"
-                                    value="1">
+                                    value="1" style="width: 206px;">
                             </div>
                             <div class="col-md-2 form-group scanbasket-IVNUM"
-                                style="text-align: center; display: none;">
-                                <h6>IVNUM</h6>
+                                style="text-align: center; margin: auto; display: none;">
+                                
                                 <label></label>
                             </div>
                             <div class="col-md-2 form-group scanbasket-royy_transportmean"
-                                style="text-align: center; display: none;">
-                                <h6>
-                                    <%= packNumberLabel%>
-                                </h6>
+                                style="text-align: center; margin: auto; display: none;">
                                 <label></label>
                             </div>
                             <div class="col-md-5 order_information_section" style="display: none;">
@@ -145,11 +142,11 @@
                                 <div class="row">
                                     <div class="col-md-12 scan-field form-group">
                                         <input type="text" id="scanbasket" name="scanbasket" class="scanbasket form-control"
-                                            placeholder="<%= scanBasketLabel%>">
+                                            placeholder="<%= scanBasketLabel%>" style="width: 206px;">
                                     </div>
                                     <div class="col-md-12 scan-field form-group" style="display: none;">
                                         <input type="text" name="scanitem" class="scanitem form-control"
-                                            placeholder="<%= scanItemLabel%>">
+                                            placeholder="<%= scanItemLabel%>" style="width: 206px;">
                                     </div>
                                 </div>
                             </div>
@@ -208,27 +205,27 @@
                             </table>
                         </div>
                         <div class="row action">
-                            <div class="col-md-2 text-left">
+                            <div class="col-md-2 text-center">
                                 <button type="button" class="btn btn-outline-primary btn-complete">
                                     <%= completeLabel%>
                                 </button>
                             </div>
-                            <div class="col-md-3 text-left">
+                            <div class="col-md-3 text-center">
                                 <button type="button" class="btn btn-outline-danger btn-close-to-invoice">
                                     <%= closeinvoiceLabel%>
                                 </button>
                             </div>
-                            <div class="col-md-3 text-right">
+                            <div class="col-md-3 text-left">
                                 <button type="button" class="btn btn-outline-primary btn-print-to-invoice">
                                     <%= printInvoiceLabel%>
                                 </button>
                             </div>
-                            <div class="col-md-2 text-center">
+                            <div class="col-md-2 text-left">
                                 <button type="button" class="btn btn-outline-warning btn-suspend">
                                     <%= suspendedLabel%>
                                 </button>
                             </div>
-                            <div class="col-md-2 text-right">
+                            <div class="col-md-2 text-center">
                                 <button type="button" class="btn btn-outline-danger btn-print-sticker">
                                     <%= printStickerLabel %>
                                 </button>

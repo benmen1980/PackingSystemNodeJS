@@ -702,9 +702,9 @@ jQuery(document).ready(function () {
 			const splitedText = selectedPalletNoText.split(' ');
 			let STCODE = splitedText[2];
 			const STDES = splitedText.slice(4).join(' ');
-			jQuery('.pallet_no-STCODE').show();
+			// jQuery('.pallet_no-STCODE').show();
 			jQuery('.pallet_no-STCODE label').text(STCODE);
-			jQuery('.pallet_no-STDES').show();
+			// jQuery('.pallet_no-STDES').show();
 			jQuery('.pallet_no-STDES label').text(STDES);
 
 
