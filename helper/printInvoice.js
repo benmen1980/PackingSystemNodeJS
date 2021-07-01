@@ -32,21 +32,24 @@ exports.printInvoice = async (IVNUM) => {
                     let data = procStepResult.input.EditFields;
                     data[0].value = IVNUM;
 
-                    const documentOptionsResult = await procStepResult.proc.documentOptions(1, -103, 1)
-                    
+                    procStepResult = await procStepResult.proc.inputOptions(1 , 1);
+
                     const inputFieldsResult = await procStepResult.proc.inputFields(1, { EditFields: data })
 
-                    return await procStepResult.proc.continueProc();
+                    const documentOptionsResult = await procStepResult.proc.documentOptions(1, -103, 0)
+
+                    await procStepResult.proc.continueProc();
+                    return documentOptionsResult;
 
                 })
-                .then(continueProcResult => {
-                    resolve({ url: continueProcResult.Urls[0].url })
+                .then(documentOptionsResult => {
+                    resolve({ url: documentOptionsResult.Urls[0].url })
                 })
                 .catch((err) => {
                     // reject({ message: JSON.stringify(err) })
                     reject({ message: "Getting error into print invoice API" })
                 });
-        } catch (err) {
+            } catch (err) {
             reject({ message: "Getting error into print invoice API" })
         }
     })
