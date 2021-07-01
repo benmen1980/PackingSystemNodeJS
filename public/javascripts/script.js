@@ -788,6 +788,7 @@ jQuery(document).ready(function () {
 			jQuery('.btn-complete').prop('disabled', true);
 			jQuery('.alert').hide();
 			jQuery(".packs_number").removeClass('input-error');
+			const inputvariable = await generateDownloadFileContent();
 
 
 			/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
@@ -823,7 +824,6 @@ jQuery(document).ready(function () {
 
 			
 			/**This is the code for auto download the file */
-			const inputvariable = await generateDownloadFileContent();
 			setTimeout(() => {
 				let bb = new Blob([inputvariable], { type: 'text/plain' });
 				let a = document.createElement('a');
