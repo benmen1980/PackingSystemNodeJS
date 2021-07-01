@@ -32,8 +32,8 @@ exports.printInvoice = async (IVNUM) => {
                     let data = procStepResult.input.EditFields;
                     data[0].value = IVNUM;
 
-                    const documentOptionsResult = await procStepResult.proc.documentOptions(1, -101, 1)
-
+                    const documentOptionsResult = await procStepResult.proc.documentOptions(1, -103, 1)
+                    
                     const inputFieldsResult = await procStepResult.proc.inputFields(1, { EditFields: data })
 
                     return await procStepResult.proc.continueProc();
