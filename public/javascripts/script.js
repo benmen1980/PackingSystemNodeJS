@@ -768,6 +768,14 @@ jQuery(document).ready(function () {
 	jQuery(".btn-complete").click(async function (e) {
 		e.preventDefault();
 
+
+		/**Hide the invoice url div */
+		jQuery('.invoice-url').hide();
+		jQuery('#invoice-url-tag').attr("href", "#");
+		jQuery('#invoice-url-tag').text("");
+		/** **/
+
+
 		let ItemArray = [];
 		let IVnum = jQuery('.scanbasket-IVNUM label').html();
 
@@ -962,6 +970,12 @@ jQuery(document).ready(function () {
 					if(resp.status){
 						console.log("Generated Print Invoice URL: ", resp.url)
 
+						/**Show the invoice url div*/
+						jQuery('.invoice-url').show();
+						jQuery('#invoice-url-tag').attr("href", resp.url);
+						jQuery('#invoice-url-tag').text(resp.url);
+						/** **/
+
 						/***Download html/PDF invoice */
 	
 						let oReq = new XMLHttpRequest();
@@ -1060,7 +1074,13 @@ jQuery(document).ready(function () {
 
 	jQuery(".btn-suspend").click(function (e) {
 		e.preventDefault();
-		
+
+		/**Hide the invoice url div */
+		jQuery('.invoice-url').hide();
+		jQuery('#invoice-url-tag').attr("href", "#");
+		jQuery('#invoice-url-tag').text("");
+		/** **/
+
 		let ItemArray = [];
 		let IVnum = jQuery('.scanbasket-IVNUM label').html();
 
