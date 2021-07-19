@@ -769,7 +769,7 @@ jQuery(document).ready(function () {
 		e.preventDefault();
 
 		let ItemArray = [];
-		let IVnum = jQuery('.ivnum').val();
+		let IVnum = jQuery('.scanbasket-IVNUM label').html();
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
@@ -961,7 +961,7 @@ jQuery(document).ready(function () {
 				success: function (resp) {
 					if(resp.status){
 						console.log("Generated Print Invoice URL: ", resp.url)
-	
+
 						/***Download html/PDF invoice */
 	
 						let oReq = new XMLHttpRequest();
@@ -1006,7 +1006,7 @@ jQuery(document).ready(function () {
 	})
 
 	jQuery(".btn-print-sticker").on("click", async function (e) {
-		let IVnum = jQuery('.ivnum').val();
+		let IVnum = jQuery('.scanbasket-IVNUM label').html();
 		if (IVnum) {
 			/**This is the code for auto download the file */
 			const inputvariable = await generateDownloadFileContent();
@@ -1062,7 +1062,7 @@ jQuery(document).ready(function () {
 		e.preventDefault();
 		
 		let ItemArray = [];
-		let IVnum = jQuery('.ivnum').val();
+		let IVnum = jQuery('.scanbasket-IVNUM label').html();
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
