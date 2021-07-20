@@ -60,13 +60,13 @@ jQuery(document).ready(function () {
 			let item_quantity = jQuery(this).find('.totalqty').html();
 			if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 				jQuery(this).addClass('active-red');
-			} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
-				
+			} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
+
 				jQuery(this).addClass('active-yellow');
-				
-			} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+
+			} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
 				jQuery(this).addClass('active-green');
-	
+
 			}
 			else {
 				jQuery(this).removeClass('active');
@@ -77,7 +77,7 @@ jQuery(document).ready(function () {
 		});
 
 		jQuery(this).removeClass('active-yellow');
-    	jQuery(this).removeClass('active-green');
+		jQuery(this).removeClass('active-green');
 		jQuery(this).removeClass('active-red');
 		jQuery(this).addClass('active');
 		jQuery(this).siblings().removeClass('active');
@@ -113,19 +113,19 @@ jQuery(document).ready(function () {
 
 						/**Verify scan basket stcode and pallletno stcode */
 						const palletNoStcode = jQuery('.pallet_no-STCODE label').text();
-						if((palletNoStcode === "" ) || (parseInt(palletNoStcode) !==  parseInt(obj.STCODE))){
+						if ((palletNoStcode === "") || (parseInt(palletNoStcode) !== parseInt(obj.STCODE))) {
 							/**Hide the table and display error message */
 							jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
 							jQuery('.btn').prop('disabled', true);
 						}
-						else{
+						else {
 							/**Hide the error message and display the table */
 							jQuery('.item-table-wrapper').addClass('show-table');
 							jQuery('.alert').hide();
 							jQuery('.btn').prop('disabled', false);
 
 						}
-						
+
 						if (obj.ivnum != '') {
 							var hidden_field = '<input type="hidden" name="ivnum" class="ivnum" value="' + obj.ivnum + '">';
 							jQuery(hidden_field).insertAfter('.table-items');
@@ -212,12 +212,12 @@ jQuery(document).ready(function () {
 
 							/**Verify scan basket stcode and pallletno stcode */
 							const palletNoStcode = jQuery('.pallet_no-STCODE label').text();
-							if((palletNoStcode === "" ) || (parseInt(palletNoStcode) !==  parseInt(obj.STCODE))){
+							if ((palletNoStcode === "") || (parseInt(palletNoStcode) !== parseInt(obj.STCODE))) {
 								/**Verify scan basket stcode and pallletno stcode */
 								jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
 								jQuery('.btn').prop('disabled', true);
 							}
-							else{
+							else {
 								/**Hide the error message and display the table */
 								jQuery('.item-table-wrapper').addClass('show-table');
 								jQuery('.alert').hide();
@@ -353,7 +353,7 @@ jQuery(document).ready(function () {
 							if (parseInt(current_qty) > parseInt(item_quantity)) {
 								jQuery(this).addClass('active-red');
 							}
-							else if(current_qty === item_quantity){
+							else if (current_qty === item_quantity) {
 								jQuery(this).addClass('active-green');
 							}
 							jQuery(this).addClass('active');
@@ -381,13 +381,13 @@ jQuery(document).ready(function () {
 						let item_quantity = jQuery(this).find('.totalqty').html();
 						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 							jQuery(this).addClass('active-red');
-						} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
-							
+						} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
+
 							jQuery(this).addClass('active-yellow');
-							
-						} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+
+						} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
 							jQuery(this).addClass('active-green');
-			
+
 						}
 						else {
 							jQuery(this).removeClass('active');
@@ -405,7 +405,7 @@ jQuery(document).ready(function () {
 
 						jQuery(this).removeClass('active-red');
 						jQuery(this).removeClass('active-yellow');
-                    	jQuery(this).removeClass('active-green');
+						jQuery(this).removeClass('active-green');
 						jQuery(this).addClass('active');
 						jQuery(this).siblings().removeClass('active');
 						jQuery(this).find('.quantity').val(new_qty);
@@ -422,13 +422,13 @@ jQuery(document).ready(function () {
 						let item_quantity = jQuery(this).find('.totalqty').html();
 						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 							jQuery(this).addClass('active-red');
-						} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
-							
+						} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
+
 							jQuery(this).addClass('active-yellow');
-							
-						} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+
+						} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
 							jQuery(this).addClass('active-green');
-			
+
 						}
 						else {
 							jQuery(this).removeClass('active');
@@ -523,7 +523,7 @@ jQuery(document).ready(function () {
 								if (parseInt(current_qty) > parseInt(item_quantity)) {
 									jQuery(this).addClass('active-red');
 								}
-								else if(current_qty === item_quantity){
+								else if (current_qty === item_quantity) {
 									jQuery(this).addClass('active-green');
 								}
 								jQuery(this).addClass('active');
@@ -539,13 +539,13 @@ jQuery(document).ready(function () {
 							let item_quantity = jQuery(this).find('.totalqty').html();
 							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 								jQuery(this).addClass('active-red');
-							} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
-							
+							} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
+
 								jQuery(this).addClass('active-yellow');
-								
-							} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+
+							} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
 								jQuery(this).addClass('active-green');
-				
+
 							}
 							else {
 								jQuery(this).removeClass('active');
@@ -563,7 +563,7 @@ jQuery(document).ready(function () {
 
 							jQuery(this).removeClass('active-red');
 							jQuery(this).removeClass('active-yellow');
-                    		jQuery(this).removeClass('active-green');
+							jQuery(this).removeClass('active-green');
 							jQuery(this).addClass('active');
 							jQuery(this).siblings().removeClass('active');
 							jQuery(this).find('.quantity').val(new_qty);
@@ -580,13 +580,13 @@ jQuery(document).ready(function () {
 							let item_quantity = jQuery(this).find('.totalqty').html();
 							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
 								jQuery(this).addClass('active-red');
-							} else if(parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)){
-							
+							} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
+
 								jQuery(this).addClass('active-yellow');
-								
-							} else if(parseInt(scan_quantity) === parseInt(item_quantity)){
+
+							} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
 								jQuery(this).addClass('active-green');
-				
+
 							}
 							else {
 								jQuery(this).removeClass('active');
@@ -698,7 +698,7 @@ jQuery(document).ready(function () {
 	$("select.pallet_no").change(function () {
 		const selectedPalletNoValue = jQuery("select.pallet_no").children("option:selected").val();
 		const selectedPalletNoText = jQuery("select.pallet_no").children("option:selected").text();
-		if (selectedPalletNoValue && selectedPalletNoValue !== "" ) {
+		if (selectedPalletNoValue && selectedPalletNoValue !== "") {
 			const splitedText = selectedPalletNoText.split(' ');
 			let STCODE = splitedText[2];
 			const STDES = splitedText.slice(4).join(' ');
@@ -709,8 +709,8 @@ jQuery(document).ready(function () {
 
 
 			const infoSTCODE = jQuery('.STCODE').text();
-			if(jQuery('.scanbasket-IVNUM label').text() !== ""){
-				if(infoSTCODE && infoSTCODE !== "" && parseInt(infoSTCODE) === parseInt(STCODE)){
+			if (jQuery('.scanbasket-IVNUM label').text() !== "") {
+				if (infoSTCODE && infoSTCODE !== "" && parseInt(infoSTCODE) === parseInt(STCODE)) {
 					jQuery('.item-table-wrapper').addClass('show-table');
 					jQuery('.alert').hide();
 					jQuery('.btn').prop('disabled', false);
@@ -721,12 +721,12 @@ jQuery(document).ready(function () {
 					jQuery('.btn').prop('disabled', true);
 				}
 			}
-			
+
 		} else {
 			jQuery('.pallet_no-STCODE label').text('-');
 			jQuery('.pallet_no-STDES label').text('-');
 
-			if(jQuery('.scanbasket-IVNUM label').text() !== ""){
+			if (jQuery('.scanbasket-IVNUM label').text() !== "") {
 				jQuery('.alert').hide();
 				jQuery('.item-table-wrapper').removeClass('show-table');
 				jQuery('#error_message_STCODE_not_eq_pallete_STCODE').show();
@@ -830,7 +830,7 @@ jQuery(document).ready(function () {
 			/** */
 
 
-			
+
 			/**This is the code for auto download the file */
 			setTimeout(() => {
 				let bb = new Blob([inputvariable], { type: 'text/plain' });
@@ -866,14 +866,14 @@ jQuery(document).ready(function () {
 						}
 					},
 					success: function (resp) {
-						
+
 						console.log("PATCH API Request called..");
 						console.log(resp.patchApiReq);
-				
+
 						console.log("=========================================");
 						console.log("Patch API Response: ");
 						console.log(resp.patchApiResp);
-						
+
 						console.log("=========================================");
 						console.log("Close Invoice Response: ");
 						console.log(resp.closeInvoiceResp);
@@ -886,7 +886,7 @@ jQuery(document).ready(function () {
 						jQuery('tbody').remove();
 						jQuery('.scanitem').val('')
 						/** */
-						
+
 						jQuery(".packs_number").val(1);
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
@@ -967,7 +967,7 @@ jQuery(document).ready(function () {
 					'IVNUM': ivnumValue
 				},
 				success: function (resp) {
-					if(resp.status){
+					if (resp.status) {
 						console.log("Generated Print Invoice URL: ", resp.url)
 
 						/**Show the invoice url div*/
@@ -977,17 +977,17 @@ jQuery(document).ready(function () {
 						/** **/
 
 						/***Download html/PDF invoice */
-	
+
 						let oReq = new XMLHttpRequest();
 						oReq.open("GET", resp.url, true);
 						oReq.responseType = "blob";
 						oReq.onload = function (oEvent) {
 							let blob = oReq.response;
-	
+
 							// console.log("blob : ", blob)
 							let bb = new Blob([blob], { type: 'text/html' });
 							let a = document.createElement('a');
-							a.download = (blob.type === "application/pdf")? 'Invoice.pdf':'Invoice.html';
+							a.download = (blob.type === "application/pdf") ? 'Invoice.pdf' : 'Invoice.html';
 							a.href = window.URL.createObjectURL(bb);
 							a.textContent = 'Download ready';
 							a.style = 'display:none';
@@ -995,10 +995,10 @@ jQuery(document).ready(function () {
 						};
 						oReq.send();
 						/***** */
-					} else{
-						console.log("Erro Message: ",resp.message)
+					} else {
+						console.log("Erro Message: ", resp.message)
 					}
-				
+
 
 					/**Enable all buttons */
 					jQuery('.btn-print-to-invoice').text(printInvoiceLabel)
@@ -1035,7 +1035,7 @@ jQuery(document).ready(function () {
 		}
 	});
 
-	async function changeInvoiceDetailAndButtons(){
+	async function changeInvoiceDetailAndButtons() {
 		jQuery('.btn-complete').prop('disabled', true);
 		jQuery('.alert').hide();
 		jQuery(".packs_number").removeClass('input-error');
@@ -1070,7 +1070,7 @@ jQuery(document).ready(function () {
 		jQuery('.STCODE').text('');
 		jQuery('.STDES').text('');
 		/** */
-	} 
+	}
 
 	jQuery(".btn-suspend").click(function (e) {
 		e.preventDefault();
@@ -1098,7 +1098,7 @@ jQuery(document).ready(function () {
 		const packNumber = jQuery(".packs_number").val();
 
 		if (ItemArray.length > 0 && packNumber > 0) {
-			
+
 
 			changeInvoiceDetailAndButtons();
 
@@ -1124,14 +1124,14 @@ jQuery(document).ready(function () {
 						}
 					},
 					success: function (resp) {
-						
+
 						console.log("PATCH API Request called..");
 						console.log(resp.patchApiReq);
-				
+
 						console.log("=========================================");
 						console.log("Patch API Response: ");
 						console.log(resp.patchApiResp);
-						
+
 
 						/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
 						$('#api_processing_message').hide();
@@ -1141,7 +1141,7 @@ jQuery(document).ready(function () {
 						jQuery('tbody').remove();
 						jQuery('.scanitem').val('')
 						/** */
-						
+
 						jQuery(".packs_number").val(1);
 					},
 					error: function (jqXHR, textStatus, errorThrown) {
