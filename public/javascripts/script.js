@@ -985,13 +985,24 @@ jQuery(document).ready(function () {
 							let blob = oReq.response;
 
 							// console.log("blob : ", blob)
-							let bb = new Blob([blob], { type: 'text/html' });
+							let bb = new Blob([blob], { type: 'application/pdf' });
 							let a = document.createElement('a');
 							a.download = (blob.type === "application/pdf") ? 'Invoice.pdf' : 'Invoice.html';
 							a.href = window.URL.createObjectURL(bb);
 							a.textContent = 'Download ready';
 							a.style = 'display:none';
 							a.click();
+
+
+							/********** Open file from URL and Print ************/
+							let objFra = document.createElement('iframe');     // Create an IFrame.
+							objFra.style.visibility = 'hidden';                // Hide the frame.
+							objFra.src = window.URL.createObjectURL(bb);       // Set source.
+							document.body.appendChild(objFra);  	// Add the frame to the web page.
+
+							objFra.contentWindow.focus();       	// Set focus.
+							objFra.contentWindow.print();
+
 						};
 						oReq.send();
 						/***** */
