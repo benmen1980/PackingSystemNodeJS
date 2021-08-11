@@ -51,6 +51,18 @@ router.post('/fetchbasket', (req, res, next) => {
               des = singleAINVOICEITEMS_SUBFORM.PDES;
               sku = singleAINVOICEITEMS_SUBFORM.BARCODE;
               kline = singleAINVOICEITEMS_SUBFORM.KLINE;
+
+              let VMSF_BARCODE_SUBFORM = '';
+              let VMSF_BARCODE_SUBFORM_ARRAY = singleAINVOICEITEMS_SUBFORM.VMSF_PARTBARCODES_SUBFORM.map(e => e.VMSF_BARCODE);
+              let VMSF_BARCODE_SUBFORM_length = singleAINVOICEITEMS_SUBFORM.VMSF_PARTBARCODES_SUBFORM.length;
+              singleAINVOICEITEMS_SUBFORM.VMSF_PARTBARCODES_SUBFORM.filter(e => {
+                if (VMSF_BARCODE_SUBFORM_length > 1) {
+                  VMSF_BARCODE_SUBFORM = VMSF_BARCODE_SUBFORM + e.VMSF_BARCODE + '\n';
+                } else {
+                  VMSF_BARCODE_SUBFORM = VMSF_BARCODE_SUBFORM + e.VMSF_BARCODE;
+                }
+              })
+
               let CARTONNUM = singleAINVOICEITEMS_SUBFORM.CARTONNUM ? parseInt(singleAINVOICEITEMS_SUBFORM.CARTONNUM) : 0;
               html += `<tr class="item_row ${(CARTONNUM > qty) ? 'active-red' : (CARTONNUM > 0 && CARTONNUM < qty) ? 'active-yellow' : (CARTONNUM === qty) ? 'active-green' : ''}" data-id="${counter}">`;
               html += `<td class="qtybox">
@@ -65,8 +77,13 @@ router.post('/fetchbasket', (req, res, next) => {
               html += `<td class="totalqty">${qty}</td>`;
               html += `<td class="itemdesc">${des}</td>`;
               html += `<td class="itemsku" data-sku="${sku}">${sku}</td>`;
-              html += `<td class="kline">${kline}</td>`;
+              if (VMSF_BARCODE_SUBFORM_length > 0) {
+                html += `<td class="kline">${kline}<span class="tooltiptext">${VMSF_BARCODE_SUBFORM}</span> </td>`;
+              } else {
+                html += `<td class="kline">${kline}</td>`;
+              }
               html += `<td class="IVNUM" hidden>${singleValue.IVNUM}</td>`;
+              html += `<td class="VMSF_BARCODE_SUBFORM" hidden>${JSON.stringify(VMSF_BARCODE_SUBFORM_ARRAY)}</td>`;
               html += `</tr>`;
               counter++;
             })
@@ -112,12 +129,12 @@ router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
 
       const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
       await closeInvoice(req.body.IVNUM)
-      .then(closeInvoiceResp => {
-        closeInvoiceResp = { ...closeInvoiceResp };
-      })
-      .catch(error => {
-        closeInvoiceResp = { ...error };
-      })
+        .then(closeInvoiceResp => {
+          closeInvoiceResp = { ...closeInvoiceResp };
+        })
+        .catch(error => {
+          closeInvoiceResp = { ...error };
+        })
       res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp })
     }
 
@@ -238,7 +255,7 @@ router.post('/print_invoice', async function (req, res, next) {
       .catch(error => {
         res.status(200).json({ status: 0, ...error })
       })
-    } catch (error) {
+  } catch (error) {
     res.status(200).json({ status: 0, message: "Getting error into print invoice API" })
   }
 })

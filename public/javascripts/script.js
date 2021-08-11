@@ -329,10 +329,12 @@ jQuery(document).ready(function () {
 			jQuery('.table-items .item_row').each(function () {
 
 				let td_val = jQuery(this).find('.itemsku').attr('data-sku');
+				let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+				tooltiptext = JSON.parse(tooltiptext);
 				items.push(td_val);
 
 				if (totalSkuCount > 1) {
-					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -398,7 +400,7 @@ jQuery(document).ready(function () {
 					}
 				}
 				else {
-					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
@@ -446,7 +448,9 @@ jQuery(document).ready(function () {
 				jQuery('.table-items .item_row').each(function () {
 
 					let td_val = jQuery(this).find('.itemsku').attr('data-sku');
-					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+					let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+					tooltiptext = JSON.parse(tooltiptext);
+					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
@@ -465,6 +469,7 @@ jQuery(document).ready(function () {
 				});
 			}
 
+			console.log("jQuery.inArray(item_val, items) : ", jQuery.inArray(item_val, items));
 			if (jQuery.inArray(item_val, items) === -1) {
 				// jQuery('.item-table-wrapper').removeClass('show-table');
 				jQuery('#error_message').html(noDataFoundLabel);
@@ -499,10 +504,12 @@ jQuery(document).ready(function () {
 				jQuery('.table-items .item_row').each(function () {
 
 					let td_val = jQuery(this).find('.itemsku').attr('data-sku');
+					let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+					tooltiptext = JSON.parse(tooltiptext);
 					items.push(td_val);
 
 					if (totalSkuCount > 1) {
-						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -556,7 +563,7 @@ jQuery(document).ready(function () {
 						}
 					}
 					else {
-						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let new_qty = current_qty + 1;
@@ -604,7 +611,9 @@ jQuery(document).ready(function () {
 					jQuery('.table-items .item_row').each(function () {
 
 						let td_val = jQuery(this).find('.itemsku').attr('data-sku');
-						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+						tooltiptext = JSON.parse(tooltiptext);
+						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let new_qty = current_qty + 1;

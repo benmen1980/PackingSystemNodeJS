@@ -331,9 +331,40 @@ border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
 }
 .n-product_table table th:nth-child(5), .n-product_table table td:nth-child(5) {
     width: 80px;
+    position: relative;
 }
 @media (min-width: 1200px){
     .container {
         max-width: 960px;
     }
+}
+
+
+.kline .tooltiptext {
+    visibility: hidden;
+    width: 120px;
+    background-color: #212529;
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px 0;
+
+    /* Position the tooltip */
+    position: absolute;
+    z-index: 1;
+    /* top: -5px; */
+    right: 35px;
+}
+.kline .tooltiptext::after {
+    content: " ";
+    position: absolute;
+    top: 50%;
+    left: 100%; /* To the right of the tooltip */
+    margin-top: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent transparent black;
+}
+.kline:hover .tooltiptext {
+    visibility: visible;
 }
