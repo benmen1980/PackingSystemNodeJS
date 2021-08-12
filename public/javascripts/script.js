@@ -290,7 +290,9 @@ jQuery(document).ready(function () {
 		let count = 0;
 		jQuery('.table-items .item_row').each(function () {
 			let td_val = jQuery(this).find('.itemsku').attr('data-sku');
-			if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+			let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+			tooltiptext = JSON.parse(tooltiptext);
+			if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 				let current_qty = parseInt(jQuery(this).find('.quantity').val());
 				let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
 				if (current_qty !== item_quantity) {
@@ -321,7 +323,9 @@ jQuery(document).ready(function () {
 			jQuery('.table-items .item_row').each(function () {
 
 				let sku_val = jQuery(this).find('.itemsku').attr('data-sku');
-				if (jQuery.trim(item_val) == jQuery.trim(sku_val)) {
+				let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+				tooltiptext = JSON.parse(tooltiptext);
+				if (jQuery.trim(item_val) == jQuery.trim(sku_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 					totalSkuCount++;
 				}
 			});
@@ -332,6 +336,7 @@ jQuery(document).ready(function () {
 				let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
 				tooltiptext = JSON.parse(tooltiptext);
 				items.push(td_val);
+				items = [...items, ...tooltiptext];
 
 				if (totalSkuCount > 1) {
 					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
@@ -469,7 +474,6 @@ jQuery(document).ready(function () {
 				});
 			}
 
-			console.log("jQuery.inArray(item_val, items) : ", jQuery.inArray(item_val, items));
 			if (jQuery.inArray(item_val, items) === -1) {
 				// jQuery('.item-table-wrapper').removeClass('show-table');
 				jQuery('#error_message').html(noDataFoundLabel);
@@ -496,7 +500,9 @@ jQuery(document).ready(function () {
 				jQuery('.table-items .item_row').each(function () {
 
 					let sku_val = jQuery(this).find('.itemsku').attr('data-sku');
-					if (jQuery.trim(item_val) == jQuery.trim(sku_val)) {
+					let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
+					tooltiptext = JSON.parse(tooltiptext);
+					if (jQuery.trim(item_val) == jQuery.trim(sku_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 						totalSkuCount++;
 					}
 				});
@@ -507,6 +513,7 @@ jQuery(document).ready(function () {
 					let tooltiptext = jQuery(this).find('.VMSF_BARCODE_SUBFORM').html();
 					tooltiptext = JSON.parse(tooltiptext);
 					items.push(td_val);
+					items = [...items, ...tooltiptext];
 
 					if (totalSkuCount > 1) {
 						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
@@ -757,12 +764,19 @@ jQuery(document).ready(function () {
 			if (findField.length > 0) {
 				let findText = jQuery(`.${findField[0].field}`).text();
 				if (findText !== "") {
-					if (findField[0].position === 6 || findField[0].position === 7 || findField[0].position === 10) {
-						inputvariable += `${jQuery(`.${findField[0].field}`).text()}\t`;
+					if (findField[0].position === 6) {
+						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+					}
+					else if (findField[0].position === 7) {
+						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+					}
+					else if (findField[0].position === 10) {
+						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
 					}
 					else {
 						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
 					}
+					inputvariable += `\t`;
 				}
 				else {
 					inputvariable += `\t`;
