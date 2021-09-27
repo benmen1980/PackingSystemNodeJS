@@ -239,8 +239,10 @@ jQuery(document).ready(function () {
 							}
 							/*** ***/
 
+							/**Show and Focuse on scan item text box */
 							jQuery('.scanitem').show();
-
+							jQuery(".scanitem").focus();
+							/** */
 
 							/**Information section enable and set values */
 							jQuery('.order_information_section').show();
@@ -260,7 +262,6 @@ jQuery(document).ready(function () {
 
 							jQuery(".packs_number").val(obj.PNCO_NUMOFPACKS);
 							/** */
-
 
 						} else {
 
