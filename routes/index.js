@@ -87,6 +87,7 @@ router.post('/fetchbasket', (req, res, next) => {
               html += `</tr>`;
               counter++;
             })
+            return;
           });
           html += '</tbody>';
 
