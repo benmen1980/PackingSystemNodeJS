@@ -777,21 +777,6 @@ jQuery(document).ready(function () {
 			})
 			if (findField.length > 0) {
 				let findText = jQuery(`.${findField[0].field}`).text();
-				// if (findText !== "") {
-				// 	if (findField[0].position === 6) {
-				// 		inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-				// 	}
-				// 	else if (findField[0].position === 7) {
-				// 		inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-				// 	}
-				// 	else if (findField[0].position === 10) {
-				// 		inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-				// 	}
-				// 	else {
-				// 		inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-				// 	}
-				// 	inputvariable += `\t`;
-				// }
 				if (findText !== "") {
 					if (findField[0].position === 3) {
 						inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}`;
@@ -816,7 +801,7 @@ jQuery(document).ready(function () {
 					// inputvariable += `\t`;
 				}
 				else {
-					inputvariable += `\t`;
+					// inputvariable += `\t`;
 				}
 			} else {
 				inputvariable += `\t`;
