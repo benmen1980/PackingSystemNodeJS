@@ -122,25 +122,29 @@ router.post('/fetchbasket', (req, res, next) => {
 
 
 router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
+  let closeInvoiceResp;
+  let printInvoiceResp = {};
+  let updateResp = {};
   try {
-    let closeInvoiceResp = {};
     req.body.Items = JSON.parse(req.body.Items)
     if (req.body.Items.length > 0) {
       const username = req.cookies['username'];
 
-      const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
-      await closeInvoice(req.body.IVNUM)
-        .then(closeInvoiceResp => {
-          closeInvoiceResp = { ...closeInvoiceResp };
-        })
-        .catch(error => {
-          closeInvoiceResp = { ...error };
-        })
-      res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp })
+      updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
+      closeInvoiceResp = await closeInvoice(req.body.IVNUM)
+      printInvoiceResp = await printInvoice(req.body.IVNUM);
+      // await printInvoice(req.body.IVNUM)
+      //   .then(printInvoiceRespData => {
+      //     printInvoiceResp = { ...printInvoiceRespData };
+      //   })
+      //   .catch(error => {
+      //     printInvoiceResp = { ...error };
+      //   })
+      res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp, printInvoiceResp: printInvoiceResp })
     }
 
   } catch (error) {
-    res.status(200).json({ status: 0, originURL: `${req.headers.origin}/user/home`, message: res.__('Error while updating the data') })
+    res.status(200).json({ status: 0, originURL: `${req.headers.origin}/user/home`, ...updateResp, error: error, message: res.__('Error while updating the data') })
   }
 })
 

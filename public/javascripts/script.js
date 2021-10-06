@@ -810,6 +810,17 @@ jQuery(document).ready(function () {
 		return inputvariable;
 	}
 
+	/**This is the code for auto download the file */
+	async function downloadTextFile(inputvariable) {
+		let bb = new Blob([inputvariable], { type: 'text/plain' });
+		let a = document.createElement('a');
+		a.download = 'label.txt';
+		a.href = window.URL.createObjectURL(bb);
+		a.textContent = 'Download ready';
+		a.style = 'display:none';
+		a.click();
+	}
+
 	jQuery(".btn-complete").click(async function (e) {
 		e.preventDefault();
 
@@ -826,7 +837,7 @@ jQuery(document).ready(function () {
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
-			let kLine = jQuery(this).find('.kline').text();
+			let kLine = jQuery(this).find('.kline')[0].innerText;
 			let IVNUM = jQuery(this).find('.IVNUM').text();
 
 			ItemArray.push({ kLine: kLine, current_Qty: current_Qty, IVNUM: IVNUM })
@@ -874,21 +885,6 @@ jQuery(document).ready(function () {
 			jQuery('.STDES').text('');
 			/** */
 
-
-
-			/**This is the code for auto download the file */
-			setTimeout(() => {
-				let bb = new Blob([inputvariable], { type: 'text/plain' });
-				let a = document.createElement('a');
-				a.download = 'label.txt';
-				a.href = window.URL.createObjectURL(bb);
-				a.textContent = 'Download ready';
-				a.style = 'display:none';
-				a.click();
-			}, 500);
-			/** */
-
-
 			const requestData = {
 				'action': 'patchitemtable',
 				'IVNUM': IVnum,
@@ -897,52 +893,69 @@ jQuery(document).ready(function () {
 				'Items': JSON.stringify(ItemArray)
 			};
 
-			setTimeout(() => {
+			jQuery.ajax({
 
-				jQuery.ajax({
+				url: '/update_quantity_with_close_invoice',
+				type: 'POST',
+				data: requestData,
+				dataType: "json",
+				beforeSend: function (x) {
+					if (x && x.overrideMimeType) {
+						x.overrideMimeType("application/j-son;charset=UTF-8");
+					}
+				},
+				success: async function (resp) {
 
-					url: '/update_quantity_with_close_invoice',
-					type: 'POST',
-					data: requestData,
-					dataType: "json",
-					beforeSend: function (x) {
-						if (x && x.overrideMimeType) {
-							x.overrideMimeType("application/j-son;charset=UTF-8");
-						}
-					},
-					success: function (resp) {
+					console.log("PATCH API Request called..");
+					console.log(resp.patchApiReq);
 
-						console.log("PATCH API Request called..");
-						console.log(resp.patchApiReq);
+					console.log("=========================================");
+					console.log("=========================================");
+					console.log("Patch API Response: ");
+					console.log(resp.patchApiResp);
 
+					if (resp.closeInvoiceResp) {
 						console.log("=========================================");
-						console.log("Patch API Response: ");
-						console.log(resp.patchApiResp);
-
 						console.log("=========================================");
 						console.log("Close Invoice Response: ");
 						console.log(resp.closeInvoiceResp);
-
-						/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
-						$('#api_processing_message').hide();
-						jQuery('.scanbasket').show();
-						$('#scanbasket').val('');
-						jQuery('.btn-complete').prop('disabled', false);
-						jQuery('tbody').remove();
-						jQuery('.scanitem').val('')
-						/** */
-
-						jQuery(".packs_number").val(1);
-					},
-					error: function (jqXHR, textStatus, errorThrown) {
-						console.log(jqXHR.status);
-						jQuery('.btn-complete').prop('disabled', false);
-						jQuery(".packs_number").val(1);
-
 					}
 
-				});
-			}, 800);
+					if (resp.printInvoiceResp) {
+						console.log("=========================================");
+						console.log("=========================================");
+						console.log("Print Invoice Response: ");
+						console.log(resp.printInvoiceResp);
+						await printInvoice(resp.printInvoiceResp);
+					}
+					await downloadTextFile(inputvariable);
+
+					if (resp.error) {
+						console.log("=========================================");
+						console.log("=========================================");
+						console.log("Error: ", resp.error);
+					}
+
+					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
+					$('#api_processing_message').hide();
+					jQuery('.scanbasket').show();
+					$('#scanbasket').val('');
+					jQuery('.btn-complete').prop('disabled', false);
+					jQuery('tbody').remove();
+					jQuery('.scanitem').val('')
+					/** */
+
+					jQuery(".packs_number").val(1);
+				},
+				error: function (jqXHR, textStatus, errorThrown) {
+					console.log(jqXHR.status);
+					jQuery('.btn-complete').prop('disabled', false);
+					jQuery(".packs_number").val(1);
+
+				}
+
+			});
+			// }, 800);
 
 		}
 		if (packNumber < 1) {
@@ -992,6 +1005,38 @@ jQuery(document).ready(function () {
 		}
 	})
 
+	async function printInvoice(resp) {
+		/***Download html/PDF invoice */
+
+		let oReq = new XMLHttpRequest();
+		oReq.open("GET", resp.url, true);
+		oReq.responseType = "blob";
+		oReq.onload = function (oEvent) {
+			let blob = oReq.response;
+
+			let bb = new Blob([blob], { type: oReq.response.type });
+			// let bb = new Blob([blob], { type: 'application/pdf' });
+			let a = document.createElement('a');
+			a.download = (blob.type === "application/pdf") ? 'Invoice.pdf' : 'Invoice.html';
+			a.href = window.URL.createObjectURL(bb);
+			a.textContent = 'Download ready';
+			a.style = 'display:none';
+			a.click();
+
+
+			/********** Open file from URL and Print ************/
+			let objFra = document.createElement('iframe');     // Create an IFrame.
+			objFra.style.visibility = 'hidden';                // Hide the frame.
+			objFra.src = window.URL.createObjectURL(bb);       // Set source.
+			document.body.appendChild(objFra);  	// Add the frame to the web page.
+
+			objFra.contentWindow.focus();       	// Set focus.
+			objFra.contentWindow.print();
+
+		};
+		oReq.send();
+		/***** */
+	}
 
 	jQuery(".btn-print-to-invoice").click(function (e) {
 		e.preventDefault();
@@ -1011,7 +1056,7 @@ jQuery(document).ready(function () {
 				data: {
 					'IVNUM': ivnumValue
 				},
-				success: function (resp) {
+				success: async function (resp) {
 					if (resp.status) {
 						console.log("Generated Print Invoice URL: ", resp.url)
 
@@ -1021,36 +1066,7 @@ jQuery(document).ready(function () {
 						jQuery('#invoice-url-tag').text(resp.url);
 						/** **/
 
-						/***Download html/PDF invoice */
-
-						let oReq = new XMLHttpRequest();
-						oReq.open("GET", resp.url, true);
-						oReq.responseType = "blob";
-						oReq.onload = function (oEvent) {
-							let blob = oReq.response;
-
-							let bb = new Blob([blob], { type: oReq.response.type });
-							// let bb = new Blob([blob], { type: 'application/pdf' });
-							let a = document.createElement('a');
-							a.download = (blob.type === "application/pdf") ? 'Invoice.pdf' : 'Invoice.html';
-							a.href = window.URL.createObjectURL(bb);
-							a.textContent = 'Download ready';
-							a.style = 'display:none';
-							a.click();
-
-
-							/********** Open file from URL and Print ************/
-							let objFra = document.createElement('iframe');     // Create an IFrame.
-							objFra.style.visibility = 'hidden';                // Hide the frame.
-							objFra.src = window.URL.createObjectURL(bb);       // Set source.
-							document.body.appendChild(objFra);  	// Add the frame to the web page.
-
-							objFra.contentWindow.focus();       	// Set focus.
-							objFra.contentWindow.print();
-
-						};
-						oReq.send();
-						/***** */
+						await printInvoice(resp)
 					} else {
 						console.log("Erro Message: ", resp.message)
 					}
@@ -1142,7 +1158,7 @@ jQuery(document).ready(function () {
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
-			let kLine = jQuery(this).find('.kline').text();
+			let kLine = jQuery(this).find('.kline')[0].innerText;
 			let IVNUM = jQuery(this).find('.IVNUM').text();
 
 			ItemArray.push({ kLine: kLine, current_Qty: current_Qty, IVNUM: IVNUM })
