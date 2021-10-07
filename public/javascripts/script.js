@@ -766,7 +766,7 @@ jQuery(document).ready(function () {
 			{ field: 'QAMT_SHIPREMARK', position: 13 },
 			{ field: 'PNCO_REMARKS', position: 15 },
 			{ field: 'PNCO_WEBNUMBER', position: 17 },
-			{ field: 'PNCO_NUMOFPACKS', position: 19 },
+			{ field: 'packs_number', position: 19 },
 		]
 		let inputvariable = '';
 		for (let i = 1; i < 20; i++) {
@@ -798,16 +798,19 @@ jQuery(document).ready(function () {
 					else {
 						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
 					}
-					// inputvariable += `\t`;
-				}
-				else {
-					// inputvariable += `\t`;
 				}
 			} else {
 				inputvariable += `\t`;
 			}
 		}
-		return inputvariable;
+
+		let inputvariableClone = '';
+		const packs_number = parseInt(jQuery('.packs_number').val());
+		for (let i = 1; i < (packs_number + 1); i++) {
+			inputvariableClone += inputvariable;
+			inputvariableClone += `${i}/${jQuery('.packs_number').val()}\n`;
+		}
+		return inputvariableClone;
 	}
 
 	/**This is the code for auto download the file */
