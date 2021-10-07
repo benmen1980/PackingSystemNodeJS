@@ -130,7 +130,7 @@ router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
     if (req.body.Items.length > 0) {
       const username = req.cookies['username'];
 
-      updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
+      updateResp = await updateQuantity("completed", req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
       closeInvoiceResp = await closeInvoice(req.body.IVNUM)
       printInvoiceResp = await printInvoice(req.body.IVNUM);
       // await printInvoice(req.body.IVNUM)
@@ -154,7 +154,7 @@ router.post('/update_quantity', async (req, res, next) => {
     if (req.body.Items.length > 0) {
       const username = req.cookies['username'];
 
-      const updateResp = await updateQuantity(req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
+      const updateResp = await updateQuantity("suspended", req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
       res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp })
     }
 

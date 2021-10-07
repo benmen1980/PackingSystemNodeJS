@@ -833,7 +833,7 @@ jQuery(document).ready(function () {
 
 
 		let ItemArray = [];
-		let IVnum = jQuery('.scanbasket-IVNUM label').html();
+		let IVnum = jQuery('.scanbasket-IVNUM label').text();
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
@@ -966,7 +966,7 @@ jQuery(document).ready(function () {
 
 	jQuery(".btn-close-to-invoice").click(function (e) {
 		e.preventDefault();
-		const ivnumValue = jQuery('.scanbasket-IVNUM label').html();
+		const ivnumValue = jQuery('.scanbasket-IVNUM label').text();
 		if (ivnumValue && ivnumValue !== "") {
 
 			/**Disable close invoice, complete button and change close invoice button text */
@@ -1040,7 +1040,7 @@ jQuery(document).ready(function () {
 
 	jQuery(".btn-print-to-invoice").click(function (e) {
 		e.preventDefault();
-		const ivnumValue = jQuery('.scanbasket-IVNUM label').html();
+		const ivnumValue = jQuery('.scanbasket-IVNUM label').text();
 		if (ivnumValue && ivnumValue !== "") {
 
 			/**Disable close invoice, complete button and change close invoice button text */
@@ -1092,7 +1092,7 @@ jQuery(document).ready(function () {
 	})
 
 	jQuery(".btn-print-sticker").on("click", async function (e) {
-		let IVnum = jQuery('.scanbasket-IVNUM label').html();
+		let IVnum = jQuery('.scanbasket-IVNUM label').text();
 		if (IVnum) {
 			/**This is the code for auto download the file */
 			const inputvariable = await generateDownloadFileContent();
@@ -1154,7 +1154,7 @@ jQuery(document).ready(function () {
 		/** **/
 
 		let ItemArray = [];
-		let IVnum = jQuery('.scanbasket-IVNUM label').html();
+		let IVnum = jQuery('.scanbasket-IVNUM label').text();
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
