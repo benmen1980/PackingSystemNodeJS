@@ -861,32 +861,11 @@ jQuery(document).ready(function () {
 			/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
 			jQuery('.scanitem').hide();
 			jQuery('.item-table-wrapper').removeClass('show-table');
-			jQuery('.scanbasket-IVNUM').hide();
-			jQuery('.scanbasket-royy_transportmean').hide();
+			// jQuery('.scanbasket-IVNUM').hide();
+			// jQuery('.scanbasket-royy_transportmean').hide();
 			$('#api_processing_message').show();
 			/** */
 
-			/**Unset IVNUM and ROYY_TRANSPORTMEAN labels text*/
-			jQuery('.scanbasket-IVNUM label').text('');
-			jQuery('.scanbasket-royy_transportmean label').text('');
-			/** **/
-
-			/**Information section enable and set values */
-			jQuery('.order_information_section').hide();
-			jQuery('.ORDNAME').text('');
-			jQuery('.CDES').text('');
-			jQuery('.SHIPTO2_SUBFORM_ADDRESS').text('');
-			jQuery('.SHIPTO2_SUBFORM_PHONENUM').text('');
-			jQuery('.SHIPTO2_SUBFORM_STATE').text('');
-
-			jQuery('.PNCO_WEBNUMBER').text('');
-			jQuery('.PNCO_REMARKS').text('');
-			jQuery('.QAMT_SHIPREMARK').text('');
-			jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text('');
-			jQuery('.PNCO_NUMOFPACKS').text('');
-			jQuery('.STCODE').text('');
-			jQuery('.STDES').text('');
-			/** */
 
 			const requestData = {
 				'action': 'patchitemtable',
@@ -938,16 +917,52 @@ jQuery(document).ready(function () {
 						console.log("Error: ", resp.error);
 						jQuery('#error_message').html(resp.error.message);
 						jQuery('#error_message').show();
+
+						/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
+						jQuery('.scanitem').show();
+						jQuery('.item-table-wrapper').addClass('show-table');
+						jQuery('.scanbasket-IVNUM').show();
+						jQuery('.scanbasket-royy_transportmean').show();
+						$('#api_processing_message').hide();
+						/** */
 					} else {
 						await downloadTextFile(inputvariable);
+						/**Unset IVNUM and ROYY_TRANSPORTMEAN labels text*/
+						jQuery('.scanbasket-IVNUM').hide();
+						jQuery('.scanbasket-royy_transportmean').hide();
+						jQuery('.scanbasket-IVNUM label').text('');
+						jQuery('.scanbasket-royy_transportmean label').text('');
+						/** **/
+
+						/**Information section enable and set values */
+						jQuery('.order_information_section').hide();
+						jQuery('.ORDNAME').text('');
+						jQuery('.CDES').text('');
+						jQuery('.SHIPTO2_SUBFORM_ADDRESS').text('');
+						jQuery('.SHIPTO2_SUBFORM_PHONENUM').text('');
+						jQuery('.SHIPTO2_SUBFORM_STATE').text('');
+
+						jQuery('.PNCO_WEBNUMBER').text('');
+						jQuery('.PNCO_REMARKS').text('');
+						jQuery('.QAMT_SHIPREMARK').text('');
+						jQuery('.PAYMENTDEF_SUBFORM_PAYACCOUNT').text('');
+						jQuery('.PNCO_NUMOFPACKS').text('');
+						jQuery('.STCODE').text('');
+						jQuery('.STDES').text('');
+						/** */
+
+						/** Enable to display scan basket and remove table body content*/
+						jQuery('.scanbasket').show();
+						jQuery('tbody').remove();
+						/** */
 					}
 
-					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
+					/** API called success messgae remove and enable complete button*/
 					$('#api_processing_message').hide();
-					jQuery('.scanbasket').show();
+					// jQuery('.scanbasket').show();
 					$('#scanbasket').val('');
 					jQuery('.btn-complete').prop('disabled', false);
-					jQuery('tbody').remove();
+					// jQuery('tbody').remove();
 					jQuery('.scanitem').val('')
 					/** */
 
