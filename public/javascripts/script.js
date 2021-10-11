@@ -931,12 +931,15 @@ jQuery(document).ready(function () {
 						console.log(resp.printInvoiceResp);
 						await printInvoice(resp.printInvoiceResp);
 					}
-					await downloadTextFile(inputvariable);
 
 					if (resp.error) {
 						console.log("=========================================");
 						console.log("=========================================");
 						console.log("Error: ", resp.error);
+						jQuery('#error_message').html(resp.error.message);
+						jQuery('#error_message').show();
+					} else {
+						await downloadTextFile(inputvariable);
 					}
 
 					/** API called success messgae remove, Enable to display scan basket, enable complete button and remove table body content*/
