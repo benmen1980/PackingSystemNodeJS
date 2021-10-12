@@ -39,7 +39,14 @@ exports.closeInvoice = async (IVNUM) => {
                         'AINVOICES',
                         function onShowMessge(message) {
                             errorMessage = message.message;
-                            reject({ message: errorMessage })
+                            // console.log("type ::::: ", message.type);
+                            // console.log("code ::::: ", message.code);
+                            // console.log("message ::::: ", message.message);
+                            if (message.type === "error") {
+                                reject({ message: message.message });
+                            } else {
+                                resolve({ message: message.message });
+                            }
                         },
                         null,
                         configuration.profile,

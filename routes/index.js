@@ -131,7 +131,7 @@ router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
       const username = req.cookies['username'];
 
       updateResp = await updateQuantity("completed", req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
-      closeInvoiceResp = await closeInvoice(req.body.IVNUM)
+      closeInvoiceResp = await closeInvoice(req.body.IVNUM);
       printInvoiceResp = await printInvoice(req.body.IVNUM);
       // await printInvoice(req.body.IVNUM)
       //   .then(printInvoiceRespData => {
