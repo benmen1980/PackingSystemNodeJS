@@ -479,6 +479,21 @@ jQuery(document).ready(function () {
 				// jQuery('.item-table-wrapper').removeClass('show-table');
 				jQuery('#error_message').html(noDataFoundLabel);
 				jQuery('#error_message').show();
+			} else {
+				/**Call Auto submit functionality */
+				let isQuantityNotEqual = true;
+				jQuery('.table-items .item_row').each(function () {
+					const scannedQuantity = jQuery(this).find('.quantity').val();
+					const totalQtyAmout = jQuery(this).find('.totalqty').text();
+					if (scannedQuantity !== totalQtyAmout) {
+						isQuantityNotEqual = false;
+					}
+				});
+				if (isQuantityNotEqual) {
+					console.log("::::::::::::: if condition :::::::::::::")
+					await completeButtonEvent();
+				}
+				/** End Auto submit functionality */
 			}
 		}
 	});
@@ -644,6 +659,21 @@ jQuery(document).ready(function () {
 					// jQuery('.item-table-wrapper').removeClass('show-table');
 					jQuery('#error_message').html(noDataFoundLabel);
 					jQuery('#error_message').show();
+				} else {
+					/**Call Auto submit functionality */
+					let isQuantityNotEqual = true;
+					jQuery('.table-items .item_row').each(function () {
+						const scannedQuantity = jQuery(this).find('.quantity').val();
+						const totalQtyAmout = jQuery(this).find('.totalqty').text();
+						if (scannedQuantity !== totalQtyAmout) {
+							isQuantityNotEqual = false;
+						}
+					});
+					if (isQuantityNotEqual) {
+						console.log("::::::::::::: if condition :::::::::::::")
+						await completeButtonEvent();
+					}
+					/** End Auto submit functionality */
 				}
 			}
 		}
@@ -824,10 +854,7 @@ jQuery(document).ready(function () {
 		a.click();
 	}
 
-	jQuery(".btn-complete").click(async function (e) {
-		e.preventDefault();
-
-
+	async function completeButtonEvent() {
 		/**Hide the invoice url div */
 		jQuery('.invoice-url').hide();
 		jQuery('#invoice-url-tag').attr("href", "#");
@@ -914,8 +941,8 @@ jQuery(document).ready(function () {
 					if (resp.error) {
 						console.log("=========================================");
 						console.log("=========================================");
-						console.log("Error: ", resp.error);
-						jQuery('#error_message').html(resp.error.message);
+						console.log("Error: ", resp.error.message);
+						jQuery('#error_message').html(resp.error.message.message);
 						jQuery('#error_message').show();
 
 						/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
@@ -982,7 +1009,12 @@ jQuery(document).ready(function () {
 		if (packNumber < 1) {
 			jQuery(".packs_number").addClass('input-error');
 		}
+	}
 
+	jQuery(".btn-complete").click(async function (e) {
+		e.preventDefault();
+
+		await completeButtonEvent();
 	});
 
 	jQuery(".btn-close-to-invoice").click(function (e) {

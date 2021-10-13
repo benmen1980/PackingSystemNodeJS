@@ -39,13 +39,13 @@ exports.closeInvoice = async (IVNUM) => {
                         'AINVOICES',
                         function onShowMessge(message) {
                             errorMessage = message.message;
-                            // console.log("type ::::: ", message.type);
+                            // console.log("message ::::: ", message);
                             // console.log("code ::::: ", message.code);
                             // console.log("message ::::: ", message.message);
-                            if (message.type === "error") {
-                                reject({ message: message.message });
+                            if (message.type === "warning") {
+                                resolve({ message: message });
                             } else {
-                                resolve({ message: message.message });
+                                reject({ message: message });
                             }
                         },
                         null,
@@ -58,7 +58,7 @@ exports.closeInvoice = async (IVNUM) => {
                     await form.getRows(1);
                     await form.setActiveRow(1);
                     await form.activateStart('CLOSEANINVOICE', 'P').then(async (activateFormResponse) => {
-                        console.log("activateFormResponse : ", activateFormResponse)
+                        // console.log("activateFormResponse : ", activateFormResponse)
                         let end = await form.activateEnd();
                         resolve({ message: "Invoice close successfully", activateStartFormResponse: activateFormResponse })
                     }).catch(err => {
