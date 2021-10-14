@@ -46,10 +46,10 @@ exports.updateQuantity = async (type, items, IVNUM, username, palletNo, packNumb
         }
 
         const batchAPIURL = 'https://pri.paneco.com/odata/Priority/tabula.ini/a190515/$batch';
-        const temp = { "requests": apiArray };
-        await axiosFunction(batchAPIURL, 'POST', { "requests": apiArray })
+        const body = { "requests": apiArray };
+        await axiosFunction(batchAPIURL, 'POST', body)
             .then(basketList => {
-                resolve({ patchApiReq: temp, patchApiResp: basketList })
+                resolve({ patchApiReq: body, patchApiResp: basketList })
             })
             .catch((error) => { })
     })

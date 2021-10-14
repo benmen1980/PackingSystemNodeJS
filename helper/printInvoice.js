@@ -47,10 +47,12 @@ exports.printInvoice = async (IVNUM) => {
                     resolve({ url: documentOptionsResult.Urls[0].url })
                 })
                 .catch((err) => {
+                    // console.log("error: ",err);
                     // reject({ message: JSON.stringify(err) })
                     reject({ message: "Getting error into print invoice API" })
                 });
         } catch (err) {
+            // console.log("err: ",err);
             reject({ message: "Getting error into print invoice API" })
         }
     })

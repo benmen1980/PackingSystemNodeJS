@@ -42,7 +42,7 @@ exports.closeInvoice = async (IVNUM) => {
                             // console.log("message ::::: ", message);
                             // console.log("code ::::: ", message.code);
                             // console.log("message ::::: ", message.message);
-                            if (message.type === "warning") {
+                            if (message.type === "information" && message.message === " The invoice/memo has been finalized.") {
                                 resolve({ message: message });
                             } else {
                                 reject({ message: message });
