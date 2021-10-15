@@ -6,7 +6,7 @@
     "start": "nodemon ./bin/www"
   },
   "dependencies": {
-    "axios": "^0.21.1",
+    "axios": "^0.21.4",
     "bcrypt": "^5.0.1",
     "cookie-parser": "^1.4.5",
     "debug": "~2.6.9",
@@ -15,6 +15,6 @@
     "http-errors": "~1.6.3",
     "i18n": "^0.13.3",
     "morgan": "~1.9.1",
-    "priority-web-sdk": "^3.0.7"
+    "priority-web-sdk": "^3.0.12"
   }
 }

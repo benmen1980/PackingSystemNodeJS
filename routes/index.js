@@ -4,7 +4,7 @@ const bcrypt = require('bcrypt');
 var router = express.Router();
 const { axiosFunction } = require('../helper/helper');
 const { closeInvoice } = require('../helper/closeInvoice');
-const { printInvoice } = require('../helper/printInvoice');
+const { printInvoice, printInvoiceOnSubmit } = require('../helper/printInvoice');
 const { updateQuantity } = require('../helper/updateQuantity');
 
 
@@ -132,14 +132,7 @@ router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
 
       updateResp = await updateQuantity("completed", req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
       closeInvoiceResp = await closeInvoice(req.body.IVNUM);
-      printInvoiceResp = await printInvoice(req.body.IVNUM);
-      // await printInvoice(req.body.IVNUM)
-      //   .then(printInvoiceRespData => {
-      //     printInvoiceResp = { ...printInvoiceRespData };
-      //   })
-      //   .catch(error => {
-      //     printInvoiceResp = { ...error };
-      //   })
+      printInvoiceResp = await printInvoiceOnSubmit(req.body.IVNUM, closeInvoiceResp.procObj);
       res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp, printInvoiceResp: printInvoiceResp })
     }
 

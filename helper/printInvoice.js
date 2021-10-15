@@ -19,7 +19,32 @@ function onProgress(proc, number) {
     console.log('proc---: ', proc, "---number--------", number);
 }
 
-exports.printInvoice = async (IVNUM) => {
+exports.printInvoiceOnSubmit = async (IVNUM, procObj) => {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log("procStepResult.input.EditFields  ", procObj);
+            let data = procObj.input.EditFields;
+            data[0].value = IVNUM;
+
+            procObj = await procObj.proc.inputOptions(1, 1);
+            console.log("inputOptions : ", procObj);
+
+            const inputFieldsResult = await procObj.proc.inputFields(1, { EditFields: data })
+            console.log("inputFieldsResult : ", inputFieldsResult);
+
+            const documentOptionsResult = await procObj.proc.documentOptions(1, -103, { pdf: 0, word: 0, mode: 'display' })
+            console.log("documentOptionsResult : ", documentOptionsResult);
+
+            await procObj.proc.continueProc();
+            resolve({ url: documentOptionsResult.Urls[0].url })
+
+        } catch (err) {
+            reject({ message: "Getting error into print invoice API" })
+        }
+    })
+}
+
+exports.printInvoice = async (IVNUM, formObj) => {
     return new Promise((resolve, reject) => {
         try {
             priority
@@ -47,12 +72,10 @@ exports.printInvoice = async (IVNUM) => {
                     resolve({ url: documentOptionsResult.Urls[0].url })
                 })
                 .catch((err) => {
-                    // console.log("error: ",err);
                     // reject({ message: JSON.stringify(err) })
                     reject({ message: "Getting error into print invoice API" })
                 });
         } catch (err) {
-            // console.log("err: ",err);
             reject({ message: "Getting error into print invoice API" })
         }
     })
