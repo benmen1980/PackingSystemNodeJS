@@ -132,7 +132,7 @@ router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
 
       updateResp = await updateQuantity("completed", req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
       closeInvoiceResp = await closeInvoice(req.body.IVNUM);
-      printInvoiceResp = await printInvoiceOnSubmit(req.body.IVNUM, closeInvoiceResp.procObj);
+      printInvoiceResp = await printInvoiceOnSubmit(req.body.IVNUM, closeInvoiceResp.formObj);
       res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp, printInvoiceResp: printInvoiceResp })
     }
 
