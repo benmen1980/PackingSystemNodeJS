@@ -25,7 +25,6 @@ exports.printInvoiceOnSubmit = async (IVNUM, procObj) => {
             await procObj.activateStart('LIEL_WWWSHOWAIV1_0', 'P').then(async (activatePrintFormResponse) => {
 
                 const documentOptionsResult = await activatePrintFormResponse.proc.documentOptions(1, -103, { pdf: 0, word: 0, mode: 'display' })
-                console.log("documentOptionsResult : ", documentOptionsResult);
 
                 await activatePrintFormResponse.proc.continueProc();
                 resolve({ url: documentOptionsResult.Urls[0].url })

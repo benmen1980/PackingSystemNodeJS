@@ -59,8 +59,7 @@ exports.closeInvoice = async (IVNUM) => {
                     formObj = form;
                     await form.activateStart('CLOSEANINVOICE', 'P').then(async (activateFormResponse) => {
                         formObj = form;
-                        // console.log("activateFormResponse : ", activateFormResponse)
-                        let end = await form.activateEnd();
+                        // let end = await form.activateEnd();
                         resolve({ message: "Invoice close successfully", activateStartFormResponse: activateFormResponse, formObj: form })
                     }).catch(err => {
                         reject({ message: err.message })
