@@ -8,7 +8,7 @@ const configuration = {
     appkey: 'F40FFA79343C446A9931BA1177716F04',
     url: 'https://pri.paneco.com',
     tabulaini: 'tabula.ini',
-    language: 3,
+    language: 1,
     profile: {
         company: 'a190515',
     },
