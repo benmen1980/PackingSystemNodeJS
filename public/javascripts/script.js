@@ -480,12 +480,12 @@ jQuery(document).ready(function () {
 				jQuery('#error_message').html(noDataFoundLabel);
 				jQuery('#error_message').show();
 			} else {
-				/**Call Auto submit functionality */
+				/**Start Auto submit functionality */
 				let isQuantityNotEqual = true;
 				jQuery('.table-items .item_row').each(function () {
 					const scannedQuantity = jQuery(this).find('.quantity').val();
 					const totalQtyAmout = jQuery(this).find('.totalqty').text();
-					if (scannedQuantity !== totalQtyAmout) {
+					if (parseInt(scannedQuantity) !== parseInt(totalQtyAmout)) {
 						isQuantityNotEqual = false;
 					}
 				});
@@ -665,7 +665,7 @@ jQuery(document).ready(function () {
 					jQuery('.table-items .item_row').each(function () {
 						const scannedQuantity = jQuery(this).find('.quantity').val();
 						const totalQtyAmout = jQuery(this).find('.totalqty').text();
-						if (scannedQuantity !== totalQtyAmout) {
+						if (parseInt(scannedQuantity) !== parseInt(totalQtyAmout)) {
 							isQuantityNotEqual = false;
 						}
 					});
