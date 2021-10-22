@@ -33,8 +33,8 @@ exports.closeInvoice = async (IV) => {
 
                     procStepResult = await procStepResult.proc.inputFields(1, { EditFields: data })
 
-                    // console.log('procStepResult =>', procStepResult);
-                    if (procStepResult.messagetype === "information" && (procStepResult.message === "The invoice/memo has been finalized." || procStepResult.message === "The invoice was successfully closed.")) {
+                    console.log('procStepResult =>', procStepResult);
+                    if (procStepResult.messagetype === "information" && (procStepResult.message === "החשבונית/תזכיר הסתיימה." || procStepResult.message === "החשבונית נסגרה בהצלחה.")) {
                         resolve({ message: "Invoice close successfully", activateStartFormResponse: procStepResult })
                     } else {
                         reject({ message: procStepResult.message })
