@@ -2,74 +2,49 @@ const priority = require('priority-web-sdk');
 
 const configuration = {
     appname: 'demo',
-    username: 'API',
-    password: '12345678',
-    appid: 'APP006',
-    appkey: 'F40FFA79343C446A9931BA1177716F04',
+    username: 'curve',
+    password: 'df53dsf51c',
     url: 'https://pri.paneco.com',
     tabulaini: 'tabula.ini',
-    language: 1,
+    language: 2,
     profile: {
         company: 'a190515',
     },
     devicename: 'Roy',
 };
 
-exports.closeInvoice = async (IVNUM) => {
+function onProgress(proc, number) {
+    console.log('proc---: ', proc, "---number--------", number);
+    return;
+}
+
+exports.closeInvoice = async (IV) => {
     return new Promise((resolve, reject) => {
         try {
-            let formObj;
-            let errorMessage = '';
-            let filter = {
-                or: 0,
-                ignorecase: 1,
-                QueryValues: [
-                    {
-                        field: 'IVNUM',
-                        fromval: IVNUM,
-                        op: '=',
-                        sort: 0,
-                        isdesc: 0,
-                    },
-                ],
-            };
             priority
                 .login(configuration)
-                .then(() =>
-                    priority.formStart(
-                        'AINVOICES',
-                        function onShowMessge(message) {
-                            errorMessage = message.message;
-                            // console.log("message ::::: ", message);
-                            if (message.type === "information" && message.message === " The invoice/memo has been finalized.") {
-                                resolve({ message: message, formObj: formObj });
-                            } else {
-                                reject({ message: message, formObj: formObj });
-                            }
-                        },
-                        null,
-                        configuration.profile,
-                        1
-                    )
-                )
-                .then(async (form) => {
-                    await form.setSearchFilter(filter);
-                    await form.getRows(1);
-                    await form.setActiveRow(1);
-                    formObj = form;
-                    await form.activateStart('CLOSEANINVOICE', 'P').then(async (activateFormResponse) => {
-                        formObj = form;
-                        // let end = await form.activateEnd();
-                        resolve({ message: "Invoice close successfully", activateStartFormResponse: activateFormResponse, formObj: form })
-                    }).catch(err => {
-                        reject({ message: err.message })
-                    });
+                .then(() => {
+                    return priority.procStart('CLOSEANINVOICE', 'P', onProgress, configuration.profile.company);
+                })
+                .then(async (procStepResult) => {
+                    // console.log('procStepResult =>', procStepResult);
+
+                    let data = procStepResult.input.EditFields;
+                    data[0].value = IV;
+
+                    procStepResult = await procStepResult.proc.inputFields(1, { EditFields: data })
+
+                    if (procStepResult.messagetype === "information" && procStepResult.message === " The invoice/memo has been finalized.") {
+                        resolve({ message: "Invoice close successfully", activateStartFormResponse: procStepResult })
+                    } else {
+                        reject({ message: procStepResult.message })
+                    }
                 })
                 .catch((err) => {
                     reject({ message: err.message })
                 });
         } catch (err) {
-            reject({ message: "Getting error into close invoice API" })
+            reject({ message: err.message })
         }
     })
 }

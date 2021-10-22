@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=(ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' or PNCO_WEBNUMBER eq '${req.body.basket_number}') and FINAL ne 'Y' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,BARCODE,PDES,CARTONNUM,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' ;$expand= VMSF_PARTBARCODES_SUBFORM)&$select=IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=(ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' or PNCO_WEBNUMBER eq '${req.body.basket_number}') and FINAL ne 'Y' &$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,BARCODE,PDES,CARTONNUM,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' ;$expand= VMSF_PARTBARCODES_SUBFORM)&$select=IV,IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {
@@ -92,7 +92,10 @@ router.post('/fetchbasket', (req, res, next) => {
           html += '</tbody>';
 
           res.status(200).json({
-            status: 1, content: html, ivnum: ivnum, IVNUM: basketList.value[0].IVNUM, ROYY_TRANSPORTMEAN: basketList.value[0].ROYY_TRANSPORTMEAN,
+            status: 1, content: html, ivnum: ivnum,
+            IVNUM: basketList.value[0].IVNUM,
+            IV: basketList.value[0].IV,
+            ROYY_TRANSPORTMEAN: basketList.value[0].ROYY_TRANSPORTMEAN,
             ORDNAME: basketList.value[0].ORDNAME, CDES: basketList.value[0].CDES,
             SHIPTO2_SUBFORM_ADDRESS: (basketList.value[0].SHIPTO2_SUBFORM) ? basketList.value[0].SHIPTO2_SUBFORM.ADDRESS : '',
             SHIPTO2_SUBFORM_PHONENUM: (basketList.value[0].SHIPTO2_SUBFORM) ? basketList.value[0].SHIPTO2_SUBFORM.PHONENUM : '',
@@ -129,10 +132,9 @@ router.post('/update_quantity_with_close_invoice', async (req, res, next) => {
     req.body.Items = JSON.parse(req.body.Items)
     if (req.body.Items.length > 0) {
       const username = req.cookies['username'];
-
       updateResp = await updateQuantity("completed", req.body.Items, req.body.IVNUM, username, req.body.palletNo, req.body.packNumber);
-      closeInvoiceResp = await closeInvoice(req.body.IVNUM);
-      printInvoiceResp = await printInvoiceOnSubmit(req.body.IVNUM, closeInvoiceResp.formObj);
+      closeInvoiceResp = await closeInvoice(req.body.IV);
+      printInvoiceResp = await printInvoice(req.body.IV);
       res.status(200).json({ status: 1, originURL: `${req.headers.origin}/user/home`, message: res.__('The data are successfully updated'), ...updateResp, closeInvoiceResp: closeInvoiceResp, printInvoiceResp: printInvoiceResp })
     }
 
@@ -226,10 +228,11 @@ router.post('/fetchmessage', function (req, res, next) {
 
 router.post('/close_invoice', async function (req, res, next) {
   try {
-    if (req.body.IVNUM === "") {
-      return res.status(200).json({ message: "Please select valid IVNUM" })
+    console.log('req.body.IV =>', req.body.IV);
+    if (req.body.IV === "") {
+      return res.status(200).json({ message: "Please select valid IV" })
     }
-    await closeInvoice(req.body.IVNUM)
+    await closeInvoice(req.body.IV)
       .then(closeInvoiceResp => {
         res.status(200).json({ ...closeInvoiceResp })
       })
@@ -243,10 +246,10 @@ router.post('/close_invoice', async function (req, res, next) {
 
 router.post('/print_invoice', async function (req, res, next) {
   try {
-    if (req.body.IVNUM === "") {
-      return res.status(200).json({ message: "Please select valid IVNUM" })
+    if (req.body.IV === "") {
+      return res.status(200).json({ message: "Please select valid IV" })
     }
-    await printInvoice(req.body.IVNUM)
+    await printInvoice(req.body.IV)
       .then(printInvoiceResp => {
         res.status(200).json({ status: 1, ...printInvoiceResp })
       })

@@ -2,13 +2,11 @@ const priority = require('priority-web-sdk');
 
 const configuration = {
     appname: 'demo',
-    username: 'API',
-    password: '12345678',
-    appid: 'APP006',
-    appkey: 'F40FFA79343C446A9931BA1177716F04',
+    username: 'curve',
+    password: 'df53dsf51c',
     url: 'https://pri.paneco.com',
     tabulaini: 'tabula.ini',
-    language: 1,
+    language: 2,
     profile: {
         company: 'a190515',
     },
@@ -19,39 +17,18 @@ function onProgress(proc, number) {
     console.log('proc---: ', proc, "---number--------", number);
 }
 
-exports.printInvoiceOnSubmit = async (IVNUM, procObj) => {
-    return new Promise(async (resolve, reject) => {
-        try {
-            await procObj.activateStart('LIEL_WWWSHOWAIV1_0', 'P').then(async (activatePrintFormResponse) => {
-
-                const documentOptionsResult = await activatePrintFormResponse.proc.documentOptions(1, -103, { pdf: 0, word: 0, mode: 'display' })
-
-                await activatePrintFormResponse.proc.continueProc();
-                resolve({ url: documentOptionsResult.Urls[0].url })
-            }).catch((err) => {
-                reject({ message: "Getting error into print invoice API" })
-            });
-
-        } catch (err) {
-            reject({ message: "Getting error into print invoice API" })
-        }
-    })
-}
-
-exports.printInvoice = async (IVNUM) => {
+exports.printInvoice = async (IV) => {
     return new Promise((resolve, reject) => {
         try {
             priority
                 .login(configuration)
-                .then(async (loginResp) => {
-                    return await priority.procStart('LIEL_WWWSHOWAIV1_0', 'P', onProgress, configuration.profile.company);
+                .then((loginResp) => {
+                    return priority.procStart('LIEL_WWWSHOWAIV1_0', 'P', onProgress, configuration.profile.company);
                 })
                 .then(async procStepResult => {
 
                     let data = procStepResult.input.EditFields;
-                    data[0].value = IVNUM;
-
-                    procStepResult = await procStepResult.proc.inputOptions(1, 1);
+                    data[0].value = IV;
 
                     const inputFieldsResult = await procStepResult.proc.inputFields(1, { EditFields: data })
 
@@ -66,11 +43,10 @@ exports.printInvoice = async (IVNUM) => {
                     resolve({ url: documentOptionsResult.Urls[0].url })
                 })
                 .catch((err) => {
-                    // reject({ message: JSON.stringify(err) })
-                    reject({ message: "Getting error into print invoice API" })
+                    reject({ message: JSON.stringify(err) })
                 });
         } catch (err) {
-            reject({ message: "Getting error into print invoice API" })
+            reject({ message: JSON.stringify(err) })
         }
     })
 }

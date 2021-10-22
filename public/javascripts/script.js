@@ -135,6 +135,7 @@ jQuery(document).ready(function () {
 						if (obj.IVNUM && obj.IVNUM !== "") {
 							jQuery('.scanbasket-IVNUM').show();
 							jQuery('.scanbasket-IVNUM label').text(obj.IVNUM);
+							jQuery('.scanbasket-IV label').text(obj.IV);
 							jQuery('.scanbasket-royy_transportmean').show();
 							jQuery('.scanbasket-royy_transportmean label').text(obj.ROYY_TRANSPORTMEAN);
 						}
@@ -234,6 +235,7 @@ jQuery(document).ready(function () {
 							if (obj.IVNUM && obj.IVNUM !== "") {
 								jQuery('.scanbasket-IVNUM').show();
 								jQuery('.scanbasket-IVNUM label').text(obj.IVNUM);
+								jQuery('.scanbasket-IV label').text(obj.IV);
 								jQuery('.scanbasket-royy_transportmean').show();
 								jQuery('.scanbasket-royy_transportmean label').text(obj.ROYY_TRANSPORTMEAN);
 							}
@@ -864,6 +866,7 @@ jQuery(document).ready(function () {
 
 		let ItemArray = [];
 		let IVnum = jQuery('.scanbasket-IVNUM label').text();
+		let IV = jQuery('.scanbasket-IV label').text();
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
@@ -897,6 +900,7 @@ jQuery(document).ready(function () {
 			const requestData = {
 				'action': 'patchitemtable',
 				'IVNUM': IVnum,
+				'IV': IV,
 				'packNumber': packNumber,
 				'palletNo': selectedPalletNo,
 				'Items': JSON.stringify(ItemArray)
@@ -958,6 +962,7 @@ jQuery(document).ready(function () {
 						jQuery('.scanbasket-IVNUM').hide();
 						jQuery('.scanbasket-royy_transportmean').hide();
 						jQuery('.scanbasket-IVNUM label').text('');
+						jQuery('.scanbasket-IV label').text('');
 						jQuery('.scanbasket-royy_transportmean label').text('');
 						/** **/
 
@@ -1019,8 +1024,8 @@ jQuery(document).ready(function () {
 
 	jQuery(".btn-close-to-invoice").click(function (e) {
 		e.preventDefault();
-		const ivnumValue = jQuery('.scanbasket-IVNUM label').text();
-		if (ivnumValue && ivnumValue !== "") {
+		const ivValue = jQuery('.scanbasket-IV label').text();
+		if (ivValue && ivValue !== "") {
 
 			/**Disable close invoice, complete button and change close invoice button text */
 			jQuery('.btn-close-to-invoice').text(CloseInvoiceInProgressLabel)
@@ -1033,7 +1038,7 @@ jQuery(document).ready(function () {
 				url: '/close_invoice',
 				type: 'POST',
 				data: {
-					'IVNUM': ivnumValue
+					'IV': ivValue
 				},
 				success: function (resp) {
 					console.log("Close Invoice API Response  : ", resp)
@@ -1093,8 +1098,8 @@ jQuery(document).ready(function () {
 
 	jQuery(".btn-print-to-invoice").click(function (e) {
 		e.preventDefault();
-		const ivnumValue = jQuery('.scanbasket-IVNUM label').text();
-		if (ivnumValue && ivnumValue !== "") {
+		const ivValue = jQuery('.scanbasket-IV label').text();
+		if (ivValue && ivValue !== "") {
 
 			/**Disable close invoice, complete button and change close invoice button text */
 			jQuery('.btn-print-to-invoice').text(printingInvoiceLabel)
@@ -1107,7 +1112,7 @@ jQuery(document).ready(function () {
 				url: '/print_invoice',
 				type: 'POST',
 				data: {
-					'IVNUM': ivnumValue
+					'IV': ivValue
 				},
 				success: async function (resp) {
 					if (resp.status) {
@@ -1176,6 +1181,7 @@ jQuery(document).ready(function () {
 
 		/**Unset IVNUM and ROYY_TRANSPORTMEAN labels text*/
 		jQuery('.scanbasket-IVNUM label').text('');
+		jQuery('.scanbasket-IV label').text('');
 		jQuery('.scanbasket-royy_transportmean label').text('');
 		/** **/
 
@@ -1208,6 +1214,7 @@ jQuery(document).ready(function () {
 
 		let ItemArray = [];
 		let IVnum = jQuery('.scanbasket-IVNUM label').text();
+		let IV = jQuery('.scanbasket-IV label').text();
 
 		jQuery('.table-items .item_row').each(function () {
 			let current_Qty = jQuery(this).find('.quantity').val();
@@ -1230,6 +1237,7 @@ jQuery(document).ready(function () {
 			const requestData = {
 				'action': 'patchitemtable',
 				'IVNUM': IVnum,
+				'IV': IV,
 				'packNumber': packNumber,
 				'palletNo': selectedPalletNo,
 				'Items': JSON.stringify(ItemArray)
