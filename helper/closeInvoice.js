@@ -6,7 +6,7 @@ const configuration = {
     password: 'df53dsf51c',
     url: 'https://pri.paneco.com',
     tabulaini: 'tabula.ini',
-    language: 2,
+    language: 1,
     profile: {
         company: 'a190515',
     },
