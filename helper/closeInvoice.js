@@ -6,7 +6,7 @@ const configuration = {
     password: 'df53dsf51c',
     url: 'https://pri.paneco.com',
     tabulaini: 'tabula.ini',
-    language: 1,
+    language: 2,
     profile: {
         company: 'a190515',
     },
@@ -27,14 +27,14 @@ exports.closeInvoice = async (IV) => {
                     return priority.procStart('CLOSEANINVOICE', 'P', onProgress, configuration.profile.company);
                 })
                 .then(async (procStepResult) => {
-                    // console.log('procStepResult =>', procStepResult);
 
                     let data = procStepResult.input.EditFields;
                     data[0].value = IV;
 
                     procStepResult = await procStepResult.proc.inputFields(1, { EditFields: data })
 
-                    if (procStepResult.messagetype === "information" && procStepResult.message === " The invoice/memo has been finalized.") {
+                    // console.log('procStepResult =>', procStepResult);
+                    if (procStepResult.messagetype === "information" && (procStepResult.message === "The invoice/memo has been finalized." || procStepResult.message === "The invoice was successfully closed.")) {
                         resolve({ message: "Invoice close successfully", activateStartFormResponse: procStepResult })
                     } else {
                         reject({ message: procStepResult.message })
