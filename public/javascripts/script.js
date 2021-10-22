@@ -946,7 +946,7 @@ jQuery(document).ready(function () {
 						console.log("=========================================");
 						console.log("=========================================");
 						console.log("Error: ", resp.error.message);
-						jQuery('#error_message').html(resp.error.message.message);
+						jQuery('#error_message').html(resp.error.message);
 						jQuery('#error_message').show();
 
 						/** Hide scan item, table section, (IVNUM and royy_transportmean div section set to display none) and display the API processing message  */
