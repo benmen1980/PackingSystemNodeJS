@@ -985,6 +985,7 @@ jQuery(document).ready(function () {
 
 						/** Enable to display scan basket and remove table body content*/
 						jQuery('.scanbasket').show();
+						jQuery('.scanbasket').focus();
 						jQuery('tbody').remove();
 						/** */
 					}
