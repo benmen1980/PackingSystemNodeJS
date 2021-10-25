@@ -1074,13 +1074,6 @@ jQuery(document).ready(function () {
 
 			let bb = new Blob([blob], { type: oReq.response.type });
 			// let bb = new Blob([blob], { type: 'application/pdf' });
-			let a = document.createElement('a');
-			a.download = (blob.type === "application/pdf") ? 'Invoice.pdf' : 'Invoice.html';
-			a.href = window.URL.createObjectURL(bb);
-			a.textContent = 'Download ready';
-			a.style = 'display:none';
-			a.click();
-
 
 			/********** Open file from URL and Print ************/
 			let objFra = document.createElement('iframe');     // Create an IFrame.

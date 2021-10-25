@@ -5,13 +5,13 @@
     "User Login": "כניסת משתמש",
     "Username": "שם משתמש",
     "Logoff": "להתנתק",
-    "Pallet No.": "מזרן מס '",
+    "Pallet No.": "מספר משטח",
     "Distribution Number": "מספר הפצה",
     "Login": "התחברות",
     "Enter your valid credential.": "הזן את האישור התקף שלך.",
     "Number of packs": "מספר חבילות",
-    "Complete": "לְהַשְׁלִים",
-    "Suspended": "מוּשׁהֶה",
+    "Complete": "סיום",
+    "Suspended": "השהייה",
     "Logout": "להתנתק",
     "Add User": "הוסף משתמש",
     "Error while finding credential": "שגיאה במציאת אישורים",
@@ -31,5 +31,5 @@
     "Print invoice": "הדפסת חשבונית",
     "Printing invoice": "הדפסת חשבונית",
     "Print Sticker": "מדבקת הדפסה",
-    "STCODE not equalt pallete STCODE!!!": "STCODE לא שווה pallete STCODE !!!"
+    "STCODE not equalt pallete STCODE!!!": "מספר המשטח שנבחר לא זהה לקוד המשלוח בהזמנה"
 }
