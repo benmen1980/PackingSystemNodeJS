@@ -795,7 +795,7 @@ jQuery(document).ready(function () {
 			{ field: 'SHIPTO2_SUBFORM_STATE', position: 8 },
 			{ field: 'SHIPTO2_SUBFORM_PHONENUM', position: 9 },
 			{ field: 'PAYMENTDEF_SUBFORM_PAYACCOUNT', position: 11 },
-			{ field: 'QAMT_SHIPREMARK', position: 13 },
+			{ field: 'STDES', position: 13 },
 			{ field: 'PNCO_REMARKS', position: 15 },
 			{ field: 'PNCO_WEBNUMBER', position: 17 },
 			{ field: 'packs_number', position: 19 },
