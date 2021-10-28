@@ -165,6 +165,7 @@ jQuery(document).ready(function () {
 					} else {
 						// jQuery('.alert').html(obj.message);
 						// jQuery('.alert').show();
+						jQuery('#scanbasket').val('');
 						jQuery('#error_message').html(obj.message);
 						jQuery('#error_message').show();
 						jQuery('.product_table').removeClass('show-table');
@@ -269,6 +270,7 @@ jQuery(document).ready(function () {
 
 							// jQuery('.alert').html(obj.message);
 							// jQuery('.alert').show();
+							jQuery('#scanbasket').val('');
 							jQuery('#error_message').html(obj.message);
 							jQuery('#error_message').show();
 							// jQuery('.item-table-wrapper').removeClass('show-table');

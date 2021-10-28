@@ -163,6 +163,9 @@ header.template-header {
 .table-hover tbody tr.active-green {
     background-color: #00c850; 
 }
+.table-hover tbody tr.active-lightgreen {
+    background-color: #89e269; 
+}
 .product_table table {
     border: 1px solid #dee2e6;
     border-radius: 10px !important;

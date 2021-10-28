@@ -7,7 +7,7 @@ router.get('/home', userAuthentication, (req, res, next) => {
 
     const date = new Date();
     // const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE ge ${date.toISOString()}&$select=PALLETNUM,STCODE,STDES,CURDATE`;
-    const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE%20ge%202021-05-01T09:59:00%2B02:00 and SENTTODRIVER ne 'Y'&$select=PALLETNUM,STCODE,STDES,SENTTODRIVER ,CURDATE`;
+    const listPalletNumbertUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/QAMR_PALLET2?$filter=CURDATE%20ge%202021-05-01T09:59:00%2B02:00 and SENTTODRIVER ne 'Y'&$select=PALLETNUM,STCODE,STDES,SENTTODRIVER ,CURDATE, REMARKS`;
     axiosFunction(listPalletNumbertUrl, 'get')
         .then(palletNoList => {
             res.render('user/home', {
@@ -29,7 +29,7 @@ router.get('/home', userAuthentication, (req, res, next) => {
                 CloseInvoiceInProgressLabel: res.__('Close invoice in-progress'),
                 printInvoiceLabel: res.__('Print invoice'),
                 printStickerLabel: res.__('Print Sticker'),
-                stcodeNotEqualPallentStcodeLabel : res.__('STCODE not equalt pallete STCODE!!!')
+                stcodeNotEqualPallentStcodeLabel: res.__('STCODE not equalt pallete STCODE!!!')
             });
         })
         .catch((error) => {
@@ -51,7 +51,7 @@ router.get('/home', userAuthentication, (req, res, next) => {
                 closeinvoiceLabel: res.__('Close invoice'),
                 CloseInvoiceInProgressLabel: res.__('Close invoice in-progress'),
                 printInvoiceLabel: res.__('Print invoice'),
-                stcodeNotEqualPallentStcodeLabel : res.__('STCODE not equalt pallete STCODE!!!')
+                stcodeNotEqualPallentStcodeLabel: res.__('STCODE not equalt pallete STCODE!!!')
             });
         })
 })
