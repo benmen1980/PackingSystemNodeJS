@@ -483,6 +483,7 @@ jQuery(document).ready(function () {
 				// jQuery('.item-table-wrapper').removeClass('show-table');
 				jQuery('#error_message').html(noDataFoundLabel);
 				jQuery('#error_message').show();
+				jQuery('.scanitem').val('');
 			} else {
 				/**Start Auto submit functionality */
 				let isQuantityNotEqual = true;
@@ -663,6 +664,7 @@ jQuery(document).ready(function () {
 					// jQuery('.item-table-wrapper').removeClass('show-table');
 					jQuery('#error_message').html(noDataFoundLabel);
 					jQuery('#error_message').show();
+					jQuery('.scanitem').val('');
 				} else {
 					/**Call Auto submit functionality */
 					let isQuantityNotEqual = true;
