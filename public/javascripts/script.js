@@ -50,6 +50,11 @@ jQuery(document).ready(function () {
 		}
 
 		jQuery(this).parents(".number-input").find('.quantity').val(new_qty);
+
+		const totalQty = jQuery(this).parents(".item_row").find('.totalqty').html();
+		if (parseInt(totalQty) === new_qty) {
+			jQuery(this).parents(".item_row").addClass('active-green');
+		}
 		// jQuery(this).parents(".item_row").find(".totalqty").text(new_qty);
 	});
 
@@ -344,7 +349,8 @@ jQuery(document).ready(function () {
 				items = [...items, ...tooltiptext];
 
 				if (totalSkuCount > 1) {
-					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+					// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -357,6 +363,14 @@ jQuery(document).ready(function () {
 							jQuery(this).addClass('active');
 							jQuery(this).siblings().removeClass('active');
 							jQuery(this).find('.quantity').val(new_qty);
+
+							if (parseInt(new_qty) === parseInt(item_quantity)) {
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-yellow');
+								jQuery(this).addClass('active-green');
+							}
+
 							jQuery('.item-table-wrapper').addClass('show-table');
 							jQuery('.alert').hide();
 							$this.val('');
@@ -410,8 +424,10 @@ jQuery(document).ready(function () {
 					}
 				}
 				else {
-					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-
+					console.log("tooltiptext : ", tooltiptext);
+					// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						console.log("under the if condition...");
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
 
@@ -423,22 +439,38 @@ jQuery(document).ready(function () {
 						jQuery(this).find('.quantity').val(new_qty);
 						// jQuery(this).find('.totalqty').text(new_qty);
 
+						let item_quantity = jQuery(this).find('.totalqty').html();
+						if (parseInt(new_qty) === parseInt(item_quantity)) {
+							jQuery(this).removeClass('active');
+							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-yellow');
+							jQuery(this).addClass('active-green');
+						}
+
 						jQuery('.item-table-wrapper').addClass('show-table');
 						jQuery('.alert').hide();
 
 						$this.val('');
 					}
 					else {
+						console.log("under the else condition...");
 						// jQuery(this).removeClass('active');
 						let scan_quantity = jQuery(this).find('.quantity').val();
 						let item_quantity = jQuery(this).find('.totalqty').html();
 						if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+							jQuery(this).removeClass('active');
+							jQuery(this).removeClass('active-yellow');
+							jQuery(this).removeClass('active-green');
 							jQuery(this).addClass('active-red');
 						} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
-
+							jQuery(this).removeClass('active');
+							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-green');
 							jQuery(this).addClass('active-yellow');
-
 						} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
+							jQuery(this).removeClass('active');
+							jQuery(this).removeClass('active-red');
+							jQuery(this).removeClass('active-yellow');
 							jQuery(this).addClass('active-green');
 
 						}
@@ -495,7 +527,6 @@ jQuery(document).ready(function () {
 					}
 				});
 				if (isQuantityNotEqual) {
-					console.log("::::::::::::: if condition :::::::::::::")
 					await completeButtonEvent();
 				}
 				/** End Auto submit functionality */
@@ -537,7 +568,8 @@ jQuery(document).ready(function () {
 					items = [...items, ...tooltiptext];
 
 					if (totalSkuCount > 1) {
-						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+						// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -550,6 +582,14 @@ jQuery(document).ready(function () {
 								jQuery(this).addClass('active');
 								jQuery(this).siblings().removeClass('active');
 								jQuery(this).find('.quantity').val(new_qty);
+
+								if (parseInt(new_qty) === parseInt(item_quantity)) {
+									jQuery(this).removeClass('active');
+									jQuery(this).removeClass('active-red');
+									jQuery(this).removeClass('active-yellow');
+									jQuery(this).addClass('active-green');
+								}
+
 								jQuery('.item-table-wrapper').addClass('show-table');
 								jQuery('.alert').hide();
 								$this.val('');
@@ -591,7 +631,8 @@ jQuery(document).ready(function () {
 						}
 					}
 					else {
-						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+						// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let new_qty = current_qty + 1;
@@ -604,6 +645,14 @@ jQuery(document).ready(function () {
 							jQuery(this).find('.quantity').val(new_qty);
 							// jQuery(this).find('.totalqty').text(new_qty);
 
+							let item_quantity = jQuery(this).find('.totalqty').html();
+							if (parseInt(new_qty) === parseInt(item_quantity)) {
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-yellow');
+								jQuery(this).addClass('active-green');
+							}
+
 							jQuery('.item-table-wrapper').addClass('show-table');
 							jQuery('.alert').hide();
 
@@ -614,14 +663,20 @@ jQuery(document).ready(function () {
 							let scan_quantity = jQuery(this).find('.quantity').val();
 							let item_quantity = jQuery(this).find('.totalqty').html();
 							if (parseInt(scan_quantity) > parseInt(item_quantity)) {
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-yellow');
+								jQuery(this).removeClass('active-green');
 								jQuery(this).addClass('active-red');
 							} else if (parseInt(scan_quantity) > 0 && parseInt(scan_quantity) < parseInt(item_quantity)) {
-
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-green');
 								jQuery(this).addClass('active-yellow');
-
 							} else if (parseInt(scan_quantity) === parseInt(item_quantity)) {
+								jQuery(this).removeClass('active');
+								jQuery(this).removeClass('active-red');
+								jQuery(this).removeClass('active-yellow');
 								jQuery(this).addClass('active-green');
-
 							}
 							else {
 								jQuery(this).removeClass('active');
@@ -676,7 +731,6 @@ jQuery(document).ready(function () {
 						}
 					});
 					if (isQuantityNotEqual) {
-						console.log("::::::::::::: if condition :::::::::::::")
 						await completeButtonEvent();
 					}
 					/** End Auto submit functionality */
