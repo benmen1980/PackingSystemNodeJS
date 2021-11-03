@@ -424,10 +424,8 @@ jQuery(document).ready(function () {
 					}
 				}
 				else {
-					console.log("tooltiptext : ", tooltiptext);
 					// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
 					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
-						console.log("under the if condition...");
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
 
@@ -453,7 +451,6 @@ jQuery(document).ready(function () {
 						$this.val('');
 					}
 					else {
-						console.log("under the else condition...");
 						// jQuery(this).removeClass('active');
 						let scan_quantity = jQuery(this).find('.quantity').val();
 						let item_quantity = jQuery(this).find('.totalqty').html();
