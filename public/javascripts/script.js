@@ -36,6 +36,21 @@ jQuery(document).ready(function () {
 		jQuery(".form-response").html('');
 	});
 
+
+	jQuery('body').on('click', '.Popup', function () {
+		const data = jQuery(this).parent().find('.VMSF_BARCODE_SUBFORM').html();
+		console.log(data);
+		const arrayOfBarcode = JSON.parse(data);
+		jQuery('.modal-body p').remove();
+		if (arrayOfBarcode.length) {
+			arrayOfBarcode.forEach(element => {
+				jQuery('.modal-body').append(`<p class="h5">${element}</p>`);
+			});
+		} else {
+			jQuery('.modal-body').append(`<p class="h5">${noDataFoundLabel}</p>`);
+		}
+	});
+
 	jQuery('body').on('click', '.qtybox-btn', function () {
 		var qty = jQuery(this).parents(".number-input").find('.quantity').val();
 		var new_qty = 0;
@@ -96,8 +111,6 @@ jQuery(document).ready(function () {
 
 		if (basket_num) {
 
-			jQuery(".scanitem").parents('.form-group').show();
-
 			jQuery.ajax({
 
 				url: '/fetchbasket',
@@ -109,8 +122,11 @@ jQuery(document).ready(function () {
 				success: function (resp) {
 
 					var obj = resp;
-
+					console.log(":::::::: Scan Basket API Request :::::::: ");
+					console.log(resp.basketRequestUrl);
 					if (obj.status == 1) {
+
+						jQuery(".scanitem").parents('.form-group').show();
 
 						jQuery('.table-items').html(obj.content);
 						jQuery('.alert').hide();
@@ -197,7 +213,6 @@ jQuery(document).ready(function () {
 
 			if (basket_num) {
 
-				jQuery(".scanitem").parents('.form-group').show();
 
 				jQuery.ajax({
 
@@ -211,7 +226,11 @@ jQuery(document).ready(function () {
 
 						var obj = resp;
 
+						console.log(":::::::: Scan Basket API Request :::::::: ");
+						console.log(resp.basketRequestUrl);
+
 						if (obj.status == 1) {
+							jQuery(".scanitem").parents('.form-group').show();
 
 							jQuery('.table-items').html(obj.content);
 							jQuery('.alert').hide();
@@ -736,15 +755,6 @@ jQuery(document).ready(function () {
 		}
 	});
 
-	// jQuery(".btn-complete").click(function () {
-	// 	jQuery('.item-table-wrapper').hide();
-
-	// 	jQuery('.scanbasket').show();
-	// 	jQuery('.scanitem').hide();
-	// 	jQuery('.item-table-wrapper').removeClass('show-table');
-	// 	$('#scanbasket').val('');
-	// });
-
 	jQuery(".login_submit").click(function (e) {
 		// e.preventDefault();
 		var username = jQuery(".loginform .username").val();
@@ -779,25 +789,6 @@ jQuery(document).ready(function () {
 		}
 
 	});
-
-
-	/*jQuery(".qtybox-btn").click(function(){
-		var qty = jQuery(this).parents(".number-input").find('.quantity').val();
-		jQuery(this).parents(".item_row").find(".totalqty").text(qty);
-	});*/
-
-	/*jQuery(".item_row").click(function(){
-		jQuery(this).toggleClass('active');
-		jQuery(this).siblings().removeClass('active');
-	});*/
-
-	/*jQuery('.scanbasket').on('focus', function(){
-		jQuery('.item-table-wrapper').show();
-	});*/
-
-	/*jQuery('.scanitem').on('focusout', function(){
-		jQuery('.item-table-wrapper').hide();
-	});*/
 
 	$("select.pallet_no").change(function () {
 		const selectedPalletNoValue = jQuery("select.pallet_no").children("option:selected").val();

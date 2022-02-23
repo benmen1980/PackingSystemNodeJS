@@ -185,35 +185,52 @@
                             style="display: none; width: 50%; margin: 10px auto;">
                             <%= printingAndProcessingLabel%>
                         </div>
-                        <div class="table-responsive item-table-wrapper" style="display: none">
+                        <div class="table-responsive item-table-wrapper" style="display: none;">
                             <table class="table table-hover table-items">
-                                <tr>
-                                    <th>נסרק</th>
-                                    <th>כמות</th>
-                                    <th style="text-align: right">תאור</th>
-                                    <th>מקט</th>
-                                    <th>KLINE</th>
-                                </tr>
-                                <!-- <tr class="item_row" data-id="1">
-                                    <td class="qtybox">
-                                        <div class="number-input md-number-input">
-                                            <input class="quantity" min="0" name="quantity" value="1" type="number">
-                                            <div class="qty-btn">
-                                                <button class="plus qtybox-btn"><i class="fa fa-sort-asc"
-                                                        aria-hidden="true"></i></button>
-                                                <button class="minus qtybox-btn"><i class="fa fa-caret-down"
-                                                        aria-hidden="true"></i></button>
+                                <!-- <tbody>
+                                    <tr>
+                                        <th>נסרק</th>
+                                        <th>כמות</th>
+                                        <th>CONTENT</th>
+                                        <th>תאור</th>
+                                        <th>מקט</th>
+                                        <th></th>
+                                        <th>KLINE</th>
+                                    </tr>
+                                    <tr class="item_row active-green" data-id="1">
+                                        <td class="qtybox">
+                                            <div class="number-input md-number-input">
+                                                <input class="quantity" min="0" name="quantity" value="0" type="number">
+                                                <div class="qty-btn">
+                                                    <button class="plus qtybox-btn"><i class="fa fa-sort-asc"
+                                                            aria-hidden="true"></i></button>
+                                                    <button class="minus qtybox-btn"><i class="fa fa-caret-down"
+                                                            aria-hidden="true"></i></button>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
-                                    <td class="totalqty">3</td>
-                                    <td class="itemdesc">ווסקי</td>
-                                    <td class="itemsku" data-sku="AAAA">AAAA</td>
-                                    <td class="kline">1</td>
-                                </tr>
-                                 -->
+                                        </td>
+                                        <td class="totalqty">0</td>
+                                        <td class="CONTENT">CONTENT</td>
+                                        <td class="itemdesc">קמפרי 28.5% - ליטר</td>
+                                        <td class="itemsku" data-sku="8000040003599">8000040003599</td>
+                                        <td class="Popup" data-toggle="modal" data-target="#barcodeSubformModel">*</td>
+                                        <td class="kline">2<span class="tooltiptext">8000040000802</span> </td>
+                                        <td class="IVNUM" hidden="">T99997</td>
+                                        <td class="VMSF_BARCODE_SUBFORM" hidden="">["8000040000802","8000040000801"]</td>
+                                    </tr>
+                                </tbody> -->
                             </table>
+                            
                         </div>
+                        <div class="modal fade" id="barcodeSubformModel" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                              <div class="modal-content">
+                                <div class="modal-body text-center">
+                                    <p class="h5">h5. Bootstrap heading</p>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                         <div class="row action">
                             <div class="col-md-2 text-center">
                                 <button type="button" class="btn btn-outline-primary btn-complete">

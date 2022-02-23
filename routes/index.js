@@ -30,7 +30,7 @@ router.get('/', function (req, res, next) {
 
 router.post('/fetchbasket', (req, res, next) => {
   try {
-    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=(ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' or PNCO_WEBNUMBER eq '${req.body.basket_number}') and FINAL ne 'Y'  and ROYY_ORDSTATUS eq -4&$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,BARCODE,PDES,CARTONNUM,TQUANT,PRICE,Y_9965_5_ESHB ;$filter= Y_9965_5_ESHB eq 'YES' ;$expand= VMSF_PARTBARCODES_SUBFORM)&$select=IV,IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS,ROYY_ORDSTATUS`;
+    const basketUrl = `https://pri.paneco.com/odata/Priority/tabula.ini/a190515/AINVOICES?$filter=(ROYY_TRANSPORTMEAN eq '${req.body.basket_number}' or PNCO_WEBNUMBER eq '${req.body.basket_number}') and FINAL ne 'Y'  and ROYY_ORDSTATUS eq -4&$expand=PAYMENTDEF_SUBFORM($select=PAYACCOUNT),SHIPTO2_SUBFORM($select=ADDRESS,PHONENUM,STATE),AINVOICEITEMS_SUBFORM($select=KLINE,BARCODE,PDES,CARTONNUM,TQUANT,PRICE,Y_9965_5_ESHB,PNCO_CONTENT ;$filter= Y_9965_5_ESHB eq 'YES' ;$expand= VMSF_PARTBARCODES_SUBFORM)&$select=IV,IVNUM,CDES,IVDATE,DEBIT,IVTYPE,ROYY_TRANSPORTMEAN,PNCO_WEBNUMBER,CDES,ORDNAME,PNCO_REMARKS,QAMT_SHIPREMARK,STCODE,STDES,PNCO_NUMOFPACKS,ROYY_ORDSTATUS`;
     axiosFunction(basketUrl, 'get')
       .then(basketList => {
         if (basketList.value.length > 0) {
@@ -38,8 +38,10 @@ router.post('/fetchbasket', (req, res, next) => {
 					      <tr>
 	                 	<th>נסרק</th>
 	                  	<th>כמות</th>
+	                  	<th>תכולה</th>
 	                   	<th>תאור</th>
 	                    <th>מקט</th>
+                      <th></th>
 	                    <th>KLINE</th>
 	              </tr>`;
           let counter = 0;
@@ -47,10 +49,11 @@ router.post('/fetchbasket', (req, res, next) => {
           basketList.value.forEach(singleValue => {
             ivnum = singleValue.IVNUM;
             singleValue.AINVOICEITEMS_SUBFORM.forEach(singleAINVOICEITEMS_SUBFORM => {
-              qty = singleAINVOICEITEMS_SUBFORM.TQUANT;
-              des = singleAINVOICEITEMS_SUBFORM.PDES;
-              sku = singleAINVOICEITEMS_SUBFORM.BARCODE;
-              kline = singleAINVOICEITEMS_SUBFORM.KLINE;
+              let qty = singleAINVOICEITEMS_SUBFORM.TQUANT;
+              let des = singleAINVOICEITEMS_SUBFORM.PDES;
+              let sku = singleAINVOICEITEMS_SUBFORM.BARCODE;
+              let kline = singleAINVOICEITEMS_SUBFORM.KLINE;
+              let PNCO_CONTENT = singleAINVOICEITEMS_SUBFORM.PNCO_CONTENT;
 
               let VMSF_BARCODE_SUBFORM = '';
               let VMSF_BARCODE_SUBFORM_ARRAY = singleAINVOICEITEMS_SUBFORM.VMSF_PARTBARCODES_SUBFORM.map(e => e.VMSF_BARCODE);
@@ -75,8 +78,10 @@ router.post('/fetchbasket', (req, res, next) => {
 	                            </div>
 	                        </td>`;
               html += `<td class="totalqty">${qty}</td>`;
+              html += `<td class="CONTENT">${PNCO_CONTENT}</td>`;
               html += `<td class="itemdesc">${des}</td>`;
               html += `<td class="itemsku" data-sku="${sku}">${sku}</td>`;
+              html += `<td class="Popup" data-toggle="modal" data-target="#barcodeSubformModel">*</td>`;
               if (VMSF_BARCODE_SUBFORM_length > 0) {
                 html += `<td class="kline">${kline}<span class="tooltiptext">${VMSF_BARCODE_SUBFORM}</span> </td>`;
               } else {
@@ -92,7 +97,7 @@ router.post('/fetchbasket', (req, res, next) => {
           html += '</tbody>';
 
           res.status(200).json({
-            status: 1, content: html, ivnum: ivnum,
+            status: 1, basketRequestUrl: basketUrl, content: html, ivnum: ivnum,
             IVNUM: basketList.value[0].IVNUM,
             IV: basketList.value[0].IV,
             ROYY_TRANSPORTMEAN: basketList.value[0].ROYY_TRANSPORTMEAN,
@@ -110,12 +115,12 @@ router.post('/fetchbasket', (req, res, next) => {
           })
         }
         else {
-          res.status(200).json({ status: 0, message: res.__('No data found!') })
+          res.status(200).json({ status: 0, message: res.__('No data found!'), basketRequestUrl: basketUrl })
         }
       })
       .catch((error) => {
         console.log("error: ", error)
-        res.status(200).json({ status: 0, message: res.__('No data found!') })
+        res.status(200).json({ status: 0, message: res.__('No data found!'), basketRequestUrl: basketUrl })
       })
   } catch (error) {
     console.log("error: ", error)
