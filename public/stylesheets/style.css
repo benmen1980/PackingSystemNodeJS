@@ -352,6 +352,9 @@ border-left: 1px solid #999;height: 100%;width: 1px;left: 0;}
     }
 }
 
+.model-popup {
+    padding: 65px 20px;
+}
 
 .kline .tooltiptext {
     visibility: hidden;
