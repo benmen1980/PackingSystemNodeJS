@@ -39,7 +39,6 @@ jQuery(document).ready(function () {
 
 	jQuery('body').on('click', '.Popup', function () {
 		const data = jQuery(this).parent().find('.VMSF_BARCODE_SUBFORM').html();
-		console.log(data);
 		const arrayOfBarcode = JSON.parse(data);
 		jQuery('.modal-body p').remove();
 		if (arrayOfBarcode.length) {
