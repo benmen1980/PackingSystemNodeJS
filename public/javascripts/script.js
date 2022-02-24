@@ -367,8 +367,8 @@ jQuery(document).ready(function () {
 				items = [...items, ...tooltiptext];
 
 				if (totalSkuCount > 1) {
-					// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+					// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -442,8 +442,8 @@ jQuery(document).ready(function () {
 					}
 				}
 				else {
-					// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-					if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+					// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
 
@@ -583,8 +583,8 @@ jQuery(document).ready(function () {
 					items = [...items, ...tooltiptext];
 
 					if (totalSkuCount > 1) {
-						// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+						// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -646,8 +646,10 @@ jQuery(document).ready(function () {
 						}
 					}
 					else {
-						// if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-						if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						console.log("scan item: ", typeof jQuery.trim(item_val));
+						console.log("------ ", tooltiptext.includes(jQuery.trim(item_val)));
+						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
+							// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let new_qty = current_qty + 1;
