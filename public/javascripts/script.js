@@ -368,7 +368,7 @@ jQuery(document).ready(function () {
 
 				if (totalSkuCount > 1) {
 					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-					// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -443,7 +443,7 @@ jQuery(document).ready(function () {
 				}
 				else {
 					if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-					// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+						// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 						let current_qty = parseInt(jQuery(this).find('.quantity').val());
 						let new_qty = current_qty + 1;
 
@@ -584,7 +584,7 @@ jQuery(document).ready(function () {
 
 					if (totalSkuCount > 1) {
 						if (jQuery.trim(item_val) == jQuery.trim(td_val) || tooltiptext.includes(jQuery.trim(item_val))) {
-						// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
+							// if (jQuery.trim(item_val) == jQuery.trim(td_val)) {
 
 							let current_qty = parseInt(jQuery(this).find('.quantity').val());
 							let item_quantity = parseInt(jQuery(this).find('.totalqty').html());
@@ -848,48 +848,82 @@ jQuery(document).ready(function () {
 			{ field: 'packs_number', position: 19 },
 		]
 		let inputvariable = '';
-		for (let i = 1; i < 20; i++) {
-			const findField = textField.filter(e => {
-				if (e.position === i) {
-					return e;
-				}
-			})
-			if (findField.length > 0) {
-				let findText = jQuery(`.${findField[0].field}`).text();
-				if (findText !== "") {
-					if (findField[0].position === 3) {
-						inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}`;
-					}
-					else if (findField[0].position === 7) {
-						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-						inputvariable += `\t`;
-					}
-					else if (findField[0].position === 8) {
-						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-						inputvariable += `\t`;
-					}
-					else if (findField[0].position === 11) {
-						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-					}
-					else if (findField[0].position === 17) {
-						inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}.001`;
-					}
-					else {
-						inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
-					}
-				}
-			} else {
-				inputvariable += `\t`;
-			}
-		}
+		// for (let i = 1; i < 20; i++) {
+		// 	const findField = textField.filter(e => {
+		// 		if (e.position === i) {
+		// 			return e;
+		// 		}
+		// 	})
+		// 	if (findField.length > 0) {
+		// 		let findText = jQuery(`.${findField[0].field}`).text();
+		// 		if (findText !== "") {
+		// 			if (findField[0].position === 3) {
+		// 				inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}`;
+		// 			}
+		// 			else if (findField[0].position === 7) {
+		// 				inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+		// 				inputvariable += `\t`;
+		// 			}
+		// 			else if (findField[0].position === 8) {
+		// 				inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+		// 				inputvariable += `\t`;
+		// 			}
+		// 			else if (findField[0].position === 11) {
+		// 				inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+		// 			}
+		// 			else if (findField[0].position === 17) {
+		// 				inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}.001`;
+		// 			}
+		// 			else {
+		// 				inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+		// 			}
+		// 		}
+		// 	} else {
+		// 		inputvariable += `\t`;
+		// 	}
+		// }
 
 		let inputvariableClone = '';
 		const packs_number = parseInt(jQuery('.packs_number').val());
-		for (let i = 1; i < (packs_number + 1); i++) {
-			inputvariableClone += inputvariable;
-			inputvariableClone += `${i}/${jQuery('.packs_number').val()}\n`;
+		for (let numofPack = 1; numofPack < (packs_number + 1); numofPack++) {
+			for (let i = 1; i < 20; i++) {
+				const findField = textField.filter(e => {
+					if (e.position === i) {
+						return e;
+					}
+				})
+				if (findField.length > 0) {
+					let findText = jQuery(`.${findField[0].field}`).text();
+					if (findText !== "") {
+						if (findField[0].position === 3) {
+							inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}`;
+						}
+						else if (findField[0].position === 7) {
+							inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+							inputvariable += `\t`;
+						}
+						else if (findField[0].position === 8) {
+							inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+							inputvariable += `\t`;
+						}
+						else if (findField[0].position === 11) {
+							inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+						}
+						else if (findField[0].position === 17) {
+							// inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}.001`;
+							inputvariable += `PN${jQuery(`.${findField[0].field}`).text()}.${String(numofPack).padStart(3, '0')}`;
+						}
+						else {
+							inputvariable += `${jQuery(`.${findField[0].field}`).text()}`;
+						}
+					}
+				} else {
+					inputvariable += `\t`;
+				}
+			}
+			inputvariable += `${numofPack}/${jQuery('.packs_number').val()}\n`;
 		}
-		return inputvariableClone;
+		return inputvariable;
 	}
 
 	/**This is the code for auto download the file */
